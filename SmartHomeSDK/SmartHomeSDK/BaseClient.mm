@@ -288,8 +288,8 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
         }
 #else
         void *result;
-        pthread_join(m_hThread,&result);
         pthread_join(m_hWorkThread,&result);
+        pthread_join(m_hThread,&result);
 #endif
         
         m_hThread = 0;
@@ -2787,11 +2787,74 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
             {
                 if ( bRet )
                 {
-                    ERROR_TRACE("PCamera.setExtraBitRate ok.");
+                    ERROR_TRACE("IPCamera.setExtraBitRate ok.iBitRate="<<iBitRate);
                 }
                 else
                 {
-                    ERROR_TRACE("PCamera.setExtraBitRate failed.");
+                    ERROR_TRACE("IPCamera.setExtraBitRate failed.");
+                    iReturn = -1;
+                }
+            }
+            
+            // Õ∑≈ µ¿˝
+            iRet = Dvip_destroy("IPCamera.destroy",uiObjectId,m_waittime,strGwVCode);
+            if ( 0 != iRet )
+            {
+                ERROR_TRACE("IPCamera.destroy failed.");
+                //return -1;
+            }
+            
+            return iReturn;
+        }
+        
+        int CBaseClient::GetExtraBitrate(char *pszDeviceId,int &iBitRate,std::string strGwVCode)
+        {
+            int iRet = 0;
+            unsigned int uiObjectId = 0;
+            bool bRet = true;
+            int iReturn = 0;
+            
+            //¥¥Ω® µ¿˝
+            iRet = Dvip_instance("IPCamera.factory.instance",pszDeviceId,uiObjectId,m_waittime,strGwVCode);
+            if ( 0 != iRet )
+            {
+                ERROR_TRACE("IPCamera.factory.instance failed.");
+                return -1;
+            }
+            if ( 0 == uiObjectId )
+            {
+                ERROR_TRACE("IPCamera.factory.instance failed.objectid=0");
+                return -1;
+            }
+            
+            Json::Value jsonInParams;
+            Json::Value jsonOutParams;
+            
+            iRet = Dvip_method_json_b_json("IPCamera.getExtraBitRate",uiObjectId,jsonInParams,bRet,jsonOutParams,m_waittime,strGwVCode);
+            if ( 0 > iRet )
+            {
+                ERROR_TRACE("IPCamera.getExtraBitRate exec failed.");
+                iReturn = -1;
+            }
+            else
+            {
+                if ( bRet )
+                {
+                    if ( !jsonOutParams.isNull() && jsonOutParams["BitRate"].isInt())
+                    {
+                        iBitRate = jsonOutParams["BitRate"].asInt();
+                        iReturn = 0;
+                        INFO_TRACE("IPCamera.getExtraBitRate ok! iBitRate="<<iBitRate);
+                    }
+                    else
+                    {
+                        ERROR_TRACE("parse BitRate failed.");
+                        iReturn = -1;
+                    }
+                }
+                else
+                {
+                    ERROR_TRACE("PCamera.getExtraBitRate exec failed.");
                     iReturn = -1;
                 }
             }

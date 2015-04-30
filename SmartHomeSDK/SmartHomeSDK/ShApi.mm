@@ -563,6 +563,85 @@ SH_API bool CALL_METHOD SH_SetVideoCovers(unsigned int hLoginID,char *pszDeviceI
     return bRet;
 }
 
+
+SH_API bool CALL_METHOD SH_SetExtraBitrate(unsigned int hLoginID,char *pszDeviceId,int iBitRate)
+{
+    int iRet = 0;
+    bool bRet = false;
+    CBaseClient *pInst;
+    
+    std::string strGwVCode;
+    pInst = CDvrGeneral::Instance()->FindInstance(hLoginID,strGwVCode);
+    if ( !pInst )
+    {
+        ERROR_TRACE("SH_SetExtraBitrate not find instance.id="<<hLoginID);
+        return false;
+    }
+    
+    iRet = pInst->SetExtraBitrate(pszDeviceId,iBitRate,strGwVCode);
+    if ( 0 == iRet )
+    {
+        bRet = true;
+    }
+    else
+    {
+        bRet = false;
+    }
+    return bRet;
+}
+
+SH_API bool CALL_METHOD SH_GetExtraBitrate(unsigned int hLoginID,char *pszDeviceId,int & iBitRate)
+{
+    int iRet = 0;
+    bool bRet = false;
+    CBaseClient *pInst;
+    
+    std::string strGwVCode;
+    pInst = CDvrGeneral::Instance()->FindInstance(hLoginID,strGwVCode);
+    if ( !pInst )
+    {
+        ERROR_TRACE("SH_SetExtraBitrate not find instance.id="<<hLoginID);
+        return false;
+    }
+    
+    iRet = pInst->GetExtraBitrate(pszDeviceId,iBitRate,strGwVCode);
+    if ( 0 == iRet )
+    {
+        bRet = true;
+    }
+    else
+    {
+        bRet = false;
+    }
+    return bRet;
+}
+
+SH_API bool CALL_METHOD SH_RemoteOpenDoor(unsigned int hLoginID,char *pszShortNumber)
+{
+    int iRet = 0;
+    bool bRet = false;
+    CBaseClient *pInst;
+    
+    std::string strGwVCode;
+    pInst = CDvrGeneral::Instance()->FindInstance(hLoginID,strGwVCode);
+    if ( !pInst )
+    {
+        ERROR_TRACE("SH_RemoteOpenDoor not find instance.id="<<hLoginID);
+        return false;
+    }
+    
+    iRet = pInst->RemoteOpenDoor(pszShortNumber,strGwVCode);
+    if ( 0 == iRet )
+    {
+        bRet = true;
+    }
+    else
+    {
+        bRet = false;
+    }
+    return bRet;
+}
+
 //ª÷∏¥≈‰÷√
 SH_API bool CALL_METHOD SH_ResetConfig(unsigned int hLoginID)
 {

@@ -320,15 +320,19 @@ extern "C" {
     // 取得防区状态
     SH_API bool CALL_METHOD SH_GetArmMode(unsigned int hLoginID,char *pszDeviceId,bool & bEnable);
     
-    // 视频遮挡配置,本地模式直接连接IPC设备控制，暂不支持远程
-    //SH_API bool CALL_METHOD SH_GetVideoCovers(unsigned int hLoginID,bool & bEnable);
     
-    //SH_API bool CALL_METHOD SH_SetVideoCovers(unsigned int hLoginID,bool bEnable);
-    
-    // 视频遮挡配置，通过小网关修改IPC
+    // IPC远程控制
     SH_API bool CALL_METHOD SH_GetVideoCovers(unsigned int hLoginID,char *pszDeviceId,bool & bEnable);
-    
     SH_API bool CALL_METHOD SH_SetVideoCovers(unsigned int hLoginID,char *pszDeviceId,bool bEnable);
+    // 修改IPC辅码流值，iBitRate单位kbps，当前暂定流畅100kbps，清晰256kbps
+    SH_API bool CALL_METHOD SH_SetExtraBitrate(unsigned int hLoginID,char *pszDeviceId,int iBitRate);
+    // 查询IPC辅码流值
+    SH_API bool CALL_METHOD SH_GetExtraBitrate(unsigned int hLoginID,char *pszDeviceId,int & iBitRate);
+    
+    
+    // 门口机远程控制
+    SH_API bool CALL_METHOD SH_RemoteOpenDoor(unsigned int hLoginID,char *pszShortNumber);
+    
     
     // 共享文件下载，列表查询见GetConfig.ShareFile
     // pszShareFile共享文件名 pszLocalPath本地存储路径

@@ -157,6 +157,7 @@ public:
     int GetVideoCovers(char *pszDeviceId,bool &bEnable,std::string strGwVCode="");
     int SetVideoCovers(char *pszDeviceId,bool bEnable,std::string strGwVCode="");
     int SetExtraBitrate(char *pszDeviceId,int iBitRate,std::string strGwVCode="");
+    int GetExtraBitrate(char *pszDeviceId,int &iBitRate,std::string strGwVCode="");
     
     int RemoteOpenDoor(char *pszShortNumber,std::string strGwVCode="");
     
