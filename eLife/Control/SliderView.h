@@ -10,7 +10,6 @@
 
 @protocol SliderViewDelegate ;
 
-
 @interface SliderView : UIView
 
 @property (nonatomic,assign) id<SliderViewDelegate> delegate;
