@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AirConditionView">
+            <connections>
+                <outlet property="indicator" destination="d8Y-gS-Ts7" id="Kja-6u-BHz"/>
+                <outlet property="modeAutoBtn" destination="IDz-cM-cx3" id="lUw-T3-cCa"/>
+                <outlet property="modeColdBtn" destination="fUc-4B-wN5" id="wHz-pA-mm2"/>
+                <outlet property="modeHotBtn" destination="HbW-Lt-sEX" id="eGc-Xf-KbG"/>
+                <outlet property="modeWetBtn" destination="J7a-Dv-mkv" id="N6l-f3-c8T"/>
+                <outlet property="modeWindBtn" destination="cBE-I1-l4t" id="wZ6-7g-rpp"/>
+                <outlet property="nameLabel" destination="cyg-e0-frv" id="C7u-xr-nkt"/>
+                <outlet property="offBtn" destination="50Z-b8-nhq" id="uJ8-ab-5GA"/>
+                <outlet property="onBtn" destination="O9V-vP-ihR" id="N6f-1y-OQE"/>
+                <outlet property="tempAddBtn" destination="Pds-Nd-ufl" id="jcl-Ww-NbM"/>
+                <outlet property="tempDecBtn" destination="ier-Kj-Pv4" id="sQw-Xy-71d"/>
+                <outlet property="temperatureLbl" destination="jeB-4u-TYq" id="rgl-gJ-uI0"/>
+                <outlet property="view" destination="p4b-58-W7n" id="V5e-IO-8lm"/>
+                <outlet property="windAutoBtn" destination="PQn-09-cdj" id="is3-Mp-mkb"/>
+                <outlet property="windHightBtn" destination="dku-d9-IXv" id="Mmx-f1-7Ny"/>
+                <outlet property="windLowBtn" destination="T0D-dS-usy" id="w1e-9Y-jGp"/>
+                <outlet property="windMidBtn" destination="IOE-4r-FUy" id="8xW-24-lcM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="p4b-58-W7n">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="400"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GradientLine.png" id="j7Q-Nd-oqh">
+                    <rect key="frame" x="255" y="227" width="300" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28℃" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LPe-nF-Epy">
+                    <rect key="frame" x="275" y="36" width="48" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前温度：" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gzB-11-iyJ">
+                    <rect key="frame" x="213" y="36" width="65" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Pds-Nd-ufl">
+                    <rect key="frame" x="461" y="61" width="32" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="RightTriangle.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="temperatureAdd:" destination="-1" eventType="touchUpInside" id="dH5-5P-bOA"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="模式" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wID-oh-cyU">
+                    <rect key="frame" x="255" y="138" width="20" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="风速" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5za-gV-gsN">
+                    <rect key="frame" x="255" y="244" width="20" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fUc-4B-wN5">
+                    <rect key="frame" x="330" y="138" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="ModeColdText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="ModeColdTextSelected.png"/>
+                    <state key="highlighted" image="ModeColdTextSelected.png"/>
+                    <connections>
+                        <action selector="setMode:" destination="-1" eventType="touchUpInside" id="vuF-Tq-Vz4"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HbW-Lt-sEX">
+                    <rect key="frame" x="383" y="138" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="ModeHotText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="ModeHotTextSelected.png"/>
+                    <state key="highlighted" image="ModeHotTextSelected.png"/>
+                    <connections>
+                        <action selector="setMode:" destination="-1" eventType="touchUpInside" id="UCk-o0-7Pd"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cBE-I1-l4t">
+                    <rect key="frame" x="436" y="138" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="ModeWindText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="ModeWindTextSelected.png"/>
+                    <state key="highlighted" image="ModeWindTextSelected.png"/>
+                    <connections>
+                        <action selector="setMode:" destination="-1" eventType="touchUpInside" id="jMK-el-H9y"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PQn-09-cdj">
+                    <rect key="frame" x="277" y="244" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="ModeAutoText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="ModeAutoTextSelected.png"/>
+                    <state key="highlighted" image="ModeAutoTextSelected.png"/>
+                    <connections>
+                        <action selector="setWindSpeed:" destination="-1" eventType="touchUpInside" id="fkI-7r-Fpa"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="T0D-dS-usy">
+                    <rect key="frame" x="330" y="244" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="SpeedLowText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="SpeedLowTextSelected.png"/>
+                    <state key="highlighted" image="SpeedLowTextSelected.png"/>
+                    <connections>
+                        <action selector="setWindSpeed:" destination="-1" eventType="touchUpInside" id="iI2-UG-zr8"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IOE-4r-FUy">
+                    <rect key="frame" x="383" y="244" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="SpeedMidText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="SpeedMidTextSelected.png"/>
+                    <state key="highlighted" image="SpeedMidTextSelected.png"/>
+                    <connections>
+                        <action selector="setWindSpeed:" destination="-1" eventType="touchUpInside" id="KeW-JV-TzJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dku-d9-IXv">
+                    <rect key="frame" x="436" y="244" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="SpeedHighText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="SpeedHighTextSelected.png"/>
+                    <state key="highlighted" image="SpeedHighTextSelected.png"/>
+                    <connections>
+                        <action selector="setWindSpeed:" destination="-1" eventType="touchUpInside" id="IA5-Th-8FX"/>
+                    </connections>
+                </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" id="d8Y-gS-Ts7">
+                    <rect key="frame" x="480" y="7" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="J7a-Dv-mkv">
+                    <rect key="frame" x="489" y="138" width="52" height="65"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="ModeWetText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="ModeWetTextSelected.png"/>
+                    <state key="highlighted" image="ModeWetTextSelected.png"/>
+                    <connections>
+                        <action selector="setMode:" destination="-1" eventType="touchUpInside" id="Cix-47-i3i"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GradientLine.png" id="M23-2m-e99">
+                    <rect key="frame" x="245" y="120" width="300" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IDz-cM-cx3">
+                    <rect key="frame" x="277" y="138" width="52" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="ModeAutoText.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="ModeAutoTextSelected.png"/>
+                    <state key="highlighted" image="ModeAutoTextSelected.png"/>
+                    <connections>
+                        <action selector="setMode:" destination="-1" eventType="touchUpInside" id="V5w-4B-6qe"/>
+                    </connections>
+                </button>
+                <view alpha="0.40000000596046448" contentMode="scaleToFill" id="jw3-TC-jdo">
+                    <rect key="frame" x="0.0" y="336" width="768" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <view alpha="0.40000000596046448" contentMode="scaleToFill" id="nCn-re-tAS">
+                    <rect key="frame" x="384" y="336" width="1" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="50Z-b8-nhq">
+                    <rect key="frame" x="384" y="336" width="384" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="关">
+                        <color key="titleColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" backgroundImage="CtrlBtnHl.png"/>
+                    <state key="highlighted" backgroundImage="CtrlBtnHl.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="setPowerOff:" destination="-1" eventType="touchUpInside" id="5Pm-cU-YJ1"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="O9V-vP-ihR">
+                    <rect key="frame" x="0.0" y="336" width="384" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="开">
+                        <color key="titleColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled" backgroundImage="LeftBtnHl.png"/>
+                    <state key="selected" backgroundImage="CtrlBtnHl.png"/>
+                    <state key="highlighted" backgroundImage="CtrlBtnHl.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="setPowerOn:" destination="-1" eventType="touchUpInside" id="NtS-br-BO8"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="空调" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cyg-e0-frv">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="34"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.86274509799999999" green="0.99215686270000003" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ier-Kj-Pv4">
+                    <rect key="frame" x="321" y="61" width="32" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="LeftTriangle.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="temperatureDec:" destination="-1" eventType="touchUpInside" id="ia3-8c-HlB"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18℃" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jeB-4u-TYq">
+                    <rect key="frame" x="363" y="61" width="90" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                    <color key="textColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CtrlBtnHl.png" width="75" height="48"/>
+        <image name="GradientLine.png" width="627" height="2"/>
+        <image name="LeftBtnHl.png" width="179" height="48"/>
+        <image name="LeftTriangle.png" width="36" height="41"/>
+        <image name="ModeAutoText.png" width="52" height="64"/>
+        <image name="ModeAutoTextSelected.png" width="52" height="64"/>
+        <image name="ModeColdText.png" width="52" height="64"/>
+        <image name="ModeColdTextSelected.png" width="52" height="64"/>
+        <image name="ModeHotText.png" width="52" height="64"/>
+        <image name="ModeHotTextSelected.png" width="52" height="64"/>
+        <image name="ModeWetText.png" width="52" height="64"/>
+        <image name="ModeWetTextSelected.png" width="52" height="64"/>
+        <image name="ModeWindText.png" width="52" height="64"/>
+        <image name="ModeWindTextSelected.png" width="52" height="64"/>
+        <image name="RightTriangle.png" width="36" height="41"/>
+        <image name="SpeedHighText.png" width="52" height="64"/>
+        <image name="SpeedHighTextSelected.png" width="52" height="64"/>
+        <image name="SpeedLowText.png" width="52" height="64"/>
+        <image name="SpeedLowTextSelected.png" width="52" height="64"/>
+        <image name="SpeedMidText.png" width="52" height="64"/>
+        <image name="SpeedMidTextSelected.png" width="52" height="64"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GroundHeatView">
+            <connections>
+                <outlet property="indicator" destination="3Kp-M6-DKJ" id="3NA-bi-K73"/>
+                <outlet property="nameLabel" destination="FB1-J9-2jb" id="pKD-Vr-MAA"/>
+                <outlet property="offBtn" destination="2aC-15-VAW" id="v0F-Yr-otE"/>
+                <outlet property="onBtn" destination="SHD-2L-9n8" id="2KV-II-33q"/>
+                <outlet property="tempAddBtn" destination="EI5-ub-piZ" id="sSn-W0-RQP"/>
+                <outlet property="tempDecBtn" destination="YxE-Gb-hUa" id="1YE-wm-qQU"/>
+                <outlet property="temperatureLbl" destination="teh-fu-6n5" id="C28-72-aRG"/>
+                <outlet property="view" destination="rMp-7H-ZMA" id="apO-ke-RBw"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="rMp-7H-ZMA">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="272"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地暖" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FB1-J9-2jb">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.86274509799999999" green="0.99215686270000003" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" id="3Kp-M6-DKJ">
+                    <rect key="frame" x="219" y="5" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
+                <view alpha="0.40000000596046448" contentMode="scaleToFill" id="gnV-sU-vmi">
+                    <rect key="frame" x="0.0" y="224" width="320" height="1"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <view alpha="0.40000000596046448" contentMode="scaleToFill" id="S2R-OC-JFX">
+                    <rect key="frame" x="160" y="224" width="1" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SHD-2L-9n8">
+                    <rect key="frame" x="0.0" y="224" width="160" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="开">
+                        <color key="titleColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" backgroundImage="LeftBtnHl.png"/>
+                    <state key="highlighted" backgroundImage="CtrlBtnHl.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="setPowerOn:" destination="-1" eventType="touchUpInside" id="LnZ-nF-A2y"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2aC-15-VAW">
+                    <rect key="frame" x="161" y="224" width="159" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="关">
+                        <color key="titleColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" backgroundImage="RightBtnHl.png"/>
+                    <state key="highlighted" backgroundImage="CtrlBtnHl.png">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="setPowerOff:" destination="-1" eventType="touchUpInside" id="mCX-HY-IAf"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GroundHeatIcon.png" id="uAc-5G-EwZ">
+                    <rect key="frame" x="109" y="48" width="83" height="86"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="YxE-Gb-hUa">
+                    <rect key="frame" x="63" y="160" width="32" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="LeftTriangle.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="temperatureDec:" destination="-1" eventType="touchUpInside" id="naK-qc-XXV"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="EI5-ub-piZ">
+                    <rect key="frame" x="205" y="160" width="32" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" image="RightTriangle.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="temperatureAdd:" destination="-1" eventType="touchUpInside" id="lqh-Ak-Mcd"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18℃" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="teh-fu-6n5">
+                    <rect key="frame" x="105" y="160" width="90" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                    <color key="textColor" red="0.32156863810000003" green="0.61568629740000003" blue="0.1215686351" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CtrlBtnHl.png" width="75" height="48"/>
+        <image name="GroundHeatIcon.png" width="83" height="86"/>
+        <image name="LeftBtnHl.png" width="179" height="48"/>
+        <image name="LeftTriangle.png" width="36" height="41"/>
+        <image name="RightBtnHl.png" width="179" height="48"/>
+        <image name="RightTriangle.png" width="36" height="41"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

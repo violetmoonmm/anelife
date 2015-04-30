@@ -1,0 +1,394 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F569CFDA1A4BF596007C514B /* Base64.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFC11A4BF596007C514B /* Base64.mm */; };
+		F569CFDB1A4BF596007C514B /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFC21A4BF596007C514B /* Base64.h */; };
+		F569CFDC1A4BF596007C514B /* BaseClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFC31A4BF596007C514B /* BaseClient.mm */; };
+		F569CFDD1A4BF596007C514B /* BaseClient.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFC41A4BF596007C514B /* BaseClient.h */; };
+		F569CFDE1A4BF596007C514B /* CommonDefine.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFC51A4BF596007C514B /* CommonDefine.mm */; };
+		F569CFDF1A4BF596007C514B /* CommonDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFC61A4BF596007C514B /* CommonDefine.h */; };
+		F569CFE01A4BF596007C514B /* DvipClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFC71A4BF596007C514B /* DvipClient.mm */; };
+		F569CFE11A4BF596007C514B /* DvipClient.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFC81A4BF596007C514B /* DvipClient.h */; };
+		F569CFE21A4BF596007C514B /* DvipMsg.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFC91A4BF596007C514B /* DvipMsg.mm */; };
+		F569CFE31A4BF596007C514B /* DvipMsg.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFCA1A4BF596007C514B /* DvipMsg.h */; };
+		F569CFE41A4BF596007C514B /* DvrGeneral.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFCB1A4BF596007C514B /* DvrGeneral.mm */; };
+		F569CFE51A4BF596007C514B /* DvrGeneral.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFCC1A4BF596007C514B /* DvrGeneral.h */; };
+		F569CFE61A4BF596007C514B /* ISClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFCD1A4BF596007C514B /* ISClient.mm */; };
+		F569CFE71A4BF596007C514B /* ISClient.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFCE1A4BF596007C514B /* ISClient.h */; };
+		F569CFE81A4BF596007C514B /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFCF1A4BF596007C514B /* json.h */; };
+		F569CFE91A4BF596007C514B /* jsoncpp.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFD01A4BF596007C514B /* jsoncpp.mm */; };
+		F569CFEA1A4BF596007C514B /* MD5Impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFD11A4BF596007C514B /* MD5Impl.mm */; };
+		F569CFEB1A4BF596007C514B /* MD5Inc.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFD21A4BF596007C514B /* MD5Inc.h */; };
+		F569CFEC1A4BF596007C514B /* MuteX.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFD31A4BF596007C514B /* MuteX.mm */; };
+		F569CFED1A4BF596007C514B /* MuteX.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFD41A4BF596007C514B /* MuteX.h */; };
+		F569CFEE1A4BF596007C514B /* Platform.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFD51A4BF596007C514B /* Platform.h */; };
+		F569CFEF1A4BF596007C514B /* rapidxml.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F569CFD61A4BF596007C514B /* rapidxml.hpp */; };
+		F569CFF01A4BF596007C514B /* ShApi.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFD71A4BF596007C514B /* ShApi.mm */; };
+		F569CFF11A4BF596007C514B /* ShApi.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFD81A4BF596007C514B /* ShApi.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F569CFF21A4BF596007C514B /* Trace.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFD91A4BF596007C514B /* Trace.h */; };
+		F582D8C51A4D09DF00290530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F582D8C41A4D09DF00290530 /* Foundation.framework */; };
+		F59C4AC91A4E7BE600B94FDA /* MultiCast.mm in Sources */ = {isa = PBXBuildFile; fileRef = F59C4AC71A4E7BE600B94FDA /* MultiCast.mm */; };
+		F59C4ACA1A4E7BE600B94FDA /* MultiCast.h in Headers */ = {isa = PBXBuildFile; fileRef = F59C4AC81A4E7BE600B94FDA /* MultiCast.h */; };
+		F5B0F4711A5BC8E70078CC84 /* aes.mm in Sources */ = {isa = PBXBuildFile; fileRef = F5B0F46F1A5BC8E70078CC84 /* aes.mm */; };
+		F5B0F4721A5BC8E70078CC84 /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B0F4701A5BC8E70078CC84 /* aes.h */; };
+		F5B0F4A41A5BCEF10078CC84 /* SmartHomeSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = F5B0F4A31A5BCEF10078CC84 /* SmartHomeSDK-Prefix.pch */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F569CFB31A4BF52D007C514B /* libSmartHomeSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSmartHomeSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F569CFC11A4BF596007C514B /* Base64.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Base64.mm; sourceTree = "<group>"; };
+		F569CFC21A4BF596007C514B /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		F569CFC31A4BF596007C514B /* BaseClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BaseClient.mm; sourceTree = "<group>"; };
+		F569CFC41A4BF596007C514B /* BaseClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseClient.h; sourceTree = "<group>"; };
+		F569CFC51A4BF596007C514B /* CommonDefine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CommonDefine.mm; sourceTree = "<group>"; };
+		F569CFC61A4BF596007C514B /* CommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonDefine.h; sourceTree = "<group>"; };
+		F569CFC71A4BF596007C514B /* DvipClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DvipClient.mm; sourceTree = "<group>"; };
+		F569CFC81A4BF596007C514B /* DvipClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DvipClient.h; sourceTree = "<group>"; };
+		F569CFC91A4BF596007C514B /* DvipMsg.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DvipMsg.mm; sourceTree = "<group>"; };
+		F569CFCA1A4BF596007C514B /* DvipMsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DvipMsg.h; sourceTree = "<group>"; };
+		F569CFCB1A4BF596007C514B /* DvrGeneral.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DvrGeneral.mm; sourceTree = "<group>"; };
+		F569CFCC1A4BF596007C514B /* DvrGeneral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DvrGeneral.h; sourceTree = "<group>"; };
+		F569CFCD1A4BF596007C514B /* ISClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ISClient.mm; sourceTree = "<group>"; };
+		F569CFCE1A4BF596007C514B /* ISClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISClient.h; sourceTree = "<group>"; };
+		F569CFCF1A4BF596007C514B /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		F569CFD01A4BF596007C514B /* jsoncpp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsoncpp.mm; sourceTree = "<group>"; };
+		F569CFD11A4BF596007C514B /* MD5Impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MD5Impl.mm; sourceTree = "<group>"; };
+		F569CFD21A4BF596007C514B /* MD5Inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Inc.h; sourceTree = "<group>"; };
+		F569CFD31A4BF596007C514B /* MuteX.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MuteX.mm; sourceTree = "<group>"; };
+		F569CFD41A4BF596007C514B /* MuteX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuteX.h; sourceTree = "<group>"; };
+		F569CFD51A4BF596007C514B /* Platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platform.h; sourceTree = "<group>"; };
+		F569CFD61A4BF596007C514B /* rapidxml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rapidxml.hpp; sourceTree = "<group>"; };
+		F569CFD71A4BF596007C514B /* ShApi.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ShApi.mm; sourceTree = "<group>"; };
+		F569CFD81A4BF596007C514B /* ShApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShApi.h; sourceTree = "<group>"; };
+		F569CFD91A4BF596007C514B /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trace.h; sourceTree = "<group>"; };
+		F582D8C41A4D09DF00290530 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		F59C4AC71A4E7BE600B94FDA /* MultiCast.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MultiCast.mm; sourceTree = "<group>"; };
+		F59C4AC81A4E7BE600B94FDA /* MultiCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiCast.h; sourceTree = "<group>"; };
+		F5B0F46F1A5BC8E70078CC84 /* aes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = aes.mm; sourceTree = "<group>"; };
+		F5B0F4701A5BC8E70078CC84 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		F5B0F4A31A5BCEF10078CC84 /* SmartHomeSDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SmartHomeSDK-Prefix.pch"; path = "SmartHomeSDK/SmartHomeSDK-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F569CFB01A4BF52D007C514B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F582D8C51A4D09DF00290530 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F569CFAA1A4BF52C007C514B = {
+			isa = PBXGroup;
+			children = (
+				F5B0F4A31A5BCEF10078CC84 /* SmartHomeSDK-Prefix.pch */,
+				F582D8C41A4D09DF00290530 /* Foundation.framework */,
+				F569CFC01A4BF596007C514B /* SmartHomeSDK */,
+				F569CFB41A4BF52D007C514B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F569CFB41A4BF52D007C514B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F569CFB31A4BF52D007C514B /* libSmartHomeSDK.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F569CFC01A4BF596007C514B /* SmartHomeSDK */ = {
+			isa = PBXGroup;
+			children = (
+				F59C4AC71A4E7BE600B94FDA /* MultiCast.mm */,
+				F59C4AC81A4E7BE600B94FDA /* MultiCast.h */,
+				F5B0F46F1A5BC8E70078CC84 /* aes.mm */,
+				F5B0F4701A5BC8E70078CC84 /* aes.h */,
+				F569CFC11A4BF596007C514B /* Base64.mm */,
+				F569CFC21A4BF596007C514B /* Base64.h */,
+				F569CFC31A4BF596007C514B /* BaseClient.mm */,
+				F569CFC41A4BF596007C514B /* BaseClient.h */,
+				F569CFC51A4BF596007C514B /* CommonDefine.mm */,
+				F569CFC61A4BF596007C514B /* CommonDefine.h */,
+				F569CFC71A4BF596007C514B /* DvipClient.mm */,
+				F569CFC81A4BF596007C514B /* DvipClient.h */,
+				F569CFC91A4BF596007C514B /* DvipMsg.mm */,
+				F569CFCA1A4BF596007C514B /* DvipMsg.h */,
+				F569CFCB1A4BF596007C514B /* DvrGeneral.mm */,
+				F569CFCC1A4BF596007C514B /* DvrGeneral.h */,
+				F569CFCD1A4BF596007C514B /* ISClient.mm */,
+				F569CFCE1A4BF596007C514B /* ISClient.h */,
+				F569CFCF1A4BF596007C514B /* json.h */,
+				F569CFD01A4BF596007C514B /* jsoncpp.mm */,
+				F569CFD11A4BF596007C514B /* MD5Impl.mm */,
+				F569CFD21A4BF596007C514B /* MD5Inc.h */,
+				F569CFD31A4BF596007C514B /* MuteX.mm */,
+				F569CFD41A4BF596007C514B /* MuteX.h */,
+				F569CFD51A4BF596007C514B /* Platform.h */,
+				F569CFD61A4BF596007C514B /* rapidxml.hpp */,
+				F569CFD71A4BF596007C514B /* ShApi.mm */,
+				F569CFD81A4BF596007C514B /* ShApi.h */,
+				F569CFD91A4BF596007C514B /* Trace.h */,
+			);
+			path = SmartHomeSDK;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F569CFB11A4BF52D007C514B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5B0F4A41A5BCEF10078CC84 /* SmartHomeSDK-Prefix.pch in Headers */,
+				F569CFF11A4BF596007C514B /* ShApi.h in Headers */,
+				F569CFE11A4BF596007C514B /* DvipClient.h in Headers */,
+				F569CFDD1A4BF596007C514B /* BaseClient.h in Headers */,
+				F569CFE51A4BF596007C514B /* DvrGeneral.h in Headers */,
+				F569CFDF1A4BF596007C514B /* CommonDefine.h in Headers */,
+				F569CFEE1A4BF596007C514B /* Platform.h in Headers */,
+				F569CFE31A4BF596007C514B /* DvipMsg.h in Headers */,
+				F569CFED1A4BF596007C514B /* MuteX.h in Headers */,
+				F59C4ACA1A4E7BE600B94FDA /* MultiCast.h in Headers */,
+				F569CFF21A4BF596007C514B /* Trace.h in Headers */,
+				F569CFEB1A4BF596007C514B /* MD5Inc.h in Headers */,
+				F569CFDB1A4BF596007C514B /* Base64.h in Headers */,
+				F5B0F4721A5BC8E70078CC84 /* aes.h in Headers */,
+				F569CFE81A4BF596007C514B /* json.h in Headers */,
+				F569CFE71A4BF596007C514B /* ISClient.h in Headers */,
+				F569CFEF1A4BF596007C514B /* rapidxml.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F569CFB21A4BF52D007C514B /* SmartHomeSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F569CFB71A4BF52D007C514B /* Build configuration list for PBXNativeTarget "SmartHomeSDK" */;
+			buildPhases = (
+				F569CFAF1A4BF52D007C514B /* Sources */,
+				F569CFB01A4BF52D007C514B /* Frameworks */,
+				F569CFB11A4BF52D007C514B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartHomeSDK;
+			productName = SmartHomeSDK;
+			productReference = F569CFB31A4BF52D007C514B /* libSmartHomeSDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F569CFAB1A4BF52C007C514B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "陈杰";
+				TargetAttributes = {
+					F569CFB21A4BF52D007C514B = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = F569CFAE1A4BF52C007C514B /* Build configuration list for PBXProject "SmartHomeSDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F569CFAA1A4BF52C007C514B;
+			productRefGroup = F569CFB41A4BF52D007C514B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F569CFB21A4BF52D007C514B /* SmartHomeSDK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F569CFAF1A4BF52D007C514B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F59C4AC91A4E7BE600B94FDA /* MultiCast.mm in Sources */,
+				F569CFDA1A4BF596007C514B /* Base64.mm in Sources */,
+				F569CFE91A4BF596007C514B /* jsoncpp.mm in Sources */,
+				F569CFE41A4BF596007C514B /* DvrGeneral.mm in Sources */,
+				F569CFE01A4BF596007C514B /* DvipClient.mm in Sources */,
+				F569CFDE1A4BF596007C514B /* CommonDefine.mm in Sources */,
+				F569CFDC1A4BF596007C514B /* BaseClient.mm in Sources */,
+				F569CFF01A4BF596007C514B /* ShApi.mm in Sources */,
+				F569CFEA1A4BF596007C514B /* MD5Impl.mm in Sources */,
+				F569CFEC1A4BF596007C514B /* MuteX.mm in Sources */,
+				F569CFE61A4BF596007C514B /* ISClient.mm in Sources */,
+				F569CFE21A4BF596007C514B /* DvipMsg.mm in Sources */,
+				F5B0F4711A5BC8E70078CC84 /* aes.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F569CFB51A4BF52D007C514B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F569CFB61A4BF52D007C514B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F569CFB81A4BF52D007C514B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SmartHomeSDK/SmartHomeSDK-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					PLAT_UNIX,
+					NO_LOGLIB,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
+			};
+			name = Debug;
+		};
+		F569CFB91A4BF52D007C514B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				EXECUTABLE_PREFIX = lib;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SmartHomeSDK/SmartHomeSDK-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					PLAT_UNIX,
+					NO_LOGLIB,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = include;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F569CFAE1A4BF52C007C514B /* Build configuration list for PBXProject "SmartHomeSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F569CFB51A4BF52D007C514B /* Debug */,
+				F569CFB61A4BF52D007C514B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F569CFB71A4BF52D007C514B /* Build configuration list for PBXNativeTarget "SmartHomeSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F569CFB81A4BF52D007C514B /* Debug */,
+				F569CFB91A4BF52D007C514B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F569CFAB1A4BF52C007C514B /* Project object */;
+}

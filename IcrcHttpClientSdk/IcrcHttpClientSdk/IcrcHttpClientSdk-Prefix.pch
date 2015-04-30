@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'IcrcHttpClientSdk' target in the 'IcrcHttpClientSdk' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
+
+#define VT_UNIX
