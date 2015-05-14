@@ -37,7 +37,19 @@ CDvrGeneral::CDvrGeneral()
 }
 CDvrGeneral::~CDvrGeneral()
 {
-    INFO_TRACE("destroy sdk!");
+    INFO_TRACE("try destroy sdk!");
+    
+    if (m_pRemoteInst)
+    {
+        if (m_pRemoteInst->IsLogin())
+        {
+            m_pRemoteInst->Logout();
+        }
+        delete m_pRemoteInst;
+        m_pRemoteInst = NULL;
+        INFO_TRACE("release remote instance!");
+    }
+    
     std::list<CDvipClient*>::iterator iter;
     CDvipClient *pInst = NULL;
     for(iter=m_lstInst.begin();iter!=m_lstInst.end();iter++)
@@ -52,19 +64,13 @@ CDvrGeneral::~CDvrGeneral()
     }
     m_lstInst.clear();
     
-    if (m_pRemoteInst)
-    {
-        if (m_pRemoteInst->IsLogin())
-        {
-            m_pRemoteInst->Logout();
-        }
-        delete m_pRemoteInst;
-        m_pRemoteInst = NULL;
-    }
+    INFO_TRACE("release local instance!");
     
 #ifdef PLAT_WIN32
     CleanupWinSock();
 #endif
+    
+    INFO_TRACE("destroy sdk ok!");
 }
 
 CDvrGeneral *CDvrGeneral::Instance()
@@ -208,6 +214,28 @@ bool CDvrGeneral::ReleaseInstance(unsigned int hLoginID)
         ERROR_TRACE("invalid hLoginID="<<hLoginID);
         return false;
     }
+    INFO_TRACE("release gateway "<<gwInfo.szSn);
+    
+    if (m_bRemote)
+    {
+        if (!m_pRemoteInst)
+        {
+            ERROR_TRACE("not find remote instance!");
+        }
+        else
+        {
+            m_pRemoteInst->DelGateway(gwInfo);
+            if (m_pRemoteInst->GwNum() == 0)//无订阅
+            {
+                m_pRemoteInst->StopSubThread();
+                iRet = m_pRemoteInst->Logout();
+                if (iRet == 0)//登陆成功
+                {
+                    //INFO_TRACE("remote connection close! ");
+                }
+            }
+        }
+    }
     
     std::list<CDvipClient*>::iterator iter;
     found = false;
@@ -235,26 +263,6 @@ bool CDvrGeneral::ReleaseInstance(unsigned int hLoginID)
         
         delete pInst;
         m_lstInst.erase(iter);
-    }
-    
-    if (m_bRemote)
-    {
-        if (!m_pRemoteInst)
-        {
-            ERROR_TRACE("not find remote instance!");
-            return true;
-        }
-        
-        m_pRemoteInst->DelGateway(gwInfo);
-        if (m_pRemoteInst->GwNum() == 0)//无订阅
-        {
-            m_pRemoteInst->StopSubThread();
-            iRet = m_pRemoteInst->Logout();
-            if (iRet == 0)//登陆成功
-            {
-                //INFO_TRACE("remote connection close! ");
-            }
-        }
     }
     
     return true;

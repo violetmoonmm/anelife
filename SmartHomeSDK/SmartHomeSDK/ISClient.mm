@@ -41,14 +41,16 @@ CISClient::CISClient(void)
 
 CISClient::~CISClient(void)
 {
-    ClearCacheMsg();
-    
-    ClearGateway();
     StopSubThread();
+    ClearGateway();
     
     Stop();
+    ClearCacheMsg();
+    
     ClearSend();
     Clear_Tasks();
+    
+    INFO_TRACE("~CISClient m_strServIp="<<m_strServIp);
 }
 
 
@@ -431,14 +433,7 @@ int CISClient::DelGateway(GatewayInfo gwInfo)
     
     if (found)
     {
-        //if (m_lstGwObj.size() == 1)
-        //{
-        //	if (m_hSubThread)
-        //	{
-        //		StopSubThread();
-        //	}
-        //}
-        
+        //INFO_TRACE("remote erase gateway "<<gwInfo.szSn);
         m_lstGwObj.erase(it);
     }
     
@@ -985,6 +980,8 @@ int CISClient::RegisterReq(const std::string &strAuth)
 int CISClient::UnRegister()
 {
     m_bAutoConnect = false;
+    
+    INFO_TRACE("remote UnRegister");
     
     //if (!IsLogin())
     //{
@@ -1876,7 +1873,7 @@ int CISClient::StopSubThread()
     
     m_hSubThread = 0;
     
-    
+    INFO_TRACE("StopSubThread!!!");
     return 0;
 }
 #ifdef WIN32

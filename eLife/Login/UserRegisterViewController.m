@@ -17,12 +17,12 @@
 {
     IBOutlet UIImageView *pswdBgdView;
     IBOutlet UIImageView *confirmBgdView;
-//    IBOutlet UIImageView *nicknameBgdView;
+    IBOutlet UIImageView *authCodeBgdView;
     IBOutlet UIImageView *userBgdView;
     
     IBOutlet UITextField *pswdInputView;
     IBOutlet UITextField *confirmInputView;
-//    IBOutlet UITextField *nicknameInputView;
+    IBOutlet UITextField *authCodeInputView;
     IBOutlet UITextField *userInputView;
     
     IBOutlet UIScrollView *scrlView;
@@ -30,8 +30,7 @@
 
     
     MBProgressHUD *hud;
-    
-    UILabel *countDownLbl;
+
 }
 
 @end
@@ -58,7 +57,7 @@
     
     pswdBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
     confirmBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
-//    nicknameBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
+    authCodeBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
     userBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
     
 
@@ -152,7 +151,8 @@
     NSString *userName = userInputView.text;
     NSString *pswd = pswdInputView.text;
     NSString *pswdConfirm = confirmInputView.text;
-//    email = nicknameInputView.text;
+    NSString *authCode = authCodeInputView.text;
+
 
     
     if (![self validateMobile:userName]) {
@@ -161,18 +161,22 @@
     else if (!pswd) {
         [self showAlertMsg:@"密码不能为空"];
     }
+    else if ([authCode length] < 8) {
+        [self showAlertMsg:@"请输入8位数字的身份认证码"];
+    }
     else if ([pswd length] < 6) {
         [self showAlertMsg:@"密码长度不能短于6位"];
     }
     else if (![pswd isEqualToString:pswdConfirm]) {
         [self showAlertMsg:@"前后密码输入不一致"];
     }
-    else {//提示
+    else {
         
+        NSString *authCodeText = [authCode stringByReplacingCharactersInRange:NSMakeRange(2, 4) withString:@"*"];
         
         [self showWaitingStatus];
         
-        [[NetAPIClient sharedClient] userRegister:userName pswd:pswd email:@"" successCallback:^{
+        [[NetAPIClient sharedClient] userRegister:userName pswd:pswd email:@"" authCode:authCode authCodeText:authCodeText successCallback:^{
             
             
             [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -316,7 +320,7 @@
 - (void)handleKeyboardWillShow:(NSNotification *)ntf
 {
    
-    scrlView.contentSize = scrlView.frame.size;
+    scrlView.contentSize = CGSizeMake(scrlView.bounds.size.width, CGRectGetMaxY(registerBtn.frame)+10) ;
     
     
     
@@ -327,18 +331,19 @@
     
     NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     
-    NSInteger spacing = CGRectGetHeight(scrlView.frame) - CGRectGetMaxY(confirmBgdView.frame);
+    NSInteger spacing = CGRectGetHeight(scrlView.frame) - CGRectGetMaxY(registerBtn.frame);
     
     NSInteger offY = keyboardHeight - spacing;
     
+
     
     if (offY > 0) {
-         [scrlView setContentInset:UIEdgeInsetsMake(-offY, 0, keyboardHeight, 0)];
-        [UIView animateWithDuration:[duration floatValue] animations:^{
-            [scrlView setContentOffset:CGPointMake(0, offY)];
-            
-            
-        }completion:NULL];
+         [scrlView setContentInset:UIEdgeInsetsMake(0, 0, keyboardHeight, 0)];
+//        [UIView animateWithDuration:[duration floatValue] animations:^{
+//            [scrlView setContentOffset:CGPointMake(0, offY)];
+//            
+//            
+//        }completion:NULL];
     }
     
 }
@@ -365,9 +370,6 @@
     
 }
 
-- (void)swipeRight
-{
-    [self goBack:nil];
-}
+
 
 @end

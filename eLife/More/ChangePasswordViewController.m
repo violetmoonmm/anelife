@@ -152,6 +152,9 @@
                 case ICRC_ERROR_PASSWORD_INCORRECT:
                     errMsg = @"原密码错误";
                     break;
+                case ICRC_ERROR_LOGIN_EXPIRED:
+                    errMsg = @"登录已过期";
+                    break;
                 case ICRC_ERROR_SERVER_ABNORMAL:
                     errMsg = @"服务器异常";
                     break;

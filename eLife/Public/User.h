@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+
+typedef enum _AlarmVideoSetting
+{
+    AVSEnableVideo = 0, //报警开启视频
+    AVSEnableViaWifi = 1,//仅wifi开启
+    AVSDisable = 2 //不开启
+} AlarmVideoSetting;
+
 @interface User : NSObject
 
 
@@ -17,13 +25,17 @@
 @property (nonatomic,strong) NSString *virtualCode;
 @property (nonatomic,strong) NSString *city;
 @property (nonatomic,strong) NSString *ISP;
+@property (nonatomic,strong) NSString *authCodeText;//半明文身份识别码
 
 @property (nonatomic,strong) NSString *lockPswd;//手势密码
 @property (nonatomic,assign) BOOL enableLockPswd;//是否开启了手势密码
 @property (nonatomic,assign) BOOL locked;//app当前是否已经锁屏
 
 @property (nonatomic,assign) BOOL haveLogin;//账号是否已经登录/注销
-@property (nonatomic,assign) BOOL enableAlarmVideo;//2G/3G/4G报警自动打开视频
+//@property (nonatomic,assign) BOOL enableAlarmVideo;//2G/3G/4G报警自动打开视频
+
+@property (nonatomic,assign) BOOL disableAlarm;//是否接受报警
+@property (nonatomic,assign) AlarmVideoSetting alarmVideo;//报警联动视频设置
 
 + (User *)currentUser;
 

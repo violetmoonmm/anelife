@@ -17,6 +17,8 @@ extern NSString *const LoginFailedNotification;
 extern NSString *const MQRecvCommunityMsgNotification;//社区信息
 extern NSString *const MQRecvCommunityMsgNotificationKey;
 
+
+
 extern NSString *const OnAlarmNotification;
 extern NSString *const OnAlarmNotificationKey;
 
@@ -67,3 +69,8 @@ extern NSString *const GetGatewayConfigStepNotificationKey;//获取网关配置�
 extern NSString *const FileDownloadNotification;//下载文件通知
 //extern NSString *const FileDownloadNotificationDataKey;//下载文件通知数据key
 
+extern NSString *const CallRedirectNotification;//呼叫转移
+
+extern NSString *const CallRedirectIPCKey;//呼叫转移ipc
+
+extern NSString *const PlayVideoNotification;//视频播放通知

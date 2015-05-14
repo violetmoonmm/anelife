@@ -203,7 +203,7 @@
         
         [self showWaitingStatus];
         
-        [[NetAPIClient sharedClient] resetPasswordWithUser:userName pswd:pswd verifCode:pswd successCallback:^{
+        [[NetAPIClient sharedClient] resetPasswordWithUser:userName pswd:pswd successCallback:^{
             
             
             [NSObject cancelPreviousPerformRequestsWithTarget:self];

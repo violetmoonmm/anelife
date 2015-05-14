@@ -72,6 +72,7 @@ typedef struct
     char sPhone[32];        //电话号码
     char sCity[64];         //城市
     char sISP[64];          //运营商
+    char sAuthCodeText[256]; //半明文，中间4位用*表示
 } ICRC_CONNECT_INFO;
 
 typedef struct
@@ -86,6 +87,10 @@ typedef struct
     char sVersionDesc[1024];   //版本更新说明
     char sMinVersionName[256]; //最小支持版本
     char sUpdateurl[256];      //软件版本升级的URL
+    char sUpdateurl2[256];     //软件版本升级的URL2
+    char sUpdateurl3[256];     //软件版本升级的URL3
+    char sUpdateurl4[256];     //软件版本升级的URL4
+    char sUpdateurl5[256];     //软件版本升级的URL5
     int  iPublishTime;         //发布日期
 } ICRC_VERSION_INFO;
 
@@ -107,6 +112,8 @@ typedef struct
     char sCity[64];        //城市
     char sISP[64];         //运营商
     int  iGValue;          //G值
+    char sARMSNetwork[64]; //ARMS访问地址
+    int  iARMSPort;        //ARMS访问端口
 } ICRC_SMARTHOME_DEVICE_DETAIL;
 
 typedef struct
@@ -385,7 +392,11 @@ ICRC_HTTPCLIENT_API int ICRC_Http_RegisterAccount(
                                                   IN  int         iPort,       //服务器端口
                                                   IN  const char* sUserName,   //手机号码
                                                   IN  const char* sEmail,      //邮箱
-                                                  IN  const char* sPassWord    //登录密码
+                                                  IN  const char* sPassWord,   //登录密码
+                                                  IN  const char* sAuthCode,   //身份识别码
+                                                  IN  const char* sAuthCodeText, //半明文，中间4位用*表示
+                                                  IN  const char* sPhone,      //手机号码(可选)
+                                                  IN  const char* sActiveCode  //激活码(可选)
 );
 
 /******************** 通过邮箱找回密码 *************************/
@@ -432,8 +443,9 @@ ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestorePrepare(
                                                          IN	const char* sIpAddr,     //服务器ip地址
                                                          IN	int         iPort,       //服务器端口
                                                          IN	const char* sUserName,   //用户名称
-                                                         OUT char*       sResetAppCode, //重置申请码    \ !!! make sure the buffer is big enough
-                                                         OUT char*       sSmsNum  //短信发送号码        /
+                                                         OUT char*       sAuthCodeSeed, //身份识别码种子
+                                                         OUT char*       sAuthCodeSeedIndex, //种子编号
+                                                         OUT char*       sSmsNum  //短信发送号码
 );
 
 /************************ 密码重置 *****************************/
@@ -441,8 +453,16 @@ ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestore(
                                                   IN	const char* sIpAddr,     //服务器ip地址
                                                   IN	int         iPort,       //服务器端口
                                                   IN	const char* sUserName, //用户名称
-                                                  IN	const char* sResetCode, //重置码(短信接收的)
                                                   IN	const char*	sPassWordNew //新密码
+);
+
+/********************** 补充身份识别码 *************************/
+ICRC_HTTPCLIENT_API int ICRC_Http_PatchAuthCode(
+                                                IN  const char* sIpAddr,     //服务器ip地址
+                                                IN  int         iPort,       //服务器端口
+                                                IN  const char* sUserName, //用户名称
+                                                IN  const char* sPassWord, //登录密码
+                                                IN  const char* sAuthCode  //身份识别码
 );
 
 /********************** 添加用户订阅网关 ***********************/

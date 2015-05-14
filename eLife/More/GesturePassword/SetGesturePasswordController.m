@@ -146,10 +146,11 @@
         NSInteger switchHeight = 28;
         NSInteger rightMargin = 18;
         
-        UISwitch *aswitch = [[UISwitch alloc] initWithFrame:CGRectMake(CGRectGetWidth(tableView.bounds)-rightMargin-switchWidth, (CELL_H-switchHeight)/2, switchWidth, switchHeight)];
+        UISwitch *aswitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, (CELL_H-switchHeight)/2, switchWidth, switchHeight)];
         aswitch.on = [LLLockPassword isEnableLockPassword]  ? YES : NO;
         [aswitch addTarget:self action:@selector(toggleGestPswd:) forControlEvents:UIControlEventValueChanged];
-        [cell.contentView addSubview:aswitch];
+     
+        cell.accessoryView = aswitch;
     }
     
     return cell;

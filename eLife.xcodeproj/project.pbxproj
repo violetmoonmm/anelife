@@ -480,12 +480,19 @@
 		F540DB811A5E84EC0079A4D2 /* DeviceCtrlBgdView.m in Sources */ = {isa = PBXBuildFile; fileRef = F540DB801A5E84EC0079A4D2 /* DeviceCtrlBgdView.m */; };
 		F54157331AD8EA160076C6F9 /* BasicEnvironmentListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54157321AD8EA160076C6F9 /* BasicEnvironmentListCell.m */; };
 		F54157391AD90D6E0076C6F9 /* PageFlipOrange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F54157381AD90D6E0076C6F9 /* PageFlipOrange@2x.png */; };
+		F545D8FD1B019E84000A0EF5 /* AuthCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F545D8FB1B019E84000A0EF5 /* AuthCodeViewController.m */; };
+		F545D8FE1B019E84000A0EF5 /* AuthCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545D8FC1B019E84000A0EF5 /* AuthCodeViewController.xib */; };
+		F545D9001B019EA4000A0EF5 /* AuthCodeViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545D8FF1B019EA4000A0EF5 /* AuthCodeViewController_iPad.xib */; };
+		F545D9091B01E9DC000A0EF5 /* AlarmVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F545D9071B01E9DC000A0EF5 /* AlarmVideoViewController.m */; };
+		F545D90A1B01E9DC000A0EF5 /* AlarmVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545D9081B01E9DC000A0EF5 /* AlarmVideoViewController.xib */; };
+		F545D90C1B01EA1C000A0EF5 /* AlarmVideoViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F545D90B1B01EA1C000A0EF5 /* AlarmVideoViewController_iPad.xib */; };
 		F54B07DD1AEF6FD800B6A39A /* SSceneSwitching.gif in Resources */ = {isa = PBXBuildFile; fileRef = F54B07DC1AEF6FD800B6A39A /* SSceneSwitching.gif */; };
 		F54B07DF1AEF6FE300B6A39A /* SceneSwitching.gif in Resources */ = {isa = PBXBuildFile; fileRef = F54B07DE1AEF6FE300B6A39A /* SceneSwitching.gif */; };
 		F54B07E31AEF7A2100B6A39A /* AlarmSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54B07E11AEF7A2100B6A39A /* AlarmSettingViewController.m */; };
 		F54B07E41AEF7A2100B6A39A /* AlarmSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F54B07E21AEF7A2100B6A39A /* AlarmSettingViewController.xib */; };
 		F54B07E61AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F54B07E51AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib */; };
 		F54FB54C1AC3E77E002D56E3 /* bichildren_room.png in Resources */ = {isa = PBXBuildFile; fileRef = F54FB54B1AC3E77E002D56E3 /* bichildren_room.png */; };
+		F553EDD51B02F96A00064BD3 /* BitrateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F553EDD41B02F96A00064BD3 /* BitrateView.m */; };
 		F555C5961A205C7700DC8DB3 /* AlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F555C5941A205C7700DC8DB3 /* AlarmViewController.m */; };
 		F555C5971A205C7700DC8DB3 /* AlarmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F555C5951A205C7700DC8DB3 /* AlarmViewController.xib */; };
 		F555C5991A205CA700DC8DB3 /* AlarmViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F555C5981A205CA700DC8DB3 /* AlarmViewController_iPad.xib */; };
@@ -553,6 +560,13 @@
 		F56E3FD41AE4FF5400D9F18A /* 72p.png in Resources */ = {isa = PBXBuildFile; fileRef = F56E3FD21AE4FF5400D9F18A /* 72p.png */; };
 		F56F78A81ABFA0E8000638EB /* BlueDownBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F56F78A61ABFA0E8000638EB /* BlueDownBtn@2x.png */; };
 		F56F78A91ABFA0E8000638EB /* BlueUpBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F56F78A71ABFA0E8000638EB /* BlueUpBtn@2x.png */; };
+		F572235A1B04438F0008FE8F /* VideoCountMax@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57223591B04438F0008FE8F /* VideoCountMax@2x.png */; };
+		F57223671B0476E10008FE8F /* CallForwardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F57223651B0476E10008FE8F /* CallForwardingViewController.m */; };
+		F57223681B0476E10008FE8F /* CallForwardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F57223661B0476E10008FE8F /* CallForwardingViewController.xib */; };
+		F572236A1B0479FA0008FE8F /* yellow_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = F57223691B0479FA0008FE8F /* yellow_btn.png */; };
+		F57223781B0489070008FE8F /* CallForwardingViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F57223771B0489070008FE8F /* CallForwardingViewController_iPad.xib */; };
+		F572237B1B04A0110008FE8F /* GrayBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57223791B04A0110008FE8F /* GrayBtn@2x.png */; };
+		F572237C1B04A0110008FE8F /* GrayBtnHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F572237A1B04A0110008FE8F /* GrayBtnHl@2x.png */; };
 		F5783CA11ADFB04E0064846A /* BgdMusicOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5783C9A1ADFB04E0064846A /* BgdMusicOn@2x.png */; };
 		F5783CA21ADFB04E0064846A /* MusicPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5783C9B1ADFB04E0064846A /* MusicPlay@2x.png */; };
 		F5783CA31ADFB04E0064846A /* MusicPlayHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5783C9C1ADFB04E0064846A /* MusicPlayHl@2x.png */; };
@@ -1382,6 +1396,14 @@
 		F54157311AD8EA160076C6F9 /* BasicEnvironmentListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicEnvironmentListCell.h; sourceTree = "<group>"; };
 		F54157321AD8EA160076C6F9 /* BasicEnvironmentListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicEnvironmentListCell.m; sourceTree = "<group>"; };
 		F54157381AD90D6E0076C6F9 /* PageFlipOrange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PageFlipOrange@2x.png"; sourceTree = "<group>"; };
+		F545D8FA1B019E84000A0EF5 /* AuthCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthCodeViewController.h; sourceTree = "<group>"; };
+		F545D8FB1B019E84000A0EF5 /* AuthCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthCodeViewController.m; sourceTree = "<group>"; };
+		F545D8FC1B019E84000A0EF5 /* AuthCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthCodeViewController.xib; sourceTree = "<group>"; };
+		F545D8FF1B019EA4000A0EF5 /* AuthCodeViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthCodeViewController_iPad.xib; sourceTree = "<group>"; };
+		F545D9061B01E9DC000A0EF5 /* AlarmVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmVideoViewController.h; sourceTree = "<group>"; };
+		F545D9071B01E9DC000A0EF5 /* AlarmVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmVideoViewController.m; sourceTree = "<group>"; };
+		F545D9081B01E9DC000A0EF5 /* AlarmVideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmVideoViewController.xib; sourceTree = "<group>"; };
+		F545D90B1B01EA1C000A0EF5 /* AlarmVideoViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmVideoViewController_iPad.xib; sourceTree = "<group>"; };
 		F54B07DC1AEF6FD800B6A39A /* SSceneSwitching.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SSceneSwitching.gif; sourceTree = "<group>"; };
 		F54B07DE1AEF6FE300B6A39A /* SceneSwitching.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SceneSwitching.gif; sourceTree = "<group>"; };
 		F54B07E01AEF7A2100B6A39A /* AlarmSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmSettingViewController.h; sourceTree = "<group>"; };
@@ -1389,6 +1411,8 @@
 		F54B07E21AEF7A2100B6A39A /* AlarmSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmSettingViewController.xib; sourceTree = "<group>"; };
 		F54B07E51AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmSettingViewController_iPad.xib; sourceTree = "<group>"; };
 		F54FB54B1AC3E77E002D56E3 /* bichildren_room.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bichildren_room.png; sourceTree = "<group>"; };
+		F553EDD31B02F96A00064BD3 /* BitrateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitrateView.h; sourceTree = "<group>"; };
+		F553EDD41B02F96A00064BD3 /* BitrateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitrateView.m; sourceTree = "<group>"; };
 		F555C5931A205C7700DC8DB3 /* AlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewController.h; sourceTree = "<group>"; };
 		F555C5941A205C7700DC8DB3 /* AlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmViewController.m; sourceTree = "<group>"; };
 		F555C5951A205C7700DC8DB3 /* AlarmViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmViewController.xib; sourceTree = "<group>"; };
@@ -1474,6 +1498,14 @@
 		F56E3FD21AE4FF5400D9F18A /* 72p.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72p.png; sourceTree = "<group>"; };
 		F56F78A61ABFA0E8000638EB /* BlueDownBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueDownBtn@2x.png"; sourceTree = "<group>"; };
 		F56F78A71ABFA0E8000638EB /* BlueUpBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlueUpBtn@2x.png"; sourceTree = "<group>"; };
+		F57223591B04438F0008FE8F /* VideoCountMax@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoCountMax@2x.png"; sourceTree = "<group>"; };
+		F57223641B0476E10008FE8F /* CallForwardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallForwardingViewController.h; sourceTree = "<group>"; };
+		F57223651B0476E10008FE8F /* CallForwardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallForwardingViewController.m; sourceTree = "<group>"; };
+		F57223661B0476E10008FE8F /* CallForwardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallForwardingViewController.xib; sourceTree = "<group>"; };
+		F57223691B0479FA0008FE8F /* yellow_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_btn.png; sourceTree = "<group>"; };
+		F57223771B0489070008FE8F /* CallForwardingViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallForwardingViewController_iPad.xib; sourceTree = "<group>"; };
+		F57223791B04A0110008FE8F /* GrayBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GrayBtn@2x.png"; sourceTree = "<group>"; };
+		F572237A1B04A0110008FE8F /* GrayBtnHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GrayBtnHl@2x.png"; sourceTree = "<group>"; };
 		F5783C9A1ADFB04E0064846A /* BgdMusicOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BgdMusicOn@2x.png"; sourceTree = "<group>"; };
 		F5783C9B1ADFB04E0064846A /* MusicPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlay@2x.png"; sourceTree = "<group>"; };
 		F5783C9C1ADFB04E0064846A /* MusicPlayHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayHl@2x.png"; sourceTree = "<group>"; };
@@ -1855,6 +1887,7 @@
 		041AD68C18D3F7D30001E00D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				F553EDCF1B02F89100064BD3 /* VideoControl */,
 				F58D24FB1A3A8EDD00D5F39D /* AlarmServiceController.h */,
 				F58D24FC1A3A8EDD00D5F39D /* AlarmServiceController.m */,
 				F58D24FD1A3A8EDD00D5F39D /* AlarmServiceController.xib */,
@@ -1977,6 +2010,14 @@
 				F54B07E11AEF7A2100B6A39A /* AlarmSettingViewController.m */,
 				F54B07E21AEF7A2100B6A39A /* AlarmSettingViewController.xib */,
 				F54B07E51AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib */,
+				F545D8FA1B019E84000A0EF5 /* AuthCodeViewController.h */,
+				F545D8FB1B019E84000A0EF5 /* AuthCodeViewController.m */,
+				F545D8FC1B019E84000A0EF5 /* AuthCodeViewController.xib */,
+				F545D8FF1B019EA4000A0EF5 /* AuthCodeViewController_iPad.xib */,
+				F545D9061B01E9DC000A0EF5 /* AlarmVideoViewController.h */,
+				F545D9071B01E9DC000A0EF5 /* AlarmVideoViewController.m */,
+				F545D9081B01E9DC000A0EF5 /* AlarmVideoViewController.xib */,
+				F545D90B1B01EA1C000A0EF5 /* AlarmVideoViewController_iPad.xib */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -2047,7 +2088,7 @@
 			isa = PBXGroup;
 			children = (
 				04F822881978C0D30083453F /* LibHeader */,
-				F555C5921A205C5400DC8DB3 /* Alarm */,
+				F555C5921A205C5400DC8DB3 /* Alarm&&Call */,
 				9A5F4E891A13403F00FB0F64 /* DeviceCtrlViews */,
 				9AA1897A1A11A23100FBA04F /* Control */,
 				041037BD19A59F3B00507CCD /* Favorite */,
@@ -2371,6 +2412,7 @@
 		F5375DEA19EF97FB008EF3C2 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				F57223691B0479FA0008FE8F /* yellow_btn.png */,
 				F5AE98351A70EFB500B91F34 /* env_bgd@2x.png */,
 				F58EE6561A398FB7003E0AF5 /* alarm@2x.png */,
 				F5375E3E19EF97FB008EF3C2 /* newVersion */,
@@ -2442,6 +2484,9 @@
 		F5375E3E19EF97FB008EF3C2 /* newVersion */ = {
 			isa = PBXGroup;
 			children = (
+				F57223791B04A0110008FE8F /* GrayBtn@2x.png */,
+				F572237A1B04A0110008FE8F /* GrayBtnHl@2x.png */,
+				F57223591B04438F0008FE8F /* VideoCountMax@2x.png */,
 				F54B07DE1AEF6FE300B6A39A /* SceneSwitching.gif */,
 				F54B07DC1AEF6FD800B6A39A /* SSceneSwitching.gif */,
 				F539B7021AEA194600D1ED1B /* MusicPause@2x.png */,
@@ -2883,14 +2928,25 @@
 			path = sound;
 			sourceTree = "<group>";
 		};
-		F555C5921A205C5400DC8DB3 /* Alarm */ = {
+		F553EDCF1B02F89100064BD3 /* VideoControl */ = {
 			isa = PBXGroup;
 			children = (
+				F553EDD31B02F96A00064BD3 /* BitrateView.h */,
+				F553EDD41B02F96A00064BD3 /* BitrateView.m */,
+			);
+			name = VideoControl;
+			sourceTree = "<group>";
+		};
+		F555C5921A205C5400DC8DB3 /* Alarm&&Call */ = {
+			isa = PBXGroup;
+			children = (
+				F57223631B0476E10008FE8F /* Call */,
 				F555C5931A205C7700DC8DB3 /* AlarmViewController.h */,
 				F555C5941A205C7700DC8DB3 /* AlarmViewController.m */,
 				F555C5951A205C7700DC8DB3 /* AlarmViewController.xib */,
 				F555C5981A205CA700DC8DB3 /* AlarmViewController_iPad.xib */,
 			);
+			name = "Alarm&&Call";
 			path = Alarm;
 			sourceTree = "<group>";
 		};
@@ -2926,6 +2982,17 @@
 				F569D0071A4BFF4A007C514B /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		F57223631B0476E10008FE8F /* Call */ = {
+			isa = PBXGroup;
+			children = (
+				F57223641B0476E10008FE8F /* CallForwardingViewController.h */,
+				F57223651B0476E10008FE8F /* CallForwardingViewController.m */,
+				F57223661B0476E10008FE8F /* CallForwardingViewController.xib */,
+				F57223771B0489070008FE8F /* CallForwardingViewController_iPad.xib */,
+			);
+			path = Call;
 			sourceTree = "<group>";
 		};
 		F591079D1A4A66A700FEEA62 /* CollectionView */ = {
@@ -3212,6 +3279,7 @@
 				04F53E541998A1D800E7217E /* GatewayListViewController_iPad.xib in Resources */,
 				F5650FA41ABD0FFF00482E5C /* SaveEdit@2x.png in Resources */,
 				F56CE2A81AA1FC1C00520E7C /* 120.png in Resources */,
+				F572236A1B0479FA0008FE8F /* yellow_btn.png in Resources */,
 				F537600519EF97FD008EF3C2 /* MoreNormal@2x.png in Resources */,
 				F53760B819EF97FD008EF3C2 /* voice_to_short.png in Resources */,
 				F5897A251A42A2A500573DEE /* PortraitBlue@2x.png in Resources */,
@@ -3267,6 +3335,7 @@
 				F537607F19EF97FD008EF3C2 /* RecordingSignal002.png in Resources */,
 				F5375FFB19EF97FD008EF3C2 /* ModeHotText@2x.png in Resources */,
 				F5650FAA1ABD114900482E5C /* RemoveGateway@2x.png in Resources */,
+				F57223681B0476E10008FE8F /* CallForwardingViewController.xib in Resources */,
 				F51B7C761A4AA11400BAD955 /* 学习.png in Resources */,
 				F59D5EBA1A26F0FC000C13D6 /* Capture@2x.png in Resources */,
 				04F1BBA3199BB319005B3625 /* ChangePasswordViewController_iPad.xib in Resources */,
@@ -3302,6 +3371,7 @@
 				F5375FE219EF97FD008EF3C2 /* children_room@2x.png in Resources */,
 				F5B9A9491A6F701F00D690FC /* circle_indicator_normal@2x.png in Resources */,
 				F537609419EF97FD008EF3C2 /* SenderVoiceNodePlaying001@2x.png in Resources */,
+				F572237C1B04A0110008FE8F /* GrayBtnHl@2x.png in Resources */,
 				F537601119EF97FD008EF3C2 /* SDeviceCtrlBgd@2x.png in Resources */,
 				F5AE98321A709E3600B91F34 /* gesture_guide@2x.png in Resources */,
 				F56E3FD31AE4FF5400D9F18A /* 57p.png in Resources */,
@@ -3355,7 +3425,9 @@
 				04FB2AB918D69E9E002507DC /* ServiceViewController.xib in Resources */,
 				F537600419EF97FD008EF3C2 /* ModeWindTextSelected@2x.png in Resources */,
 				F537604119EF97FD008EF3C2 /* GreenRect@2x.png in Resources */,
+				F545D90A1B01E9DC000A0EF5 /* AlarmVideoViewController.xib in Resources */,
 				F5F3807C1A6E435700000838 /* CreatGesturePasswordController.xib in Resources */,
+				F545D9001B019EA4000A0EF5 /* AuthCodeViewController_iPad.xib in Resources */,
 				F5375FDB19EF97FD008EF3C2 /* CurtainOnBtnHl@2x.png in Resources */,
 				F5375FA319EF97FD008EF3C2 /* grayArrow@2x.png in Resources */,
 				F53760B119EF97FD008EF3C2 /* ToolViewKeyboardHL@2x.png in Resources */,
@@ -3473,6 +3545,7 @@
 				F5BAB8011A5FCD560052DEFF /* EnvironmentalMonitoringController.xib in Resources */,
 				F5375F8819EF97FD008EF3C2 /* blueArrow.png in Resources */,
 				F5B6A8081A3EC7280074D742 /* Icon-180.png in Resources */,
+				F572235A1B04438F0008FE8F /* VideoCountMax@2x.png in Resources */,
 				F537607D19EF97FD008EF3C2 /* RecordingSignal001.png in Resources */,
 				04F000BF196D409500E77E98 /* ChangeEmailViewController.xib in Resources */,
 				F537609019EF97FD008EF3C2 /* SenderVoiceNodeBkgHL@2x.png in Resources */,
@@ -3613,6 +3686,7 @@
 				9A742C7619F8FF2000F868F4 /* LightDark@2x.png in Resources */,
 				F5375FCC19EF97FD008EF3C2 /* AirconditionOn@2x.png in Resources */,
 				9AD326D11A038E4600F772D6 /* PanelBgd@2x.png in Resources */,
+				F545D90C1B01EA1C000A0EF5 /* AlarmVideoViewController_iPad.xib in Resources */,
 				F56D83F41A71D94F009E7501 /* BigStepCurtainOffline@2x.png in Resources */,
 				F5375FD019EF97FD008EF3C2 /* CameraWhite@2x.png in Resources */,
 				F5AE98361A70EFB500B91F34 /* env_bgd@2x.png in Resources */,
@@ -3649,6 +3723,7 @@
 				F53760AF19EF97FD008EF3C2 /* ToolViewInputVoiceHL@2x.png in Resources */,
 				F5375F8619EF97FD008EF3C2 /* blackArrow@2x.png in Resources */,
 				F537600319EF97FD008EF3C2 /* ModeWindText@2x.png in Resources */,
+				F572237B1B04A0110008FE8F /* GrayBtn@2x.png in Resources */,
 				9AD326C71A035F1C00F772D6 /* EditBtnHl@2x.png in Resources */,
 				9A6FC1CF1A0CA7B4003BD5F6 /* PanelNameBlue@2x.png in Resources */,
 				F578B15D1A1DC9DF00BD7C1E /* MidSpeedGray@2x.png in Resources */,
@@ -3672,6 +3747,7 @@
 				F537602B19EF97FD008EF3C2 /* Upload@2X.png in Resources */,
 				F56D83F51A71D94F009E7501 /* LoginBgd@2x.png in Resources */,
 				F5375FBE19EF97FD008EF3C2 /* login_profile@2x.png in Resources */,
+				F545D8FE1B019E84000A0EF5 /* AuthCodeViewController.xib in Resources */,
 				F5375FEC19EF97FD008EF3C2 /* LightOn@2x.png in Resources */,
 				F53760CF19EF97FD008EF3C2 /* right_arrow1.png in Resources */,
 				F537607E19EF97FD008EF3C2 /* RecordingSignal001@2x.png in Resources */,
@@ -3719,6 +3795,7 @@
 				F537601419EF97FD008EF3C2 /* SideBar@2x.png in Resources */,
 				F578B14B1A1DC9DF00BD7C1E /* HighSpeedGreen@2x.png in Resources */,
 				F5375FF819EF97FD008EF3C2 /* ModeColdTextSelected@2x.png in Resources */,
+				F57223781B0489070008FE8F /* CallForwardingViewController_iPad.xib in Resources */,
 				F51B7C741A4AA11400BAD955 /* 睡眠.png in Resources */,
 				F5375FE019EF97FD008EF3C2 /* DeviceCtrlBgd@2x.png in Resources */,
 				F555C5991A205CA700DC8DB3 /* AlarmViewController_iPad.xib in Resources */,
@@ -3805,6 +3882,7 @@
 				F59AD8851A78C6CB00A5574C /* ResetPasswordViewController.m in Sources */,
 				04FB2B9F18D6E5F4002507DC /* NetAPIClient.mm in Sources */,
 				F569D00C1A4BFF4A007C514B /* AFSecurityPolicy.m in Sources */,
+				F553EDD51B02F96A00064BD3 /* BitrateView.m in Sources */,
 				04EBB1F918FEAFD800CDC262 /* EGORefreshTableHeaderView.m in Sources */,
 				F5F380631A6E41D700000838 /* zip.c in Sources */,
 				F5F380731A6E42CF00000838 /* LLLockPassword.m in Sources */,
@@ -3823,6 +3901,7 @@
 				F540556E1AEB8DB100174C62 /* BaseDeviceViewController.m in Sources */,
 				F56300021A2309A3007DA218 /* NetReachability.m in Sources */,
 				F569D0091A4BFF4A007C514B /* AFHTTPRequestOperationManager.m in Sources */,
+				F545D9091B01E9DC000A0EF5 /* AlarmVideoViewController.m in Sources */,
 				F59107A91A4A66A700FEEA62 /* RAMCollectionViewFlemishBondLayoutAttributes.m in Sources */,
 				F569D0101A4BFF4A007C514B /* AFURLSessionManager.m in Sources */,
 				04B94F74191B5B170051D441 /* VideoWnd.m in Sources */,
@@ -3830,6 +3909,7 @@
 				F5F380551A6E41D700000838 /* ACFTPPutRequest.m in Sources */,
 				F540DB811A5E84EC0079A4D2 /* DeviceCtrlBgdView.m in Sources */,
 				04E7DD5319EB754D0090046E /* SCGIFImageView.m in Sources */,
+				F57223671B0476E10008FE8F /* CallForwardingViewController.m in Sources */,
 				F59107A81A4A66A700FEEA62 /* RAMCollectionViewFlemishBondLayout.m in Sources */,
 				04E2008018F7FBA000EC3227 /* EGOCache.m in Sources */,
 				04E2008418F7FBA000EC3227 /* EGOImageView.m in Sources */,
@@ -3892,6 +3972,7 @@
 				04FD083418F91EF700B0AF15 /* Message.m in Sources */,
 				04F48B4518FD271D0071DFC8 /* JSBadgeView.m in Sources */,
 				F5F380511A6E41D700000838 /* ACFTPDeleteFileRequest.m in Sources */,
+				F545D8FD1B019E84000A0EF5 /* AuthCodeViewController.m in Sources */,
 				F555C5961A205C7700DC8DB3 /* AlarmViewController.m in Sources */,
 				F539B7081AEA3F1A00D1ED1B /* BasicBackgroundMusicCell.m in Sources */,
 				F54B07E31AEF7A2100B6A39A /* AlarmSettingViewController.m in Sources */,
@@ -4095,7 +4176,7 @@
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4135,7 +4216,7 @@
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -44,6 +44,13 @@ typedef enum _GatewayState
 } GatewayState;
 
 
+typedef enum _VideoQuality
+{
+   
+    VideoQualityClear = 0,//清晰
+    VideoQualityFluent = 1//流畅
+    
+} VideoQuality;
 
 
 enum _ErroCode
@@ -206,6 +213,9 @@ typedef struct _SHRange
 
 @property (nonatomic,strong) NSString *authCode;//授权码
 @property (nonatomic,assign) BOOL authorized;//授权是否成功
+
+@property (nonatomic,strong) NSString *ARMSAddr;
+@property (nonatomic,assign) NSInteger ARMSPort;
 
 @property (nonatomic) UInt32 loginId;
 

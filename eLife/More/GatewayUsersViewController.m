@@ -12,15 +12,18 @@
 #import "NotificationDefine.h"
 #import "DeviceData.h"
 #import "MBProgressHUD.h"
+#import "PopInputView.h"
 #import "NetAPIClient.h"
 
 #define CELL_H 84
 
 
-@interface GatewayUsersViewController ()
+@interface GatewayUsersViewController () <PopInputViewDelegate>
 {
     MBProgressHUD *hud;
     UIButton *editBtn;
+    
+    NSInteger removeIndex;//将要删除用户index
 }
 
 @end
@@ -155,7 +158,21 @@
     
 }
 
+- (void)showCtrlFailedHint:(NSString *)info
+{
+    
+    MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:tempHud];
+    tempHud.removeFromSuperViewOnHide = YES;
+    tempHud.mode = MBProgressHUDModeText;
+    tempHud.labelText = info;
+    [tempHud show:YES];
+    
+    [tempHud hide:YES afterDelay:1.0];
+}
 
+
+#pragma mark UITableViewDataSource && UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return CELL_H;
@@ -292,27 +309,53 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
+         removeIndex = indexPath.row;
+        
+        PopInputView *inputView = [[PopInputView alloc] initWithTitle:@"撤防操作" placeholder:@"请输入安全密码" delegate:self];
+        [inputView show];
+        
         // Delete the row from the data source.
         
+       
+    }
+
+}
+
+#pragma mark PopInputViewDelegate
+
+- (void)popInputView:(PopInputView *)popInputView clickOkButtonWithText:(NSString *)inputText
+{
+    if ([inputText isEqualToString:@"666666"]) {
+
         MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self.view.window];
         [self.view.window addSubview:tempHud];
         tempHud.labelText = @"请稍后...";
         tempHud.mode = MBProgressHUDModeIndeterminate;
         tempHud.removeFromSuperViewOnHide = YES;
         [hud show:YES];
-
         
-        GatewayUser *user = [self.gateway.authUserArray objectAtIndex:indexPath.row];
+        
+        GatewayUser *user = [self.gateway.authUserArray objectAtIndex:removeIndex];
         [[NetAPIClient sharedClient] removeAuthUser:user fromGateway:self.gateway successCallback:^{
             NSLog(@"删除用户成功");
-
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:removeIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         }failureCallback:^{
             tempHud.labelText = @"删除用户失败!";
         }];
 
     }
+    else {
+        
+        [self showCtrlFailedHint:@"密码错误!"];
+        
+        
+    }
+}
 
+- (void)popInputView:(PopInputView *)popInputView clickCancelButtonWithText:(NSString *)inputText
+{
+  
 }
 
 @end

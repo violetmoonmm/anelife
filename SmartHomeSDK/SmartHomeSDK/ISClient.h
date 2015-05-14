@@ -52,13 +52,6 @@ public:
     CISClient(void);
     ~CISClient(void);
     
-    enum HttpParseStatus
-    {
-        emStageIdle,
-        emStageHeader,
-        emStageContent,
-    };
-    
     void SetLocalVcode(const std::string &strVcode)
     {
         m_strVcodeLocal = strVcode;

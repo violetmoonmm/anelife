@@ -1,28 +1,37 @@
 //
-//  ForgetPasswordViewController.m
+//  UserRegisterViewController.m
 //  eLife
 //
-//  Created by mac on 14-7-4.
+//  Created by mac on 14-6-16.
 //  Copyright (c) 2014年 mac. All rights reserved.
 //
 
 #import "ForgetPasswordViewController.h"
 #import "NetAPIClient.h"
-#import "MBProgressHUD.h"
 #import "IcrcHttpClientSdk.h"
+#import "MBProgressHUD.h"
 #import "Util.h"
+#import "AppDelegate.h"
 #import <MessageUI/MessageUI.h>
-#import "ResetPasswordViewController.h"
-
 
 @interface ForgetPasswordViewController () <UIAlertViewDelegate,MFMessageComposeViewControllerDelegate>
 {
-    IBOutlet UITextField *userText;
-
+    IBOutlet UIImageView *pswdBgdView;
+    IBOutlet UIImageView *confirmBgdView;
+    IBOutlet UIImageView *authCodeBgdView;
     IBOutlet UIImageView *userBgdView;
     
+    IBOutlet UITextField *pswdInputView;
+    IBOutlet UITextField *confirmInputView;
+    IBOutlet UITextField *authCodeInputView;
+    IBOutlet UITextField *userInputView;
+    
+    IBOutlet UIScrollView *scrlView;
+    IBOutlet UIButton *okBtn;
+    
+    
     MBProgressHUD *hud;
-
+    
 }
 
 @end
@@ -34,6 +43,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     }
     return self;
 }
@@ -42,17 +55,33 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-  
-    userBgdView.image = [UIImage imageNamed:@"input_bgd"];
     
-
-    [Util unifyStyleOfViewController:self withTitle:@"忘记密码"];
+    pswdBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
+    confirmBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
+    authCodeBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
+    userBgdView.image = [UIImage imageNamed:@"input_bgd.png"];
     
-
-    [Util unifyGoBackButtonWithTarget:self selector:@selector(goBack)];
+    
+    [Util unifyStyleOfViewController:self withTitle:@"密码重置"];
+    
+    
+    [Util unifyGoBackButtonWithTarget:self selector:@selector(goBack:)];
+    
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+    }
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:tap];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [userInputView becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,28 +90,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)hideKeyboard
+
+- (void)dealloc
 {
-  
-    if ([userText isFirstResponder]) {
-        [userText resignFirstResponder];
-    }
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
-- (void)goBack
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (BOOL)validateEmail:(NSString *)aEmail
-{
-    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:aEmail];
-}
-
 
 - (BOOL)validateMobile:(NSString *)mobileNum
 {
@@ -133,35 +145,53 @@
     }
 }
 
-- (IBAction)send:(id)sender
+
+
+- (IBAction)userResetPassword:(id)sender
 {
-   
-    if (![self validateMobile:userText.text]) {
-        [self showAlertMsg:@"请输入正确的手机号"];
+    NSString *userName = userInputView.text;
+    NSString *pswd = pswdInputView.text;
+    NSString *pswdConfirm = confirmInputView.text;
+    NSString *authCode = authCodeInputView.text;
+    
+    
+    
+    if (![self validateMobile:userName]) {
+        [self showAlertMsg:@"请输入正确的手机号码"];
+    }
+    else if (!pswd) {
+        [self showAlertMsg:@"密码不能为空"];
+    }
+    else if ([authCode length] < 8) {
+        [self showAlertMsg:@"请输入8位数字的身份认证码"];
+    }
+    else if ([pswd length] < 6) {
+        [self showAlertMsg:@"密码长度不能短于6位"];
+    }
+    else if (![pswd isEqualToString:pswdConfirm]) {
+        [self showAlertMsg:@"前后密码输入不一致"];
     }
     else {
         
+        NSString *authCodeText = [authCode stringByReplacingCharactersInRange:NSMakeRange(2, 4) withString:@"*"];
+        
         [self showWaitingStatus];
-
         
         __weak typeof (self) weakSelf = self;
-        [[NetAPIClient sharedClient] applyResetPasswordWithUser:userText.text successCallback:^(NSDictionary *result){
-
+        [[NetAPIClient sharedClient] applyResetPasswordWithUser:userName successCallback:^(NSDictionary *result){
+            
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf];
             [strongSelf->hud hide:YES];
             strongSelf->hud = nil;
+    
             
-            NSString *phone = [result objectForKey:@"SMSNum"];
-            NSString *resetCode = [result objectForKey:@"ResetCode"];
-
-
-            [self sendSMSWithPhoneNum:phone content:resetCode];
+            [self sendSMSWithInfo:result];
             
             
         }failureCallback:^(int err){
-
+            
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf];
@@ -170,97 +200,10 @@
             
             [self showAlertMsg:@"重置请求失败"];
         }];
-    }
-
-}
-
-- (void)sendSMSWithPhoneNum:(NSString *)phoneNum content:(NSString *)content
-{
-    BOOL canSendSMS = [MFMessageComposeViewController canSendText];
-  
-    if (canSendSMS) {
-        
-        MFMessageComposeViewController *picker =
-        [[MFMessageComposeViewController alloc] init];
-        picker.messageComposeDelegate = self;
-        picker.navigationBar.tintColor = [UIColor blackColor];
-        picker.body = content;
-        picker.recipients = [NSArray arrayWithObject:phoneNum];
-        [self presentViewController:picker animated:YES completion:^{
-            
-        }];
         
     }
-}
-
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-{
-    switch (result) {
-        case MessageComposeResultCancelled:
-           NSLog(@"Result: canceled");
-            
-            [self dismissViewControllerAnimated:YES completion:NULL];
-            break;
-        case MessageComposeResultSent:
-        {
-            
-             NSLog(@"Result: Sent");
-            
-            [self dismissViewControllerAnimated:YES completion:NULL];
-            
-            NSString *nibName = [Util nibNameWithClass:[ResetPasswordViewController class]];
-            
-            ResetPasswordViewController *vc = [[ResetPasswordViewController alloc] initWithNibName:nibName bundle:nil];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-            
-            break;
-        case MessageComposeResultFailed:
-            NSLog(@"Result: Failed");
-            
-            [self dismissViewControllerAnimated:YES completion:NULL];
-            
-            break;
-        default:
-            break;
-    }
-}
-
-//失败处理
-- (void)reqFailed:(int)error
-{
-    NSString *errMsg = [NSString stringWithFormat:@"发送请求失败，错误码%d",error];
-    switch (error) {
-        case ICRC_ERROR_USER_NOT_EXIST:
-            errMsg = @"用户不存在";
-            break;
-        case ICRC_ERROR_SERVER_ABNORMAL:
-            errMsg = @"服务器异常";
-            break;
-        case ICRC_ERROR_EMAIL_INVALID:
-            errMsg = @"非法的邮箱";
-            break;
-        case ICRC_ERROR_EMAIL_SEND_FAIL:
-            errMsg = @"发送邮件失败";
-            break;
-        case ICRC_ERROR_EMAIL_NOT_EXIST:
-            errMsg = @"邮箱不存在";
-            break;
-        case ICRC_ERROR_ASK_EMAIL_TOO_OFTEN:
-            errMsg = @"发送邮件太频繁";
-            break;
-            case ICRC_ERROR_USR_EMAIL_NOT_MATCH:
-            errMsg = @"用户和邮箱不匹配";
-            
-        default:
-            break;
-    }
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alert show];
     
 }
-
 
 - (void)showWaitingStatus
 {
@@ -274,14 +217,61 @@
     [self performSelector:@selector(reqTimeout) withObject:nil afterDelay:10];
 }
 
-- (void)reqTimeout
+- (void)regFailed:(int)err
 {
+    NSString *errMsg = [NSString stringWithFormat:@"注册失败，错误码%d",err];
+    switch (err) {
+        case ICRC_ERROR_EMAIL_HAS_REGISTER:
+            errMsg = @"该邮箱已经被注册";
+            break;
+        case ICRC_ERROR_EMAIL_INVALID:
+            errMsg = @"非法的邮箱";
+            break;
+        case ICRC_ERROR_EMAIL_SEND_FAIL:
+            errMsg = @"发送邮件失败";
+            break;
+        case ICRC_ERROR_EMAIL_NOT_EXIST:
+            errMsg = @"邮箱不存在";
+            break;
+        case ICRC_ERROR_ASK_EMAIL_TOO_OFTEN:
+            errMsg = @"发送邮件太频繁";
+            break;
+        case ICRC_ERROR_HTTP_NO_RESPONSE:
+            errMsg = @"服务器无响应";
+            break;
+        case ICRC_ERROR_PHONENUMBER_ALREADY_ACTIVE:
+            errMsg = @"此手机号码已经激活";
+            break;
+        case ICRC_ERROR_PHONENUMBER_NOT_EXIST:
+            errMsg = @"此手机号码不存在";
+            break;
+        case ICRC_ERROR_PHONENUMBER_HAS_REGISTER:
+            errMsg = @"此手机号码已经被注册";
+            break;
+        case ICRC_ERROR_PHONENUMBER_INVALID:
+            errMsg = @"此手机号码非法";
+            break;
+            
+        default:
+            break;
+    }
+    
     hud.mode = MBProgressHUDModeText;
-	hud.labelText = @"请求超时!";
+    hud.labelText = errMsg;
     
     [hud hide:YES afterDelay:1.5];
     
-    hud = nil;
+}
+
+
+- (void)reqTimeout
+{
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"请求超时!";
+    
+    [hud hide:YES afterDelay:1.5];
+    
+    //_hud = nil;
 }
 
 - (void)showAlertMsg:(NSString *)msg
@@ -296,5 +286,181 @@
     
     [tempHud hide:YES afterDelay:1.5];
 }
+
+- (BOOL)validateEmail:(NSString *)aEmail
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:aEmail];
+}
+
+- (void)goBack:(UIButton *)sender
+{
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    
+    //    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)hideKeyboard
+{
+    //    if ([nicknameInputView isFirstResponder]) {
+    //        [nicknameInputView resignFirstResponder];
+    //    }
+    if ([pswdInputView isFirstResponder]) {
+        [pswdInputView resignFirstResponder];
+    }
+    else if ([confirmInputView isFirstResponder]) {
+        [confirmInputView resignFirstResponder];
+    }
+    else if ([userInputView isFirstResponder]) {
+        [userInputView resignFirstResponder];
+    }
+    
+}
+
+- (void)handleKeyboardWillShow:(NSNotification *)ntf
+{
+    
+    scrlView.contentSize = CGSizeMake(scrlView.bounds.size.width, CGRectGetMaxY(okBtn.frame)+10) ;
+    
+    
+    
+    NSDictionary *userInfo = [ntf userInfo];
+    NSValue *rectValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [rectValue CGRectValue];
+    NSInteger keyboardHeight = keyboardRect.size.height;
+    
+    NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    
+    NSInteger spacing = CGRectGetHeight(scrlView.frame) - CGRectGetMaxY(okBtn.frame);
+    
+    NSInteger offY = keyboardHeight - spacing;
+    
+    
+    
+    if (offY > 0) {
+        [scrlView setContentInset:UIEdgeInsetsMake(0, 0, keyboardHeight, 0)];
+        //        [UIView animateWithDuration:[duration floatValue] animations:^{
+        //            [scrlView setContentOffset:CGPointMake(0, offY)];
+        //
+        //
+        //        }completion:NULL];
+    }
+    
+}
+
+- (void)handleKeyboardWillHide:(NSNotification *)ntf
+{
+    NSDictionary *userInfo = [ntf userInfo];
+    NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    
+    scrlView.contentSize = CGSizeMake(0, 0);
+    scrlView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
+    [UIView animateWithDuration:[duration floatValue] animations:^{
+        [scrlView setContentOffset:CGPointMake(0, 0)];
+        
+        
+    }completion:NULL];
+    
+}
+
+
+- (void)sendSMSWithInfo:(NSDictionary *)info
+{
+    BOOL canSendSMS = [MFMessageComposeViewController canSendText];
+    
+    if (canSendSMS) {
+        
+        NSString *phoneNum = [info objectForKey:@"SMSNum"];
+        NSString *authCodeSeed = [info objectForKey:@"AuthCodeSeed"];
+        NSString *authCodeSeedIndex = [info objectForKey:@"AuthCodeSeedIndex"];
+        NSString *content = [NSString stringWithFormat:@"mmcz#%@#%@#%@",userInputView.text,authCodeInputView.text,authCodeSeedIndex];
+        
+        MFMessageComposeViewController *picker =
+        [[MFMessageComposeViewController alloc] init];
+        picker.messageComposeDelegate = self;
+        picker.navigationBar.tintColor = [UIColor blackColor];
+        picker.body = content;
+        picker.recipients = [NSArray arrayWithObject:phoneNum];
+        [self presentViewController:picker animated:YES completion:^{
+            
+        }];
+        
+    }
+    else {
+//        MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+//        [self.navigationController.view addSubview:tempHud];
+//        tempHud.labelText = @"请使用具有短信发送功能的设备来重置密码";
+//        tempHud.mode = MBProgressHUDModeText;
+//        tempHud.removeFromSuperViewOnHide = YES;
+//        [tempHud show:YES];
+//        [tempHud hide:YES afterDelay:2.0];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请使用具有短信发送功能的设备来重置密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+    }
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    switch (result) {
+        case MessageComposeResultCancelled:
+            NSLog(@"Result: canceled");
+            
+            [self dismissViewControllerAnimated:YES completion:NULL];
+            break;
+        case MessageComposeResultSent:
+        {
+            
+            NSLog(@"Result: Sent");
+            
+            [self dismissViewControllerAnimated:YES completion:NULL];
+            
+
+            [self showWaitingStatus];
+            [[NetAPIClient sharedClient] resetPasswordWithUser:userInputView.text pswd:pswdInputView.text successCallback:^{
+                
+                
+                [NSObject cancelPreviousPerformRequestsWithTarget:self];
+                
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"密码重置成功!";
+                
+                [hud hide:YES afterDelay:1.5];
+                
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
+                
+            }failureCallback:^(int err){
+                
+                
+                [NSObject cancelPreviousPerformRequestsWithTarget:self];
+                
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"密码重置失败!";
+                
+                [hud hide:YES afterDelay:1.5];
+                
+            }];
+
+        }
+            
+            break;
+        case MessageComposeResultFailed:
+            NSLog(@"Result: Failed");
+            
+            [self dismissViewControllerAnimated:YES completion:NULL];
+            
+            break;
+        default:
+            break;
+    }
+}
+
+
+
 
 @end

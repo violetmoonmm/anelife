@@ -17,6 +17,7 @@
 #import "LoginViewController.h"
 #import "User.h"
 #import "UserDBManager.h"
+#import "AlarmSettingViewController.h"
 
 
 #define MAGIN_X 10
@@ -181,7 +182,7 @@
         text = @"刷新网关数据";
     }
     else if (indexPath.section == 1) {
-        text = @"2G/3G/4G下报警自动联动视频";
+        text = @"报警通知";
     }
     else if (indexPath.section == 2) {
         text = @"关于安E生活";
@@ -205,19 +206,7 @@
     UIImageView *rightArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Userguide_enter_icon.png"]];
     rightArrow.frame = CGRectMake(0, 0, 20, 20);
     rightArrow.backgroundColor = [UIColor clearColor];
-    
-
-    
-    if (indexPath.section == 1) {
-        UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 80, 20)];
-        aSwitch.on = [User currentUser].enableAlarmVideo;
-        [aSwitch addTarget:self action:@selector(toggleAlarmVideoSwitch:) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = aSwitch;
-    }
-    else {
-         cell.accessoryView = rightArrow;
-    }
-    
+    cell.accessoryView = rightArrow;
     
     return cell;
 }
@@ -241,6 +230,12 @@
     if (indexPath.section == 0) {
         [self refreshDeviceList:nil];
     }
+    else if (indexPath.section == 1) {
+        
+        NSString *nibName = [Util nibNameWithClass:[AlarmSettingViewController class]];
+        AlarmSettingViewController *vc = [[AlarmSettingViewController alloc] initWithNibName:nibName bundle:nil];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     else if (indexPath.section == 2) {
         
         NSString *nibName = [Util nibNameWithClass:[AboutViewController class]];
@@ -252,12 +247,7 @@
     }
 }
 
-- (void)toggleAlarmVideoSwitch:(UISwitch *)aSwitch
-{
-    [User currentUser].enableAlarmVideo = aSwitch.on;
-    
-    [[UserDBManager defaultManager] updateUser:[User currentUser]];
-}
+
 
 - (void)logout
 {

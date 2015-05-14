@@ -102,6 +102,7 @@ typedef struct
     std::string	m_sISP;
     std::string m_seed1;
     std::string m_seed2;
+    std::string m_sAuthCodeText;
     std::map<string,string> m_servlist;
 } ICRC_HTTP_HANDLE;
 
@@ -322,6 +323,7 @@ ICRC_HTTPCLIENT_API int ICRC_Http_Login(
     strncpy(pConInfo->sPhone, pHandle->m_sPhone.c_str(), sizeof(pConInfo->sPhone));
     strncpy(pConInfo->sCity, pHandle->m_sCity.c_str(), sizeof(pConInfo->sCity));
     strncpy(pConInfo->sISP, pHandle->m_sISP.c_str(), sizeof(pConInfo->sISP));
+    strncpy(pConInfo->sAuthCodeText, pHandle->m_sAuthCodeText.c_str(), sizeof(pConInfo->sAuthCodeText));
     pConInfo->iEmailCheck = pHandle->m_iEmailCheck;
     //
     err = _http_getservicelist(pHandle);
@@ -492,7 +494,7 @@ static int _http_login(void *icrc_handle)
         if (!code.isInt() || !objs.isArray())
             return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
         //
-        Json::Value lastver, upurl, callid, token, virno, echk, phone,city,isp;
+        Json::Value lastver, upurl, callid, token, virno, echk, phone, city, isp, acode;
         lastver = objs[0]["sLastversion"];
         err = code.asInt();
         if (err==0) {
@@ -503,6 +505,7 @@ static int _http_login(void *icrc_handle)
             phone  = objs[0]["sPhone"        ];
             city   = objs[0]["sCity"         ];
             isp    = objs[0]["sISP"          ];
+            acode  = objs[0]["sAuthCodeText" ];
             pHandle->m_sCallid = callid.asString();
         } else if (err==208) {
             upurl = objs[0]["sUpdateurl"];
@@ -515,6 +518,7 @@ static int _http_login(void *icrc_handle)
         pHandle->m_sPhone = phone.asString();
         pHandle->m_sCity = city.asString();
         pHandle->m_sISP = isp.asString();
+        pHandle->m_sAuthCodeText = acode.asString();
         return err;
     }
 }
@@ -1782,8 +1786,13 @@ ICRC_HTTPCLIENT_API int ICRC_Http_CheckVersion(
         Json::Value vdesc = objs[0]["sVersionDesc"   ];
         Json::Value vmin  = objs[0]["sMinVersionName"];
         Json::Value upurl = objs[0]["sUpdateurl"     ];
+        Json::Value upurl2= objs[0]["sUpdateurl2"    ];
+        Json::Value upurl3= objs[0]["sUpdateurl3"    ];
+        Json::Value upurl4= objs[0]["sUpdateurl4"    ];
+        Json::Value upurl5= objs[0]["sUpdateurl5"    ];
         Json::Value time  = objs[0]["iPublishTime"   ];
-        if (!vname.isString() || !vdesc.isString() || !vmin.isString() || !upurl.isString() || !time.isInt()) {
+        if (!vname.isString() || !vdesc.isString() || !vmin.isString() || !upurl.isString() || !time.isInt()
+            || !upurl2.isString() || !upurl3.isString() || !upurl4.isString() || !upurl5.isString()) {
             err = ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
             break;
         }
@@ -1793,6 +1802,10 @@ ICRC_HTTPCLIENT_API int ICRC_Http_CheckVersion(
             strncpy(pVersion->sVersionDesc, vdesc.asCString(), sizeof(pVersion->sVersionDesc));
             strncpy(pVersion->sMinVersionName, vmin.asCString(), sizeof(pVersion->sMinVersionName));
             strncpy(pVersion->sUpdateurl, upurl.asCString(), sizeof(pVersion->sUpdateurl));
+            strncpy(pVersion->sUpdateurl2, upurl2.asCString(), sizeof(pVersion->sUpdateurl2));
+            strncpy(pVersion->sUpdateurl3, upurl3.asCString(), sizeof(pVersion->sUpdateurl3));
+            strncpy(pVersion->sUpdateurl4, upurl4.asCString(), sizeof(pVersion->sUpdateurl4));
+            strncpy(pVersion->sUpdateurl5, upurl5.asCString(), sizeof(pVersion->sUpdateurl5));
             pVersion->iPublishTime = time.asInt();
         }
     } while (0);
@@ -1806,13 +1819,17 @@ ICRC_HTTPCLIENT_API int ICRC_Http_RegisterAccount(
                                                   IN  int         iPort,       //服务器端口
                                                   IN  const char* sUserName,   //手机号码
                                                   IN  const char* sEmail,      //邮箱
-                                                  IN  const char* sPassWord    //登录密码
+                                                  IN  const char* sPassWord,   //登录密码
+                                                  IN  const char* sAuthCode,   //身份识别码
+                                                  IN  const char* sAuthCodeText, //半明文，中间4位用*表示
+                                                  IN  const char* sPhone,      //手机号码(可选)
+                                                  IN  const char* sActiveCode  //激活码(可选)
 )
 {
     CLock lock(&g_dhmtx);
     
     // step1: 获取种子
-    std::string sSeed;
+    std::string sSeed, sSeed2;
     {
         Json::Value root;
         root["req"]["sUserName"] = sUserName;
@@ -1834,6 +1851,7 @@ ICRC_HTTPCLIENT_API int ICRC_Http_RegisterAccount(
         if (!objs.isArray() || !objs.size())
             return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
         sSeed = objs[0]["sSeed"].asString();
+        sSeed2 = objs[0]["sAuthCodeSeed"].asString();
     }
     
     // step2: 计算MD5
@@ -1854,12 +1872,33 @@ ICRC_HTTPCLIENT_API int ICRC_Http_RegisterAccount(
         strMD5Password = BinaryToHex(strMD5Password);
     }
     
+    std::string strMD5AuthCode;
+    {
+        struct MD5Context md5c;
+        unsigned char ucResult[16];
+        std::string strTemp;
+        
+        strMD5AuthCode.assign(sSeed2);
+        strMD5AuthCode.append(sAuthCode);
+        
+        MD5Init(&md5c);
+        MD5Update(&md5c, (unsigned char*)strMD5AuthCode.data(), strMD5AuthCode.size());
+        MD5Final(ucResult, &md5c);
+        
+        strMD5AuthCode.assign((char*)ucResult, 16);
+        strMD5AuthCode = BinaryToHex(strMD5AuthCode);
+    }
+    
     // step3: 注册
     {
         Json::Value root;
-        root["req"]["sUserName"] = sUserName;
-        root["req"]["sEmail"   ] = sEmail;
-        root["req"]["sPassWord"] = strMD5Password;
+        root["req"]["sUserName"    ] = sUserName;
+        root["req"]["sEmail"       ] = sEmail;
+        root["req"]["sPassWord"    ] = strMD5Password;
+        root["req"]["sAuthCode"    ] = strMD5AuthCode;
+        root["req"]["sAuthCodeText"] = sAuthCodeText;
+        root["req"]["sPhone"       ] = sPhone;
+        root["req"]["sActiveCode"  ] = sActiveCode;
         std::string body = root.toUnStyledString();
         //
         Json::Value jsonObject;
@@ -2126,6 +2165,8 @@ ICRC_HTTPCLIENT_API int ICRC_Http_GetSNDevice(
         Json::Value vCity    = objs[i]["sCity"          ];
         Json::Value vISP     = objs[i]["sISP"           ];
         Json::Value vGrade   = objs[i]["iGValue"        ];
+        Json::Value vARMSNetwork = objs[i]["sARMSNetwork"   ];
+        Json::Value vARMSPort    = objs[i]["iARMSPort"      ];
         
         strncpy(pSnDevice->sVirtualCode, vVirCode.asCString(), sizeof(pSnDevice->sVirtualCode));
         strncpy(pSnDevice->sDevName, vDevName.asCString(), sizeof(pSnDevice->sDevName));
@@ -2139,6 +2180,8 @@ ICRC_HTTPCLIENT_API int ICRC_Http_GetSNDevice(
         strncpy(pSnDevice->sAddIP, vAddIP.asCString(), sizeof(pSnDevice->sAddIP));
         strncpy(pSnDevice->sCity, vCity.asCString(), sizeof(pSnDevice->sCity));
         strncpy(pSnDevice->sISP, vISP.asCString(), sizeof(pSnDevice->sISP));
+        strncpy(pSnDevice->sARMSNetwork, vARMSNetwork.asCString(), sizeof(pSnDevice->sARMSNetwork));
+        pSnDevice->iARMSPort = vARMSPort.asInt();
         pSnDevice->iNetPort = vNetPort.asInt();
         pSnDevice->iDevType = vDevType.asInt();
         pSnDevice->iStatus  = vStatus.asInt();
@@ -2179,9 +2222,10 @@ ICRC_HTTPCLIENT_API int ICRC_Http_UnbindDevice(
 ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestorePrepare(
                                                          IN	const char* sIpAddr,     //服务器ip地址
                                                          IN	int         iPort,       //服务器端口
-                                                         IN	const char* sUserName,   //用户名称		
-                                                         OUT char*       sResetAppCode, //重置申请码
-                                                         OUT char*       sSmsNum    //短信发送号码
+                                                         IN	const char* sUserName,   //用户名称
+                                                         OUT char*       sAuthCodeSeed, //身份识别码种子
+                                                         OUT char*       sAuthCodeSeedIndex, //种子编号
+                                                         OUT char*       sSmsNum  //短信发送号码
 )
 {
     CLock lock(&g_dhmtx);
@@ -2201,7 +2245,8 @@ ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestorePrepare(
     err = code.asInt();
     if (err!=ICRC_ERROR_OK)
         return err;
-    strcpy(sResetAppCode, objs[0]["sResetAppCode"].asCString());
+    strcpy(sAuthCodeSeed, objs[0]["sAuthCodeSeed"].asCString());
+    strcpy(sAuthCodeSeedIndex, objs[0]["sAuthCodeSeedIndex"].asCString());
     strcpy(sSmsNum, objs[0]["sSmsNum"].asCString());
     //
     return ICRC_ERROR_OK;
@@ -2212,7 +2257,6 @@ ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestore(
                                                   IN	const char* sIpAddr,     //服务器ip地址
                                                   IN	int         iPort,       //服务器端口
                                                   IN	const char* sUserName,   //用户名称
-                                                  IN  const char* sResetCode,  //重置码(短信接收的)
                                                   IN	const char*	sPassWordNew //新密码
 )
 {
@@ -2222,8 +2266,7 @@ ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestore(
     std::string sSeed;
     {
         Json::Value root;
-        root["req"]["sUserName" ] = sUserName;
-        root["req"]["sResetCode"] = sResetCode;
+        root["req"]["sUserName"] = sUserName;
         std::string body = root.toUnStyledString();
         //
         Json::Value jsonObject;
@@ -2231,12 +2274,14 @@ ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestore(
         if (err!=ICRC_ERROR_OK)
             return err;
         Json::Value code = jsonObject["code"];
-        Json::Value objs = jsonObject["objs"];
-        if (!code.isInt() || !objs.isArray() || !objs.size())
+        if (!code.isInt())
             return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
         err = code.asInt();
         if (err!=ICRC_ERROR_OK)
             return err;
+        Json::Value objs = jsonObject["objs"];
+        if (!objs.isArray() || !objs[0]["sSeed"].isString())
+            return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
         sSeed = objs[0]["sSeed"].asString();
     }
     
@@ -2262,12 +2307,104 @@ ICRC_HTTPCLIENT_API int ICRC_Http_PasswordRestore(
     {
         Json::Value root;
         root["req"]["sUserName" ] = sUserName;
-        root["req"]["sResetCode"] = sResetCode;
         root["req"]["sPassWord" ] = strMD5Password;
         std::string body = root.toUnStyledString();
         //
         Json::Value jsonObject;
         int err = _http_process_v2(sIpAddr, iPort, "/app/zwelife/regist", "1#609", body.c_str(), body.size(), jsonObject);
+        if (err!=ICRC_ERROR_OK)
+            return err;
+        Json::Value code = jsonObject["code"];
+        if (!code.isInt())
+            return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
+        err = code.asInt();
+        if (err!=ICRC_ERROR_OK)
+            return err;
+    }
+    
+    return ICRC_ERROR_OK;
+}
+
+/********************** 补充身份识别码 *************************/
+ICRC_HTTPCLIENT_API int ICRC_Http_PatchAuthCode(
+                                                IN  const char* sIpAddr,     //服务器ip地址
+                                                IN  int         iPort,       //服务器端口
+                                                IN  const char* sUserName, //用户名称
+                                                IN  const char* sPassWord, //登录密码
+                                                IN  const char* sAuthCode  //身份识别码
+)
+{
+    CLock lock(&g_dhmtx);
+    
+    // step1: 获取种子
+    std::string sSeed, sSeed2;
+    {
+        Json::Value root;
+        root["req"]["sUserName"] = sUserName;
+        std::string body = root.toUnStyledString();
+        //
+        Json::Value jsonObject;
+        int err = _http_process_v2(sIpAddr, iPort, "/app/zwelife/regist", "11#709", body.c_str(), body.size(), jsonObject);
+        if (err!=ICRC_ERROR_OK)
+            return err;
+        Json::Value code = jsonObject["code"];
+        if (!code.isInt())
+            return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
+        err = code.asInt();
+        if (err!=ICRC_ERROR_OK)
+            return err;
+        Json::Value objs = jsonObject["objs"];
+        if (!objs.isArray() || !objs[0]["sSeed"].isString() || !objs[0]["sAuthCodeSeed"].isString())
+            return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
+        sSeed = objs[0]["sSeed"].asString();
+        sSeed2 = objs[0]["sAuthCodeSeed"].asString();
+    }
+    
+    // step2: 计算MD5
+    std::string strMD5Password;
+    {
+        struct MD5Context md5c;
+        unsigned char ucResult[16];
+        std::string strTemp;
+        
+        strMD5Password.assign(sSeed);
+        strMD5Password.append(sPassWord);
+        
+        MD5Init(&md5c);
+        MD5Update(&md5c, (unsigned char*)strMD5Password.data(), strMD5Password.size());
+        MD5Final(ucResult, &md5c);
+        
+        strMD5Password.assign((char*)ucResult, 16);
+        strMD5Password = BinaryToHex(strMD5Password);
+    }
+    
+    std::string strMD5AuthCode;
+    {
+        struct MD5Context md5c;
+        unsigned char ucResult[16];
+        std::string strTemp;
+        
+        strMD5AuthCode.assign(sSeed2);
+        strMD5AuthCode.append(sAuthCode);
+        
+        MD5Init(&md5c);
+        MD5Update(&md5c, (unsigned char*)strMD5AuthCode.data(), strMD5AuthCode.size());
+        MD5Final(ucResult, &md5c);
+        
+        strMD5AuthCode.assign((char*)ucResult, 16);
+        strMD5AuthCode = BinaryToHex(strMD5AuthCode);
+    }
+    
+    // step3: 添加身份识别码
+    {
+        Json::Value root;
+        root["req"]["sUserName"    ] = sUserName;
+        root["req"]["sPassWord"    ] = strMD5Password;
+        root["req"]["sAuthCode"    ] = strMD5AuthCode;
+        std::string body = root.toUnStyledString();
+        //
+        Json::Value jsonObject;
+        int err = _http_process_v2(sIpAddr, iPort, "/app/zwelife/regist", "11#709", body.c_str(), body.size(), jsonObject);
         if (err!=ICRC_ERROR_OK)
             return err;
         Json::Value code = jsonObject["code"];

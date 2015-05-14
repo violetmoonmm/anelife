@@ -102,7 +102,7 @@
         NSInteger speedWidth = modeWidth;
         NSInteger speedHeight = modeHeight;
         
-        NSInteger spacingX = (iconWidth -textWidth-modeWidth-speedWidth)/4;
+        NSInteger spacingX = (iconWidth -textWidth-modeWidth)/3;
         NSInteger statusY = 10;
         
         tempLabel = [[UILabel alloc] initWithFrame:CGRectMake(spacingX, statusY, textWidth, textHeight)];
@@ -117,9 +117,9 @@
         [iconView addSubview:modeView];
         modeView.hidden = YES;
         
-        windSpeedView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(modeView.frame)+spacingX, statusY, speedWidth, speedHeight)];
-        [iconView addSubview:windSpeedView];
-        windSpeedView.hidden = YES;
+//        windSpeedView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(modeView.frame)+spacingX, statusY, speedWidth, speedHeight)];
+//        [iconView addSubview:windSpeedView];
+//        windSpeedView.hidden = YES;
         
 
         

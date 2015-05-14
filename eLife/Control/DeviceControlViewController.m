@@ -2497,15 +2497,15 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
 
 
 
-- (void)disableScrolling:(NSNotification *)notify
-{
-    containerView.scrollEnabled = NO;
-}
-
-- (void)enableScrolling:(NSNotification *)notify
-{
-    containerView.scrollEnabled = YES;
-}
+//- (void)disableScrolling:(NSNotification *)notify
+//{
+//    containerView.scrollEnabled = NO;
+//}
+//
+//- (void)enableScrolling:(NSNotification *)notify
+//{
+//    containerView.scrollEnabled = YES;
+//}
 
 
 

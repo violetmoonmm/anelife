@@ -8,6 +8,7 @@
 
 #import "DotView.h"
 
+
 @implementation DotView
 
 - (id)initWithFrame:(CGRect)frame
@@ -32,6 +33,7 @@
 //    CGContextSetFillColorWithColor(context, [[UIColor colorWithRed:232/255. green:76/255. blue:52/255. alpha:1] CGColor]);
     CGContextSetFillColorWithColor(context, [[UIColor redColor] CGColor]);
     CGContextFillEllipseInRect(context,rect);
+
 }
 
 

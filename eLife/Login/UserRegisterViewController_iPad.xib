@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7702" systemVersion="14B25" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserRegisterViewController">
             <connections>
-                <outlet property="confirmBgdView" destination="JGs-AH-wDQ" id="inD-wZ-LDx"/>
-                <outlet property="confirmInputView" destination="7JW-FE-apn" id="70S-fA-Ioe"/>
-                <outlet property="pswdBgdView" destination="tgY-48-0Hy" id="0vC-GV-XO2"/>
-                <outlet property="pswdInputView" destination="YP7-VD-1id" id="dCK-em-oku"/>
-                <outlet property="registerBtn" destination="gTt-LF-FpQ" id="YqP-9J-NMs"/>
+                <outlet property="authCodeBgdView" destination="btQ-td-H20" id="gch-fd-YCR"/>
+                <outlet property="authCodeInputView" destination="xIW-0g-kT9" id="h48-Ah-DmR"/>
+                <outlet property="confirmBgdView" destination="x8M-T6-d4G" id="9f3-rd-71x"/>
+                <outlet property="confirmInputView" destination="xzh-CR-6Kr" id="us8-BD-JOv"/>
+                <outlet property="pswdBgdView" destination="Pvu-1A-mus" id="SUv-Dt-FJC"/>
+                <outlet property="pswdInputView" destination="eXy-Vz-ZbY" id="jAJ-U3-rJh"/>
+                <outlet property="registerBtn" destination="Cv7-Hd-gtI" id="AJ3-pS-LyQ"/>
                 <outlet property="scrlView" destination="AZu-lY-OkN" id="LfA-bZ-2bX"/>
-                <outlet property="userBgdView" destination="osO-a5-tpO" id="Em9-Of-V5G"/>
-                <outlet property="userInputView" destination="pv7-sz-0bq" id="bsy-oo-tdd"/>
+                <outlet property="userBgdView" destination="uGX-81-4S1" id="5jQ-jc-w4s"/>
+                <outlet property="userInputView" destination="YqE-d9-Zcj" id="fm2-CB-IJd"/>
                 <outlet property="view" destination="iN0-l3-epB" id="BeE-0S-gBy"/>
             </connections>
         </placeholder>
@@ -26,22 +28,11 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AZu-lY-OkN">
                     <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTt-LF-FpQ">
-                            <rect key="frame" x="244" y="268" width="280" height="40"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                            <state key="normal" title="注册" backgroundImage="reg_btn.png">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="userRegister:" destination="-1" eventType="touchUpInside" id="dGG-pK-nnf"/>
-                            </connections>
-                        </button>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tgY-48-0Hy" customClass="UIImageView">
-                            <rect key="frame" x="244" y="151" width="280" height="40"/>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pvu-1A-mus" customClass="UIImageView">
+                            <rect key="frame" x="244" y="269" width="280" height="40"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YP7-VD-1id">
-                                    <rect key="frame" x="18" y="0.0" width="245" height="40"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eXy-Vz-ZbY">
+                                    <rect key="frame" x="15" y="0.0" width="245" height="40"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -49,10 +40,10 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="osO-a5-tpO" customClass="UIImageView">
-                            <rect key="frame" x="245" y="67" width="280" height="40"/>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uGX-81-4S1" customClass="UIImageView">
+                            <rect key="frame" x="245" y="108" width="280" height="40"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pv7-sz-0bq">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="手机号" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqE-d9-Zcj">
                                     <rect key="frame" x="15" y="0.0" width="245" height="40"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -61,11 +52,11 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JGs-AH-wDQ" customClass="UIImageView">
-                            <rect key="frame" x="244" y="208" width="280" height="40"/>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x8M-T6-d4G" customClass="UIImageView">
+                            <rect key="frame" x="244" y="322" width="280" height="40"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="确认密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7JW-FE-apn">
-                                    <rect key="frame" x="18" y="0.0" width="245" height="40"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="确认密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xzh-CR-6Kr">
+                                    <rect key="frame" x="15" y="0.0" width="245" height="40"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -73,8 +64,37 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*请确保为本人手机，方便日后找回密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3nK-95-NMC">
-                            <rect key="frame" x="259" y="120" width="252" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*请确保为本人手机，方便日后找回密码!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccK-ow-kPs">
+                            <rect key="frame" x="259" y="158" width="252" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.97254901959999995" green="0.3803921569" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cv7-Hd-gtI">
+                            <rect key="frame" x="244" y="384" width="280" height="40"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <state key="normal" title="注册" backgroundImage="reg_btn.png">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="userRegister:" destination="-1" eventType="touchUpInside" id="aku-xg-oNC"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="btQ-td-H20" customClass="UIImageView">
+                            <rect key="frame" x="245" y="188" width="280" height="40"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="身份认证码(8位数字)" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xIW-0g-kT9">
+                                    <rect key="frame" x="15" y="0.0" width="245" height="40"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="*身份认证码用于密码重置，很重要!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMK-ET-JtP">
+                            <rect key="frame" x="259" y="238" width="252" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.97254901959999995" green="0.3803921569" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>

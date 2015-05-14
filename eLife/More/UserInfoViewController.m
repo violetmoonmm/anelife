@@ -20,6 +20,8 @@
 #import "CreatGesturePasswordController.h"
 #import "SetGesturePasswordController.h"
 #import "NotificationDefine.h"
+#import "DotView.h"
+#import "AuthCodeViewController.h"
 
 #define BOTTOM_BAR_H 44
 #define MAGIN_Y 8
@@ -77,7 +79,7 @@
     [super viewWillAppear:animated];
     
 
-     NSLog(@"%@",NSStringFromCGRect(tblView.frame));
+    [tblView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,7 +107,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,6 +140,10 @@
             
             break;
         case 1:
+            text = @"身份认证码修改";
+            
+            break;
+        case 2:
             text = @"手势密码";
             
             break;
@@ -165,7 +171,16 @@
 
     cell.accessoryView = rightArrow;
     
+    
     if (indexPath.section == 1)
+    {
+        if ([[User currentUser].authCodeText length] == 0) {
+            DotView *dot = [[DotView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLbl.frame)+4, (CELL_H-10)/2, 10, 10)];
+            [cell.contentView addSubview:dot];
+        }
+        
+    }
+    else if (indexPath.section == 2)
     {
         UILabel *gestPswdLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(tableView.bounds)-100, 0, 50, CELL_H)];
         gestPswdLbl.backgroundColor = [UIColor clearColor];
@@ -205,6 +220,14 @@
             
             break;
         case 1:
+        {
+            NSString *nibName = [Util nibNameWithClass:[AuthCodeViewController class]];
+            viewController = [[AuthCodeViewController alloc] initWithNibName:nibName bundle:nil];
+            
+        }
+            
+            break;
+        case 2:
         {
             if (![User currentUser].enableLockPswd && [[User currentUser].lockPswd length] == 0) {
                 NSString *nibName = [Util nibNameWithClass:[CreatGesturePasswordController class]];

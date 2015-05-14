@@ -126,8 +126,8 @@ int CMsg_method_v_b_v_rsp::Decode(char *pData,unsigned int iDataLen)
     unsigned int uiSessionId = jsonContent["session"].asUInt();
     if ( uiReqId != hdr.request_id || uiSessionId != hdr.session_id )
     {
-        ERROR_TRACE("reqid or sessid not same with hdr");
-        return -1;
+        WARN_TRACE("reqid or sessid not same with hdr");
+        //return -1;
     }
     
     //
@@ -234,8 +234,8 @@ int CMsgDvip_instance_rsp::Decode(char *pData,unsigned int iDataLen)
     unsigned int uiSessionId = jsonContent["session"].asUInt();
     if ( uiReqId != hdr.request_id || uiSessionId != hdr.session_id )
     {
-        ERROR_TRACE("reqid or sessid not same with hdr");
-        return -1;
+        WARN_TRACE("reqid or sessid not same with hdr");
+        //return -1;
     }
     
     //
@@ -338,8 +338,8 @@ int CMsgDvip_destroy_rsp::Decode(char *pData,unsigned int iDataLen)
     unsigned int uiSessionId = jsonContent["session"].asUInt();
     if ( uiReqId != hdr.request_id || uiSessionId != hdr.session_id )
     {
-        ERROR_TRACE("reqid or sessid not same with hdr");
-        return -1;
+        WARN_TRACE("reqid or sessid not same with hdr");
+        //return -1;
     }
     
     //
@@ -435,8 +435,8 @@ int CMsg_method_json_b_json_rsp::Decode(char *pData,unsigned int iDataLen)
     unsigned int uiSessionId = jsonContent["session"].asUInt();
     if ( uiReqId != hdr.request_id || uiSessionId != hdr.session_id )
     {
-        ERROR_TRACE("reqid or sessid not same with hdr");
-        return -1;
+        WARN_TRACE("req id or session id not same with hdr");
+        //return -1;
     }
     
     //

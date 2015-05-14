@@ -26,7 +26,7 @@
 #import "UserDBManager.h"
 #import "zw_dssdk.h"
 #import "FavoriteViewController.h"
-
+#import "CallForwardingViewController.h"
 #import "LLLCheckPasswordController.h"
 
 //#import "ISClient.h"
@@ -41,7 +41,7 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
 
 }
 
-@interface AppDelegate () <UIAlertViewDelegate,AlarmViewControllerDelegate,CheckPasswordDelegate>
+@interface AppDelegate () <UIAlertViewDelegate,CheckPasswordDelegate>
 {
     
     UINavigationController *callNavController;
@@ -80,7 +80,7 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
         
     }
 
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     int res = [zw_dssdk dssdk_init];
 #endif
     
@@ -92,8 +92,17 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    float sysVersion = [[UIDevice currentDevice]systemVersion].floatValue;
+    if (sysVersion >= 8.0) {
+        UIUserNotificationType type = UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
+        UIUserNotificationSettings *setting = [UIUserNotificationSettings settingsForTypes:type categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:setting];
+    }
+    else {
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
+    }
+
     
     //[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
@@ -123,9 +132,10 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
         [User currentUser].lockPswd = lastUser.lockPswd;
         [User currentUser].enableLockPswd = lastUser.enableLockPswd;
         [User currentUser].haveLogin = lastUser.haveLogin;
-        [User currentUser].enableAlarmVideo = lastUser.enableAlarmVideo;
+        [User currentUser].disableAlarm = lastUser.disableAlarm;
         [User currentUser].city = lastUser.city;
         [User currentUser].ISP = lastUser.ISP;
+        [User currentUser].alarmVideo = lastUser.alarmVideo;
         
     }
 
@@ -443,6 +453,8 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
                                              selector:@selector(handleAlarmNtf:)
                                                  name:OnAlarmNotification
                                                object:nil];
+    
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallRedirectNtf:) name:CallRedirectNotification object:nil];
 }
 
 
@@ -530,58 +542,82 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
     return str;
 }
 
+
+- (void)handleCallRedirectNtf:(NSNotification *)ntf
+{
+    [self dismissCallView];//如果先前有present callview ，则dismiss
+    
+    [self playRingSound];//播放呼叫声音
+    
+    
+    NSString *nibName = [Util nibNameWithClass:[CallForwardingViewController class]];
+    
+    CallForwardingViewController *callVC = [[CallForwardingViewController alloc] initWithNibName:nibName bundle:nil];
+    
+    id ipc = [[ntf userInfo] objectForKey:CallRedirectIPCKey];
+    if (![ipc isEqual:[NSNull null]]) {
+        callVC.video = ipc;
+    }
+   
+    
+    callNavController = [[UINavigationController alloc] initWithRootViewController:callVC];
+//    callNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+     [[UIApplication sharedApplication].keyWindow addSubview:callNavController.view];
+}
+
 - (void)handleAlarmNtf:(NSNotification *)notification
 {
-    AlarmRecord *alarmInfo = [[notification userInfo] objectForKey:OnAlarmNotificationKey];
- 
-    //发生
-    if ([alarmInfo.alarmStatus isEqualToString:@"Start"])
-    {
-        [self playAlarmSound];//播放报警声音
+    if (![User currentUser].disableAlarm) {
+        AlarmRecord *alarmInfo = [[notification userInfo] objectForKey:OnAlarmNotificationKey];
         
-        
-        if (!alarmNavController)
+        //发生
+        if ([alarmInfo.alarmStatus isEqualToString:@"Start"])
         {
-            UIViewController *viewController = self.mainNavController ;
+            [self playAlarmSound];//播放报警声音
             
             
-            NSString *nibName = [Util nibNameWithClass:[AlarmViewController class]];
-            AlarmViewController *alarmVC = [[AlarmViewController alloc] initWithNibName:nibName bundle:nil];
-            
-            alarmInfo.msgStatus = MessageStatusRead;
-            alarmVC.alarmRecords = [NSMutableArray arrayWithObject:alarmInfo];
-            alarmVC.delegate = self;
-            
-            alarmNavController = [[UINavigationController alloc] initWithRootViewController:alarmVC];
-            
-            //alarmNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            
-            
-//            [viewController presentViewController:alarmNavController animated:YES completion:NULL];
-            
-            [[UIApplication sharedApplication].keyWindow addSubview:alarmNavController.view];
+            if (!alarmNavController)
+            {
+                UIViewController *viewController = self.mainNavController ;
+                
+                
+                NSString *nibName = [Util nibNameWithClass:[AlarmViewController class]];
+                AlarmViewController *alarmVC = [[AlarmViewController alloc] initWithNibName:nibName bundle:nil];
+                
+                alarmInfo.msgStatus = MessageStatusRead;
+                alarmVC.alarmRecords = [NSMutableArray arrayWithObject:alarmInfo];
+          
+                alarmNavController = [[UINavigationController alloc] initWithRootViewController:alarmVC];
+                
+                //alarmNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                
+                
+                //            [viewController presentViewController:alarmNavController animated:YES completion:NULL];
+                
+                [[UIApplication sharedApplication].keyWindow addSubview:alarmNavController.view];
+            }
         }
-    }
-    else {
-        NSString *state = @"恢复";
-        
-        NSString *alarmAddr = alarmInfo.channelName ? alarmInfo.channelName : [NSString stringWithFormat:@"通道%@",alarmInfo.channelId];
-        NSString *alarmType = alarmInfo.alarmType ? alarmInfo.alarmType : @"";
-        NSString *content = [NSString stringWithFormat:@"%@%@%@报警",alarmAddr,state,alarmType];
-        
-        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
-        
-        hud.removeFromSuperViewOnHide = YES;
-        hud.labelText = content;
-        hud.mode = MBProgressHUDModeText;
-        [[UIApplication sharedApplication].keyWindow addSubview:hud];
-        
-        [hud show:YES];
-        [hud hide:YES afterDelay:2.0];
+        else {
+            NSString *state = @"恢复";
+            
+            NSString *alarmAddr = alarmInfo.channelName ? alarmInfo.channelName : [NSString stringWithFormat:@"通道%@",alarmInfo.channelId];
+            NSString *alarmType = alarmInfo.alarmType ? alarmInfo.alarmType : @"";
+            NSString *content = [NSString stringWithFormat:@"%@%@%@报警",alarmAddr,state,alarmType];
+            
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+            
+            hud.removeFromSuperViewOnHide = YES;
+            hud.labelText = content;
+            hud.mode = MBProgressHUDModeText;
+            [[UIApplication sharedApplication].keyWindow addSubview:hud];
+            
+            [hud show:YES];
+            [hud hide:YES afterDelay:2.0];
+            
+        }
 
     }
-
-    
 
 }
 
@@ -590,29 +626,39 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
 
 - (void)dismissAlarmView
 {
-    if (alarmNavController) {
-        [self stopPlayAlarmSound];
-        
-        [alarmNavController dismissViewControllerAnimated:NO completion:^{
-
-        }];
-        
-        alarmNavController = nil;
-    }
+//    if (alarmNavController) {
+//        [self stopPlayAlarmSound];
+//        
+//        [alarmNavController dismissViewControllerAnimated:NO completion:^{
+//
+//        }];
+//        
+//        alarmNavController = nil;
+//    }
+    
+    [self stopPlayAlarmSound];
+    
+    [alarmNavController.view removeFromSuperview];
+    
+    alarmNavController = nil;
 }
 
 - (void)dismissCallView
 {
-    if (callNavController) {
-        [self stopPlayCallSound];
-        
-        [callNavController dismissViewControllerAnimated:NO completion:^{
-
-        }];
-        
-        callNavController = nil;
-
-    }
+//    if (callNavController) {
+//        [self stopPlayCallSound];
+//        
+//        [callNavController dismissViewControllerAnimated:NO completion:^{
+//
+//        }];
+//        
+//        callNavController = nil;
+//
+//    }
+    
+    [self stopPlayCallSound];
+    [callNavController.view removeFromSuperview];
+    callNavController = nil;
 }
 
 - (void)initTabBarController
@@ -798,16 +844,7 @@ static void SoundFinished(SystemSoundID soundID,void* clientData){
 
 
 
-#pragma mark AlarmViewControllerDelegate
 
-- (void)cancelAlarm
-{
-    [self stopPlayAlarmSound];
-    
-    [alarmNavController.view removeFromSuperview];
-    
-    alarmNavController = nil;
-}
 
 
 @end

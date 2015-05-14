@@ -4,6 +4,7 @@
 #include "DvrGeneral.h"
 #include "DvipClient.h"
 #include "ISClient.h"
+#include "WebsClient.h"
 
 
 // SDK初始化
@@ -709,7 +710,7 @@ SH_API bool CALL_METHOD SH_DownloadShareFile(unsigned int hLoginID,char * pszSha
     pInst = CDvrGeneral::Instance()->FindInstance(hLoginID,strGwVCode);
     if ( !pInst )
     {
-        ERROR_TRACE("SH_RestartDev not find instance.id="<<hLoginID);
+        ERROR_TRACE("SH_DownloadShareFile not find instance.id="<<hLoginID);
         return false;
     }
     
@@ -800,4 +801,72 @@ SH_API bool CALL_METHOD SH_StopDevFinder()
 SH_API bool CALL_METHOD SH_IPSearch(char *szMac,bool bGateWayOnly)
 {
     return CDvrGeneral::Instance()->MCast_search(szMac,bGateWayOnly);
+}
+
+SH_API bool CALL_METHOD HTTP_SimpleQuery(char * pszIp,int iPort,char* pszUserName,char * pszPassword,
+                                         char * pszAction,char *pszParams,char *szBuf,int iBufSize)
+{
+    if (pszIp == NULL || iPort <= 0 )
+    {
+        ERROR_TRACE("invalid ip or port");
+        return false;
+    }
+    Json::Reader jsonParser;
+    Json::Value jsonContent;
+    bool bRet;
+    bRet = jsonParser.parse(pszParams,jsonContent);
+    if ( !bRet )
+    {
+        ERROR_TRACE("parse params failed");
+        return false;
+    }
+    
+    int iRet = -1;
+    std::string strResult;
+    
+    CWebsClient client;
+    client.SetServerInfo(pszIp,iPort,pszUserName,pszPassword);
+    
+    std::string strAction = pszAction;
+    if (strAction == "GetRemoteMedia")
+    {
+        if (jsonContent["sn"].isNull()
+            || !jsonContent["sn"].isString())
+        {
+            ERROR_TRACE("no sn or sn is not string");
+            return false;
+        }
+        
+        std::string strSn = jsonContent["sn"].toUnStyledString();
+        char szSn[1024]={0};
+        strncpy(szSn,(char*)strSn.c_str()+1,strSn.length()-2);//去掉前后引号
+        iRet = client.GetClientStatus(szSn,strResult);
+    }
+    else
+    {
+        ERROR_TRACE("unsurpport action="<<pszAction);
+        return false;
+    }
+    
+    bRet = false;
+    if (iRet == 0)
+    {
+        if(iBufSize > strResult.length())
+        {
+            memset(szBuf,0,iBufSize);
+            strncpy(szBuf,(char*)strResult.c_str(),strResult.length());
+            INFO_TRACE(pszAction<<" result="<<szBuf);
+            bRet = true;
+        }
+        else
+        {
+            ERROR_TRACE("buffer too small.iBufSize="<<iBufSize<<" reslut="<<strResult.length());
+        }
+    }
+    else
+    {
+        WARN_TRACE(pszAction<<" failed!");
+    }
+    
+    return bRet;
 }

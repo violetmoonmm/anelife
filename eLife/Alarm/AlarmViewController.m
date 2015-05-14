@@ -15,6 +15,7 @@
 #import "User.h"
 #import "NetReachability.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
 
 static float cellHeight = 44;
@@ -74,9 +75,9 @@ static float cellHeight = 44;
     
 //    record.msgStatus = MessageStatusRead;
     
-    //2G/3G/4G模式下不自动联动视频(除非用户设置)
-    if (([NetReachability isReachableViaWWAN] && [User currentUser].enableAlarmVideo)
-        || ![NetReachability isReachableViaWWAN]) {//移动数据
+
+    if (([NetReachability isReachableViaWWAN] && [User currentUser].alarmVideo == AVSEnableViaWifi)
+        || [User currentUser].alarmVideo == AVSEnableVideo) {
         
         AlarmRecord *record = [self.alarmRecords objectAtIndex:0];
         [self playVideoWithRecord:record];
@@ -104,17 +105,14 @@ static float cellHeight = 44;
 - (void)goBack
 {
     
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
     
-    if ([self.delegate respondsToSelector:@selector(cancelAlarm)]) {
-        [self.delegate cancelAlarm];
-    }
+    [(AppDelegate *)[UIApplication sharedApplication].delegate dismissCallView];
     
-//    [self dismissViewControllerAnimated:YES completion:^(void){
-//        
-//    }];
+//    [self.navigationController.view removeFromSuperview];
+
 }
 
 - (void)appDidEnterBackground:(NSNotification*)ntf
@@ -122,6 +120,10 @@ static float cellHeight = 44;
 
     [self stopPlaying];
 }
+
+
+
+
 
 - (void)handleAlarmNtf:(NSNotification *)ntf
 {
@@ -251,13 +253,12 @@ static float cellHeight = 44;
     
     record.msgStatus = MessageStatusRead;
     
-    
-    //2G/3G/4G模式下不自动联动视频(除非用户设置)
-    if (([NetReachability isReachableViaWWAN] && [User currentUser].enableAlarmVideo)
-        || ![NetReachability isReachableViaWWAN]) {//移动数据
-
+    if (([NetReachability isReachableViaWWAN] && [User currentUser].alarmVideo == AVSEnableViaWifi)
+        || [User currentUser].alarmVideo == AVSEnableVideo) {
+        
+   
         [self playVideoWithRecord:record];
-
+        
     }
     else {
         [self stopPlaying];
@@ -275,7 +276,7 @@ static float cellHeight = 44;
     //关闭视频可以自动锁屏
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
     
@@ -314,7 +315,7 @@ static float cellHeight = 44;
     
     NSLog(@"play video url:%@  pubUrl:%@",videoUrl,pubVideoUrl);
     
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     
     MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:videoWnd];
     [videoWnd addSubview:tempHud];
@@ -359,6 +360,8 @@ static float cellHeight = 44;
     
     
 #endif
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
     
 }
 

@@ -19,6 +19,7 @@ CDvipClient::~CDvipClient()
     Stop();
     ClearSend();
     Clear_Tasks();
+    INFO_TRACE("~CDvipClient m_strServIp="<<m_strServIp);
 }
 
 //CDvipClient * CDvipClient::Instance()
@@ -897,7 +898,7 @@ int CDvipClient::Subscrible()
     jsonInParams["codes"][0] = "DeviceState";
     jsonInParams["codes"][1] = "AlarmLocal";
     jsonInParams["codes"][2] = "AlarmExtended";
-    jsonInParams["codes"][3] = "VideoTalk";
+    jsonInParams["codes"][3] = "RequestOpenDoor";
     
     //jsonInParams["codes"][2] = "ArmModeChange";
     //jsonInParams["codes"][0] = "*";

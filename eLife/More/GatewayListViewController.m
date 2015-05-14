@@ -351,7 +351,7 @@
     
     //网关名
     NSString *titleTxt = gateway.name;
-    NSInteger fontSize = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 16 : 17);
+    NSInteger fontSize = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 16 : 18);
     CGSize size = [titleTxt sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(200, 30)];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(originX, originY, size.width, 24)];
     titleLabel.text = titleTxt;
@@ -361,46 +361,47 @@
     titleLabel.font = [UIFont systemFontOfSize:fontSize];
     [cell.contentView addSubview:titleLabel];
     
+    NSInteger smallFontSize = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 14: 16);
+    UIFont *smallTxtFont = [UIFont systemFontOfSize:smallFontSize];
+    
     //网关序列号
     NSString *snTxt = [NSString stringWithFormat:@"序列号: %@", gateway.serialNumber];
-    fontSize = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 13: 14);
-    size = [snTxt sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(200, 24)];
+    size = [snTxt sizeWithFont:smallTxtFont constrainedToSize:CGSizeMake(200, 24)];
     UILabel *snLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLabel.frame), CGRectGetMaxY(titleLabel.frame)+spacingY, size.width, lblHeight)];
     snLabel.text = snTxt;
     snLabel.textColor = [UIColor darkGrayColor];
     snLabel.highlightedTextColor = [UIColor whiteColor];
     snLabel.backgroundColor = [UIColor clearColor];
-    snLabel.font = [UIFont systemFontOfSize:fontSize];
+    snLabel.font = smallTxtFont;
     [cell.contentView addSubview:snLabel];
     
     //网关所在地
     NSString *cityTxt = gateway.city ? gateway.city : @"未知";
     cityTxt = [NSString stringWithFormat:@"所在地: %@",cityTxt];
-    fontSize = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 13: 14);
-    size = [cityTxt sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(200, 24)];
+    size = [cityTxt sizeWithFont:smallTxtFont constrainedToSize:CGSizeMake(200, 24)];
     UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLabel.frame), CGRectGetMaxY(snLabel.frame)+spacingY, size.width, lblHeight)];
     cityLabel.text = cityTxt;
     cityLabel.textColor = [UIColor darkGrayColor];
     cityLabel.highlightedTextColor = [UIColor whiteColor];
     cityLabel.backgroundColor = [UIColor clearColor];
-    cityLabel.font = [UIFont systemFontOfSize:fontSize];
+    cityLabel.font = smallTxtFont;
     [cell.contentView addSubview:cityLabel];
     
     //网关运营商
     NSString *ispTxt = gateway.ISP ? gateway.ISP : @"未知";
     ispTxt = [NSString stringWithFormat:@"运营商: %@",ispTxt];
     fontSize = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 13: 14);
-    size = [ispTxt sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(200, 24)];
+    size = [ispTxt sizeWithFont:smallTxtFont constrainedToSize:CGSizeMake(200, 24)];
     UILabel *ispLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLabel.frame), CGRectGetMaxY(cityLabel.frame)+spacingY, size.width, lblHeight)];
     ispLabel.text = ispTxt;
     ispLabel.textColor = [UIColor darkGrayColor];
     ispLabel.highlightedTextColor = [UIColor whiteColor];
     ispLabel.backgroundColor = [UIColor clearColor];
-    ispLabel.font = [UIFont systemFontOfSize:fontSize];
+    ispLabel.font = smallTxtFont;
     [cell.contentView addSubview:ispLabel];
     
-    //在线状态
-    NSString *statusTxt = [gateway isOnline] ? @"在线" : @"不在线";
+    //本地在线状态
+    NSString *statusTxt = [NSString stringWithFormat:@"本地:%@",gateway.status.localOnline ? @"在线" : @"离线"];
     NSInteger limitWidth = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 300 : 758);
     NSInteger statusWidth = 70;
     NSInteger spacingX = 4;//右边间隔
@@ -410,30 +411,41 @@
     statusLabel.textAlignment = NSTextAlignmentRight;
     statusLabel.highlightedTextColor = [UIColor whiteColor];
     statusLabel.backgroundColor = [UIColor clearColor];
-    statusLabel.font = [UIFont systemFontOfSize:fontSize];
+    statusLabel.font = smallTxtFont;
     [cell.contentView addSubview:statusLabel];
+    
+    //远程在线状态
+    NSString *remoteTxt = [NSString stringWithFormat:@"远程:%@",gateway.status.remoteOnline ? @"在线" : @"离线"];
+    UILabel *remoteLabel = [[UILabel alloc] initWithFrame:CGRectMake(limitWidth - statusWidth - spacingX, CGRectGetMinY(snLabel.frame), statusWidth, lblHeight)];
+    remoteLabel.text = remoteTxt;
+    remoteLabel.textColor = [UIColor darkGrayColor];
+    remoteLabel.textAlignment = NSTextAlignmentRight;
+    remoteLabel.highlightedTextColor = [UIColor whiteColor];
+    remoteLabel.backgroundColor = [UIColor clearColor];
+    remoteLabel.font = smallTxtFont;
+    [cell.contentView addSubview:remoteLabel];
     
     
     //认证是否成功
     NSString *authTxt = gateway.authorized ? @"认证成功" : @"认证失败";
-    UILabel *authLabel = [[UILabel alloc] initWithFrame:CGRectMake(limitWidth - statusWidth - spacingX, CGRectGetMinY(snLabel.frame), statusWidth, lblHeight)];
+    UILabel *authLabel = [[UILabel alloc] initWithFrame:CGRectMake(limitWidth - statusWidth - spacingX, CGRectGetMinY(cityLabel.frame), statusWidth, lblHeight)];
     authLabel.text = authTxt;
     authLabel.textColor = [UIColor darkGrayColor];
     authLabel.textAlignment = NSTextAlignmentRight;
     authLabel.highlightedTextColor = [UIColor whiteColor];
     authLabel.backgroundColor = [UIColor clearColor];
-    authLabel.font = [UIFont systemFontOfSize:fontSize];
+    authLabel.font = smallTxtFont;
     [cell.contentView addSubview:authLabel];
     
 
     //远程服务等级
-    size = [@"远程服务等级:" sizeWithFont:[UIFont systemFontOfSize:fontSize] constrainedToSize:CGSizeMake(200, 24)];
+    size = [@"远程服务等级:" sizeWithFont:smallTxtFont constrainedToSize:CGSizeMake(200, 24)];
     UILabel *gradeLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLabel.frame), CGRectGetMaxY(ispLabel.frame)+spacingY, size.width, lblHeight)];
     gradeLbl.text = @"远程服务等级:";
     gradeLbl.textColor = [UIColor darkGrayColor];
     gradeLbl.highlightedTextColor = [UIColor whiteColor];
     gradeLbl.backgroundColor = [UIColor clearColor];
-    gradeLbl.font = [UIFont systemFontOfSize:fontSize];
+    gradeLbl.font = smallTxtFont;
     [cell.contentView addSubview:gradeLbl];
     
     //图标

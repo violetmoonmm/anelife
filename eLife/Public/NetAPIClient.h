@@ -73,7 +73,7 @@ enum DisConnectReason
 //- (VersionInfo *)checkVersion;
 
 //用户注册
-- (void)userRegister:(NSString *)user pswd:(NSString *)pswd email:(NSString *)email successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback;
+- (void)userRegister:(NSString *)user pswd:(NSString *)pswd email:(NSString *)email authCode:(NSString *)authCode  authCodeText:(NSString *)authCodeText successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback;
 
 //用户登录
 - (void)loginWithUser:(NSString *)user psd:(NSString *)psd successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback;
@@ -103,10 +103,14 @@ enum DisConnectReason
 - (void)logoutTimeout:(int)timeout successCallback:(void(^)(void))successCallback failureCallback:(void (^)(void))failureCallback;
 
 //申请重置
-- (void)applyResetPasswordWithUser:(NSString *)user successCallback:(void (^)(NSDictionary *result))successCallback failureCallback:(void (^)(int errCode))failureCallback;
+- (void)applyResetPasswordWithUser:(NSString *)user  successCallback:(void (^)(NSDictionary *result))successCallback failureCallback:(void (^)(int errCode))failureCallback;
 
 //发送重置密码
-- (void)resetPasswordWithUser:(NSString *)user pswd:(NSString *)pswd verifCode:(NSString *)verifCode successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback;
+- (void)resetPasswordWithUser:(NSString *)user pswd:(NSString *)pswd  successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback;
+
+//重置身份识别码
+- (void)resetAuthCodeWithUser:(NSString *)user pswd:(NSString *)pswd  authCode:(NSString *)authCode successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback;
+
 
 
 //获取智能家居配置
@@ -135,6 +139,15 @@ enum DisConnectReason
 //查询ipc列表
 - (void)getIpcList:(void(^)(NSArray *))callback;
 
+//查询ipc码流
+- (void)getIpcBitrate:(SHDevice *)device successCallback:(void (^)(VideoQuality grade))successCallback failureCallback:(void (^)(void))failureCallback;
+
+//设置码流
+- (void)setIpcBitrate:(SHDevice *)device quality:(VideoQuality)quality successCallback:(void (^)(void))successCallback failureCallback:(void (^)(void))failureCallback;
+
+//查询视频资源转发数是否达到限制
+- (void)queryIpcVideoCount:(SHDevice *)device successCallback:(void (^)(BOOL max))successCallback failureCallback:(void (^)(void))failureCallback;
+
 //查询共享面板列表
 - (void)getShareFileListOfGateway:(SHGateway *)gateway successCallback:(void (^)(NSArray *fileList))successCallback failureCallback:(void (^)(void))failureCallback;
 
@@ -143,6 +156,10 @@ enum DisConnectReason
 
 //批量下载共享文件
 - (void)downloadShareFiles:(NSArray *)remotePaths toLocalPaths:(NSArray *)localPaths fromGateway:(SHGateway *)gateway;
+
+//呼叫开锁
+- (void)unlockSuccessCallback:(void(^)(void))successCallback
+              failureCallback:(void(^)(void))failureCallback;
 
 #pragma mark 网关操作
 
@@ -161,12 +178,16 @@ enum DisConnectReason
 //删除网关授权用户
 - (void)removeAuthUser:(GatewayUser *)user fromGateway:(SHGateway *)gateway successCallback:(void (^)(void))successCallback failureCallback:(void (^)(void))failureCallback;
 
+
+
 #pragma mark 回调处理
 - (void)onEventCallBack:(unsigned int )loginId params:(NSDictionary *)params;
 
 - (void)onAlarmCallBack:(unsigned int )loginId params:(NSDictionary *)params;
 
 - (void)onFileDownloadCallBack:(unsigned int )loginId params:(NSDictionary *)params;
+
+- (void)onCallRedirectCallBack:(unsigned int )loginId params:(NSDictionary *)params;
 
 #pragma mark 信息查询
 - (void)queryLeaveMsg:(LeaveMsg *)leaveMsg;

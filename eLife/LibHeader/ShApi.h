@@ -49,6 +49,8 @@ extern "C" {
         emDeviceState = 0x01,	//设备状态
         emAlarm,				//报警
         emDownFile,				//文件下载
+        emRequestOpenDoor,		//呼叫转移事件
+        
     };
     
     //错误码
@@ -356,6 +358,36 @@ extern "C" {
     SH_API bool CALL_METHOD SH_StopDevFinder();
     //搜索,可指定mac地址
     SH_API bool CALL_METHOD SH_IPSearch(char *szMac,bool bGateWayOnly = true);
+    
+    /* 接口功能：arms http查询
+     参数说明：
+     pszIp，iPort，pszUserName，pszPassword http服务器连接及认证参数；
+     pszAction 查询方法，pszParams查询参数
+     szBuf 返回结果，iBufSize长度
+     
+     当前已实现的查询方法及对应的参数，返回结果格式形如：
+     1，查询视频转发状态，公网下arms不返回meidaIp字段：
+     pszAction = GetRemoteMedia
+     pszParams = "sn"="YZZ4JZ129W00015"
+     szBuf = {
+     “result”:0, //结果 0 成功
+     “maxVideoCount”:4,		//最大视频转发路数
+     “currentVideoCount”:4,		//当前在线视频转发路数
+     “mediaIp”:”127.0.0.1”,		//媒体转发ip
+     “mediaPort”:50000,		//媒体转发端口
+     “onlineUsers”:[			//当前使用用户列表，
+     {
+     “username”:”admin”,
+     “ip”:”127.0.0.1”,
+     “channels”：[0,3]
+     }
+     …
+     ]
+     }
+     
+     */
+    SH_API bool CALL_METHOD HTTP_SimpleQuery(char * pszIp,int iPort,char* pszUserName,char * pszPassword,
+                                             char * pszAction,char *pszParams,char *szBuf,int iBufSize);
     
 #ifdef __cplusplus
 }

@@ -56,7 +56,7 @@
     NSLog(@"user db createTables");
     
     //用户表
-    NSString *const USER_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS user (vircode text primary key, username text,  password text, blockpswd bit,lockpswd text,blogin bit,balarmvideo bit, city text, isp text); ";
+    NSString *const USER_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS user (vircode text primary key, username text,  password text, blockpswd bit,lockpswd text,blogin bit,disableAlarm bit, city text, isp text, alarmVideo integer); ";
     
     //上次登录用户表
     NSString *const LAST_USER_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS lastuser (id integer primary key autoincrement,  vircode text); ";
@@ -104,9 +104,10 @@
         user.enableLockPswd = [rs boolForColumn:@"blockpswd"];
         user.lockPswd = [rs stringForColumn:@"lockpswd"];
         user.haveLogin = [rs boolForColumn:@"blogin"];
-        user.enableAlarmVideo = [rs boolForColumn:@"balarmvideo"];
+        user.disableAlarm = [rs boolForColumn:@"disableAlarm"];
         user.city = [rs stringForColumn:@"city"];
         user.ISP = [rs stringForColumn:@"isp"];
+        user.alarmVideo = [rs intForColumn:@"alarmVideo"];
         
         return user;
     }
@@ -118,7 +119,7 @@
 - (void)updateUser:(User *)user
 {
     
-   [_db executeUpdate:@"INSERT OR REPLACE INTO user (username, password,vircode,blockpswd,lockpswd,blogin,balarmvideo,city,isp) VALUES (?,?,?,?,?,?,?,?,?)",user.name,user.password,user.virtualCode,[NSNumber numberWithBool:user.enableLockPswd],user.lockPswd,[NSNumber numberWithBool:user.haveLogin],[NSNumber numberWithBool:user.enableAlarmVideo],user.city,user.ISP];
+   [_db executeUpdate:@"INSERT OR REPLACE INTO user (username, password,vircode,blockpswd,lockpswd,blogin,disableAlarm,city,isp,alarmVideo) VALUES (?,?,?,?,?,?,?,?,?,?)",user.name,user.password,user.virtualCode,[NSNumber numberWithBool:user.enableLockPswd],user.lockPswd,[NSNumber numberWithBool:user.haveLogin],[NSNumber numberWithBool:user.disableAlarm],user.city,user.ISP,[NSNumber numberWithInt:user.alarmVideo] ];
 }
 
 

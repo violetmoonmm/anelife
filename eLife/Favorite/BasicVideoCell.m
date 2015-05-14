@@ -13,6 +13,8 @@
 #import "NotificationDefine.h"
 #import "Util.h"
 #import "MBProgressHUD.h"
+#import "BitrateView.h"
+
 
 #define MarginX 4//x轴左右边缘
 #define MarginY 4//y轴上下边缘
@@ -23,7 +25,7 @@
 
 #define SIDE_BAR_WIDTH 50
 
-@interface BasicVideoCell ()
+@interface BasicVideoCell () <BitrateViewDelegate>
 {
     UIImageView *bgdView;
     
@@ -32,6 +34,7 @@
     UIButton *playBtn;
     UIButton *closeBtn;
     UIButton *landscapeBtn;//横屏按钮
+    UIButton *bitrateBtn;
     
     UIView *sideBar;
     
@@ -39,7 +42,9 @@
 
     CGRect originFrame;//videoWnd的原始frame
     
+    BitrateView *bitrateView;
     
+    UIImageView *videoMaxView;//视频转发达到最大数
 }
 
 @end
@@ -58,9 +63,7 @@
         [self addSubview:bgdView];
         bgdView.userInteractionEnabled = YES;
 
-        
-
-        
+   
         videoWnd = [[VideoWnd alloc] initWithFrame:CGRectMake(VideoWndMargin, VideoWndMargin, CGRectGetWidth(bgdView.frame)-2*VideoWndMargin, CGRectGetHeight(bgdView.frame)-2*VideoWndMargin)];
         videoWnd.backgroundColor = [UIColor blackColor];
   
@@ -88,23 +91,51 @@
     
         playBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         
-        //注册登出通知
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLogout:) name:LogoutNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 
         sideBar = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(videoWnd.frame)-SIDE_BAR_WIDTH, 0, SIDE_BAR_WIDTH, CGRectGetHeight(videoWnd.frame))];
         sideBar.backgroundColor = [UIColor clearColor];
         sideBar.userInteractionEnabled = YES;
         [videoWnd addSubview:sideBar];
-//        sideBar.hidden = YES;
-        sideBar.alpha = 0.0;
+       sideBar.hidden = YES;
+
         sideBar.autoresizingMask = UIViewAutoresizingFlexibleHeight |  UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
         sideBar.autoresizesSubviews = YES;
+        
+        
+        CGFloat btnMargin = 4;
+        
+        //视频质量选择按钮
+       bitrateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        CGFloat bitrateBtnW = 60;
+        CGFloat bitrateBtnH = 32;
+        bitrateBtn.frame = CGRectMake(CGRectGetMinX(sideBar.frame)-bitrateBtnW-14, btnMargin, bitrateBtnW, bitrateBtnH);
+//        [bitrateBtn setBackgroundImage:[UIImage imageNamed:@"VideoCloseNormal"] forState:UIControlStateNormal];
+//        [bitrateBtn setBackgroundImage:[UIImage imageNamed:@"VideoCloseHl"] forState:UIControlStateHighlighted];
+        [bitrateBtn setTitle:@"清晰" forState:UIControlStateNormal];
+        [bitrateBtn addTarget:self action:@selector(changeBitRate:) forControlEvents:UIControlEventTouchUpInside];
+        [videoWnd addSubview:bitrateBtn];
+        bitrateBtn.hidden = YES;
 
+        [self setBitrateBtnState:UIControlStateNormal];
+        bitrateBtn.layer.cornerRadius = 5;
+        bitrateBtn.layer.borderWidth = 1;
+        bitrateBtn.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+
+        
+        bitrateView = [[BitrateView alloc] initWithText:@[@"清晰",@"流畅"]];
+        CGRect tempFrame = bitrateView.frame;
+        tempFrame.origin.x = CGRectGetMinX(bitrateBtn.frame) - (CGRectGetWidth(bitrateView.frame)- CGRectGetWidth(bitrateBtn.frame))/2;
+        tempFrame.origin.y = CGRectGetMaxY(bitrateBtn.frame)+10;
+        bitrateView.frame = tempFrame;
+        bitrateView.delegate = self;
+        [videoWnd addSubview:bitrateView];
+        bitrateView.hidden = YES;
+        bitrateView.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin  | UIViewAutoresizingFlexibleBottomMargin;
+        bitrateView.selectedIndex = 0;
         
         //关闭视频按钮
         closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        closeBtn.frame = CGRectMake(0, 10, SIDE_BAR_WIDTH, SIDE_BAR_WIDTH);
+        closeBtn.frame = CGRectMake(0, btnMargin, SIDE_BAR_WIDTH, SIDE_BAR_WIDTH);
         [closeBtn setImage:[UIImage imageNamed:@"VideoCloseNormal"] forState:UIControlStateNormal];
         [closeBtn setImage:[UIImage imageNamed:@"VideoCloseHl"] forState:UIControlStateHighlighted];
         [closeBtn setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
@@ -117,7 +148,7 @@
         
         //全屏按钮
         landscapeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        landscapeBtn.frame = CGRectMake(0, CGRectGetHeight(sideBar.frame)-SIDE_BAR_WIDTH-10, SIDE_BAR_WIDTH, SIDE_BAR_WIDTH);
+        landscapeBtn.frame = CGRectMake(0, CGRectGetHeight(sideBar.frame)-SIDE_BAR_WIDTH-btnMargin, SIDE_BAR_WIDTH, SIDE_BAR_WIDTH);
         [landscapeBtn setImage:[UIImage imageNamed:@"FullScreenNormal"] forState:UIControlStateNormal];
         [landscapeBtn setImage:[UIImage imageNamed:@"FullScreenHl"] forState:UIControlStateHighlighted];
         [landscapeBtn setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
@@ -126,6 +157,8 @@
         landscapeBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         //landscapeBtn.backgroundColor = [UIColor redColor];
         
+        
+        [self registerNotification];
     }
     return self;
 }
@@ -143,13 +176,29 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
 }
 
+//注册通知
+- (void)registerNotification
+{
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLogout:) name:LogoutNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayVideoNtf:) name:PlayVideoNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
 
 
+- (void)handlePlayVideoNtf:(NSNotification *)ntf
+{
+    if (ntf.object != self) {
+        [self stopPlaying];
+    }
+}
 
 - (void)appDidEnterBackground:(NSNotification*)ntf
 {
@@ -160,47 +209,40 @@
 //登出 停止视频播放
 - (void)handleLogout:(NSNotification *)ntf
 {
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
 }
 
-- (void)showSideBar
+
+//显示视频控件
+- (void)showVideoContrl
 {
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     
-    [self performSelector:@selector(hideSideBar) withObject:nil afterDelay:HIDE_TIME];
+    [self performSelector:@selector(hideVideoContrl) withObject:nil afterDelay:HIDE_TIME];
     
-    sideBar.alpha = 0.0;
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        sideBar.alpha = 1.0;
-    }completion:^(BOOL f){
-//        sideBar.hidden = NO;
-    }];
-    
+    sideBar.hidden = NO;
+    bitrateBtn.hidden = NO;
     
 
 }
 
-- (void)hideSideBar
+
+
+//隐藏视频控件
+- (void)hideVideoContrl
 {
-    sideBar.alpha = 1.0;
+    sideBar.hidden = YES;
+    bitrateBtn.hidden = YES;
+    bitrateView.hidden = YES;
+    [self setBitrateBtnState:UIControlStateNormal];
     
-    [UIView animateWithDuration:0.2 animations:^{
-        sideBar.alpha = 0.0;
-    }completion:^(BOOL f){
-//        sideBar.hidden = YES;
-    }];
+
 }
 
-- (void)showPlay
-{
-    sideBar.alpha = 0.0;
-    
-    playBtn.hidden = NO;
-}
+
 
 - (void)stopPlaying
 {
@@ -208,21 +250,22 @@
     //关闭视频可以自动锁屏
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
     
 
     self.isPlaying = NO;
     
-    [self showPlay];
+    [self hideVideoContrl];
+    playBtn.hidden = NO;
     
 }
 
 //播放
 - (void)playVideo
 {
-    
+#ifndef INVALID_VIDEO    
     playBtn.hidden = YES;
     
     //播放视频
@@ -235,15 +278,57 @@
     NSString *url = [(SHVideoDevice *)_device videoUrl];
     NSString *pubUrl = [(SHVideoDevice *)_device pubVideoUrl];
     
-    
-#ifndef SIMULATOR
-    
+
     MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self];
     [self addSubview:tempHud];
     tempHud.removeFromSuperViewOnHide = YES;
     tempHud.mode = MBProgressHUDModeIndeterminate;
     [tempHud show:YES];
     
+    
+    [[NetAPIClient sharedClient] queryIpcVideoCount:self.device successCallback:^(BOOL max)
+     {
+         
+         if (max) {
+             if (!videoMaxView)
+             {
+                 CGFloat width = 205;
+                 CGFloat height = 90;
+                 videoMaxView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(videoWnd.bounds)-width)/2, (CGRectGetHeight(videoWnd.bounds)-height)/2, width, height)];
+                 videoMaxView.image = [UIImage imageNamed:@"VideoCountMax"];
+                 [videoWnd addSubview: videoMaxView];
+                 
+                 CGFloat tipHeight = 30;
+                 UILabel *tip = [[UILabel alloc] initWithFrame:CGRectMake(0, (height-tipHeight)/2, width, tipHeight)];
+                 tip.text = @"远程视频转发资源已满!";
+                 [videoMaxView addSubview:tip];
+                 tip.font = [UIFont systemFontOfSize:16];
+                 tip.textColor = [UIColor whiteColor];
+                 tip.backgroundColor = [UIColor clearColor];
+                 tip.textAlignment = NSTextAlignmentCenter;
+             }
+         }
+         
+     }failureCallback:^{
+         NSLog(@"查询视频转发数失败");
+     }];
+    
+    [[NetAPIClient sharedClient] getIpcBitrate:self.device successCallback:^(VideoQuality grade)
+     {
+         if (grade == VideoQualityClear) {
+             [bitrateBtn setTitle:@"清晰" forState:UIControlStateNormal];
+             [bitrateView setSelectedIndex:0];
+         }
+         else {
+             [bitrateBtn setTitle:@"流畅" forState:UIControlStateNormal];
+             [bitrateView setSelectedIndex:1];
+         }
+         
+     }failureCallback:^{
+         NSLog(@"获取视频码流失败");
+     }];
+    
+
     if (url) {
         int ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[url UTF8String] :fplayScale];
         if (ret == 1) {//打开视频成功
@@ -285,9 +370,13 @@
     
     [tempHud hide:YES];
     
-#endif
+
     
-    [self showSideBar];
+    [self showVideoContrl];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+    
+#endif
 }
 
 
@@ -295,13 +384,13 @@
 - (void)tapBgdView
 {
     if (self.isPlaying) {
-//        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideSideBar) object:nil];
-        if (sideBar.alpha == 0)
+
+        if (sideBar.hidden)
         {
-            [self showSideBar];
+            [self showVideoContrl];
         }
         else {
-            [self hideSideBar];
+            [self hideVideoContrl];
         }
         
     }
@@ -418,6 +507,59 @@
     closeBtnF.size = CGSizeMake(SIDE_BAR_WIDTH, SIDE_BAR_WIDTH);
     closeBtn.frame = closeBtnF;
 
+}
+
+
+- (void)changeBitRate:(UIButton *)sender
+{
+
+    [self setBitrateBtnState:UIControlStateSelected];
+    
+//    bitrateView.selectedIndex = VideoQualityClear;
+    bitrateView.hidden = NO;
+    
+
+}
+
+- (void)setBitrateBtnState:(UIControlState)state
+{
+    if (state == UIControlStateNormal) {
+        [bitrateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        bitrateBtn.backgroundColor = [UIColor colorWithRed:127/255. green:127/255. blue:127/255. alpha:1];
+        bitrateBtn.layer.borderColor = [UIColor colorWithRed:166/255. green:166/255. blue:166/255. alpha:1].CGColor;
+    }
+    else if (state == UIControlStateSelected) {
+        [bitrateBtn setTitleColor:[UIColor colorWithRed:84/255. green:193/255. blue:12/255. alpha:1] forState:UIControlStateNormal];
+        bitrateBtn.backgroundColor = [UIColor colorWithRed:38/255. green:38/255. blue:38/255. alpha:1];
+        bitrateBtn.layer.borderColor = [UIColor colorWithRed:84/255. green:193/255. blue:12/255. alpha:1].CGColor;
+    }
+    
+}
+
+
+
+- (void)bitrateView:(BitrateView *)brView didSelectAtIndex:(NSInteger)index
+{
+
+    if (index == VideoQualityClear) {
+        [bitrateBtn setTitle:@"清晰" forState:UIControlStateNormal];
+    }
+    else {
+        [bitrateBtn setTitle:@"流畅" forState:UIControlStateNormal];
+    }
+    
+    [self setBitrateBtnState:UIControlStateNormal];
+    
+    
+    [[NetAPIClient sharedClient] setIpcBitrate:self.device quality:index successCallback:^{
+        NSLog(@"设置码流 %d 成功",index);
+        
+        bitrateView.hidden = YES;
+    }failureCallback:^{
+        [self showCtrlFailedHint];
+        
+        bitrateView.hidden = YES;
+    }];
 }
 
 @end

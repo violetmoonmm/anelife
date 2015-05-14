@@ -97,6 +97,7 @@ int CBaseClient::Stop()
         ERROR_TRACE("stop thread failed.");
         return -1;
     }
+    
     return 0;
 }
 
@@ -288,12 +289,14 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
         }
 #else
         void *result;
-        pthread_join(m_hWorkThread,&result);
         pthread_join(m_hThread,&result);
+        pthread_join(m_hWorkThread,&result);
 #endif
         
         m_hThread = 0;
         m_hWorkThread = 0;
+        
+        INFO_TRACE("StopThread!!!");
         
         return 0;
     }
@@ -461,6 +464,12 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
         {
             //WARN_TRACE("select timeout!"<<" m_sSock="<<m_sSock);
             //continue;
+            return;
+        }
+        
+        //¥¶¿Ì√ø∏ˆª·ª∞
+        if ( FCL_INVALID_SOCKET == m_sSock )
+        {
             return;
         }
         
@@ -1428,7 +1437,7 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                 {
                     //INFO_TRACE("event code not process now.eventcode="<<strEventCode);
                 }
-                else if ( strEventCode == "VideoTalk") //∫ÙΩ–
+                else if ( strEventCode == "RequestOpenDoor") //∫ÙΩ–
                 {
                 }
                 else
@@ -1598,17 +1607,17 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                         //INFO_TRACE("event notify end");
                     }
                 }
-                else if ( strEventCode == "VideoTalk") //∫ÙΩ–
+                else if ( strEventCode == "RequestOpenDoor") //∫ÙΩ–
                 {
                     if ( m_cbOnEventNotify )
                     {
                         Json::Value jsonEvent;
-                        jsonEvent["Type"]="VideoTalk";
-                        jsonEvent["Action"]="VideoTalk";
+                        jsonEvent["Type"]="RequestOpenDoor";
+                        jsonEvent["Action"]="RequestOpenDoor";
                         jsonEvent["Data"]=jsEvent["Data"].toUnStyledString();
                         std::string strEvent = jsonEvent.toUnStyledString();
                         INFO_TRACE("event notify: strEvent="<<strEvent);
-                        m_cbOnEventNotify(uiLoginId,emAlarm,(char*)strEvent.c_str(),m_pEventNotifyUser);
+                        m_cbOnEventNotify(uiLoginId,emRequestOpenDoor,(char*)strEvent.c_str(),m_pEventNotifyUser);
                         //INFO_TRACE("event notify end");
                     }
                 }
@@ -1799,7 +1808,7 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                 jsonEvent["Data"]["LocalPath"]=m_strLocalPath;
                 jsonEvent["Data"]["Result"]=bResult;
                 std::string strEvent = jsonEvent.toUnStyledString();
-                INFO_TRACE("event notify: strEvent="<<strEvent);
+                INFO_TRACE("event notify: uiLoginId="<<uiLoginId<<" strEvent="<<strEvent);
                 
                 m_uiDownReqId = 0;
                 m_strLocalPath = "";
@@ -3020,7 +3029,7 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
             {
                 if ( bRet )
                 {
-                    ERROR_TRACE("accessControl.openDoor ok.");
+                    INFO_TRACE("accessControl.openDoor ok.");
                 }
                 else
                 {
@@ -3269,12 +3278,17 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                         jsonEvent["Data"]["LocalPath"]=m_strLocalPath;
                         jsonEvent["Data"]["Result"]=true;
                         std::string strEvent = jsonEvent.toUnStyledString();
-                        INFO_TRACE("event notify: strEvent="<<strEvent);
                         
                         m_uiDownReqId = 0;
                         m_strLocalPath = "";
                         m_strShareFile = "";
-                        unsigned int uiLoginId = CDvrGeneral::Instance()->GetLoginId(strGwVCode);
+                        
+                        unsigned int uiLoginId = 0;
+                        if (m_uiLoginId != 0)
+                            uiLoginId = m_uiLoginId;
+                        else
+                            uiLoginId = CDvrGeneral::Instance()->GetLoginId(strGwVCode);
+                        INFO_TRACE("event notify: uiLoginId="<<uiLoginId<<" strEvent="<<strEvent);
                         m_cbOnEventNotify(uiLoginId,emDownFile,(char*)strEvent.c_str(),m_pEventNotifyUser);
                     }
                 }

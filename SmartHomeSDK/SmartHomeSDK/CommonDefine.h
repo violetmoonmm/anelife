@@ -134,6 +134,12 @@ typedef enum EMDevType
     
 };
 
+enum HttpParseStatus
+{
+    emStageIdle,
+    emStageHeader,
+    emStageContent,
+};
 
 //√˚◊÷-÷µ∂‘
 typedef struct

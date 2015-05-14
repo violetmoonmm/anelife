@@ -17,7 +17,7 @@
 #import "MBProgressHUD.h"
 #import "PublicDefine.h"
 #import "PopInputView.h"
-
+#import "BitrateView.h"
 
 #define NAV_TITLE_FONT ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 18 : 24)
 
@@ -33,7 +33,7 @@
 
 @interface VideoMonitorViewController ()
 
-- (void)hideSideBar;
+- (void)hideVideoContrl;
 
 @end
 
@@ -70,6 +70,10 @@
     CGRect originFrame;
     
     BOOL isPlaying;
+    
+    BitrateView *bitrateView;
+    UIImageView *videoMaxView;//视频转发达到最大数
+    UIButton *bitrateBtn;
 }
 
 @end
@@ -82,9 +86,8 @@
     if (self) {
         // Custom initialization
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStatusChangeNtf:) name:DeviceStatusChangeNotification object:nil];
+
+        [self registerNotification];
    
         videoDevices = [NSMutableArray arrayWithCapacity:1];
     }
@@ -109,8 +112,6 @@
     
     
     [Util unifyGoBackButtonWithTarget:self selector:@selector(goBack:)];
-    
-    
     
     
 //    for (SHGateway *gateway in [NetAPIClient sharedClient].gatewayList)
@@ -174,10 +175,28 @@
     sideBar.backgroundColor = [UIColor clearColor];
     sideBar.userInteractionEnabled = YES;
     [videoWnd addSubview:sideBar];
-    sideBar.alpha = 0;
+    sideBar.hidden = YES;
     sideBar.autoresizingMask = UIViewAutoresizingFlexibleHeight |  UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin;
     sideBar.autoresizesSubviews = YES;
     
+    
+    CGFloat btnMargin = 4;
+    //视频质量选择按钮
+    bitrateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat bitrateBtnW = 60;
+    CGFloat bitrateBtnH = 32;
+    bitrateBtn.frame = CGRectMake(CGRectGetMinX(sideBar.frame)-bitrateBtnW-14, btnMargin, bitrateBtnW, bitrateBtnH);
+    //        [bitrateBtn setBackgroundImage:[UIImage imageNamed:@"VideoCloseNormal"] forState:UIControlStateNormal];
+    //        [bitrateBtn setBackgroundImage:[UIImage imageNamed:@"VideoCloseHl"] forState:UIControlStateHighlighted];
+    [bitrateBtn setTitle:@"清晰" forState:UIControlStateNormal];
+    [bitrateBtn addTarget:self action:@selector(changeBitRate:) forControlEvents:UIControlEventTouchUpInside];
+    [videoWnd addSubview:bitrateBtn];
+    bitrateBtn.hidden = YES;
+    
+    [self setBitrateBtnState:UIControlStateNormal];
+    bitrateBtn.layer.cornerRadius = 5;
+    bitrateBtn.layer.borderWidth = 1;
+    bitrateBtn.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
 
     //关闭视频按钮
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -224,13 +243,91 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self ];
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
+
+//注册通知
+- (void)registerNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleStatusChangeNtf:) name:DeviceStatusChangeNotification object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLogout:) name:LogoutNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayVideoNtf:) name:PlayVideoNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)changeBitRate:(UIButton *)sender
+{
+    
+    [self setBitrateBtnState:UIControlStateSelected];
+    
+    //    bitrateView.selectedIndex = VideoQualityClear;
+    bitrateView.hidden = NO;
+    
+    
+}
+
+- (void)setBitrateBtnState:(UIControlState)state
+{
+    if (state == UIControlStateNormal) {
+        [bitrateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        bitrateBtn.backgroundColor = [UIColor colorWithRed:127/255. green:127/255. blue:127/255. alpha:1];
+        bitrateBtn.layer.borderColor = [UIColor colorWithRed:166/255. green:166/255. blue:166/255. alpha:1].CGColor;
+    }
+    else if (state == UIControlStateSelected) {
+        [bitrateBtn setTitleColor:[UIColor colorWithRed:84/255. green:193/255. blue:12/255. alpha:1] forState:UIControlStateNormal];
+        bitrateBtn.backgroundColor = [UIColor colorWithRed:38/255. green:38/255. blue:38/255. alpha:1];
+        bitrateBtn.layer.borderColor = [UIColor colorWithRed:84/255. green:193/255. blue:12/255. alpha:1].CGColor;
+    }
+    
+}
+
+
+
+- (void)bitrateView:(BitrateView *)brView didSelectAtIndex:(NSInteger)index
+{
+    
+    if (index == VideoQualityClear) {
+        [bitrateBtn setTitle:@"清晰" forState:UIControlStateNormal];
+    }
+    else {
+        [bitrateBtn setTitle:@"流畅" forState:UIControlStateNormal];
+    }
+    
+    [self setBitrateBtnState:UIControlStateNormal];
+    
+    SHVideoDevice *currentVideoDevice = [videoDevices objectAtIndex:videoIndex];
+    
+    [[NetAPIClient sharedClient] setIpcBitrate:currentVideoDevice quality:index successCallback:^{
+        NSLog(@"设置码流 %d 成功",index);
+        
+        bitrateView.hidden = YES;
+    }failureCallback:^{
+        [self showCtrlFailedHint];
+        
+        bitrateView.hidden = YES;
+    }];
+}
+
+- (void)showCtrlFailedHint
+{
+    
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+    [[UIApplication sharedApplication].keyWindow addSubview:hud];
+    hud.removeFromSuperViewOnHide = YES;
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"控制失败！";
+    [hud show:YES];
+    
+    [hud hide:YES afterDelay:1.0];
+}
 
 
 - (void)setAnchorPoint:(CGPoint)anchorpoint forView:(UIView *)view{
@@ -281,7 +378,7 @@
 
 - (void)playVideoAtIndex:(NSInteger)index
 {
-  
+#ifndef INVALID_VIDEO  
     playView.hidden = YES;
     
     float fplayScale = 1.0;
@@ -302,14 +399,57 @@
     
     
     NSLog(@"play video url:%@ pubUrl:%@",url,pubUrl);
-    
-    
-#ifndef SIMULATOR
+
+
     MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:tempHud];
     tempHud.removeFromSuperViewOnHide = YES;
     tempHud.mode = MBProgressHUDModeIndeterminate;
     [tempHud show:YES];
+    
+    SHVideoDevice *currentVideoDevice = [videoDevices objectAtIndex:videoIndex];
+    
+    [[NetAPIClient sharedClient] queryIpcVideoCount:currentVideoDevice successCallback:^(BOOL max)
+     {
+         
+         if (max) {
+             if (!videoMaxView)
+             {
+                 CGFloat width = 205;
+                 CGFloat height = 90;
+                 videoMaxView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(videoWnd.bounds)-width)/2, (CGRectGetHeight(videoWnd.bounds)-height)/2, width, height)];
+                 videoMaxView.image = [UIImage imageNamed:@"VideoCountMax"];
+                 [videoWnd addSubview: videoMaxView];
+                 
+                 CGFloat tipHeight = 30;
+                 UILabel *tip = [[UILabel alloc] initWithFrame:CGRectMake(0, (height-tipHeight)/2, width, tipHeight)];
+                 tip.text = @"远程视频转发资源已满!";
+                 [videoMaxView addSubview:tip];
+                 tip.font = [UIFont systemFontOfSize:16];
+                 tip.textColor = [UIColor whiteColor];
+                 tip.backgroundColor = [UIColor clearColor];
+                 tip.textAlignment = NSTextAlignmentCenter;
+             }
+         }
+         
+     }failureCallback:^{
+         NSLog(@"查询视频转发数失败");
+     }];
+    
+    [[NetAPIClient sharedClient] getIpcBitrate:currentVideoDevice successCallback:^(VideoQuality grade)
+     {
+         if (grade == VideoQualityClear) {
+             [bitrateBtn setTitle:@"清晰" forState:UIControlStateNormal];
+             [bitrateView setSelectedIndex:0];
+         }
+         else {
+             [bitrateBtn setTitle:@"流畅" forState:UIControlStateNormal];
+             [bitrateView setSelectedIndex:1];
+         }
+         
+     }failureCallback:^{
+         NSLog(@"获取视频码流失败");
+     }];
     
     if (url) {
         int ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[url UTF8String]:fplayScale];
@@ -351,10 +491,10 @@
     
     [tempHud hide:YES];
     
-#endif
-    
-    [self showSideBar];
+    [self showVideoContrl];
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+#endif
 }
 
 
@@ -364,7 +504,7 @@
     //关闭视频可以自动锁屏
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
     
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
     
@@ -373,6 +513,9 @@
     
     playView.hidden = NO;
     
+    [self hideVideoContrl];
+
+    
 }
 
 
@@ -380,17 +523,12 @@
 {
     if (isPlaying) {
 
-        if (sideBar.alpha == 0)
+        if (sideBar.hidden)
         {
-            [self showSideBar];
-            
-            if(sideBar.hidden)
-            {
-                NSLog(@"side bar hidden when alpha == 1");
-            }
+            [self showVideoContrl];
         }
         else {
-            [self hideSideBar];
+            [self hideVideoContrl];
         }
     }
     else {
@@ -399,33 +537,24 @@
     }
 }
 
-- (void)showSideBar
+- (void)showVideoContrl
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideSideBar) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideVideoContrl) object:nil];
     
-    [self performSelector:@selector(hideSideBar) withObject:nil afterDelay:HIDE_TIME];
-    
-    sideBar.alpha = 0.0;
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        sideBar.alpha = 1.0;
-    }completion:^(BOOL f){
-//        sideBar.hidden = NO;
-    }];
+    [self performSelector:@selector(hideVideoContrl) withObject:nil afterDelay:HIDE_TIME];
     
     
+    sideBar.hidden = NO;
+    bitrateBtn.hidden = NO;
 
 }
 
-- (void)hideSideBar
+- (void)hideVideoContrl
 {
-    sideBar.alpha = 1.0;
+    sideBar.hidden = YES;
+    bitrateBtn.hidden = YES;
+    bitrateView.hidden = YES;
     
-    [UIView animateWithDuration:0.2 animations:^{
-        sideBar.alpha = 0.0;
-    }completion:^(BOOL f){
-//        sideBar.hidden = YES;
-    }];
 }
 
 - (void)playFullScreenVideo
@@ -731,7 +860,7 @@
 - (void)appDidEnterBackground:(NSNotification*)ntf
 {
     NSLog(@"appDidEnterBackground");
-#ifndef SIMULATOR
+#ifndef INVALID_VIDEO
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
     
 #endif
@@ -749,6 +878,14 @@
         if (index != NSNotFound) {
             [channelView reloadItemAtIndex:index];
         }
+    }
+}
+
+
+- (void)handlePlayVideoNtf:(NSNotification *)ntf
+{
+    if (ntf.object != self) {
+        [self stopPlaying];
     }
 }
 

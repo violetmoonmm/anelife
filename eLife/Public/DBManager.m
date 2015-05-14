@@ -119,7 +119,7 @@
     
     
     //网关表
-    NSString *GATEWAY_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS gateway (id integer primary key autoincrement,vircode text ,name text,user text,pswd text,addr text,port integer,comm text,sn text , changeid text,position text,authcode text,ipcpublic bit,city text,isp text,grade integer); ";
+    NSString *GATEWAY_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS gateway (id integer primary key autoincrement,vircode text ,name text,user text,pswd text,addr text,port integer,comm text,sn text , changeid text,position text,authcode text,ipcpublic bit,city text,isp text,grade integer,ARMSAddr text,ARMSPort integer); ";
     [_db executeUpdate:GATEWAY_TABLE_CREATE_SQL];
 
     
@@ -615,7 +615,7 @@
     
     for (SHGateway *gateway in gateways) {
         
-    [_db executeUpdate:@"INSERT INTO gateway (vircode, name,user,pswd,addr,port,comm,sn,changeid,position,authcode,ipcpublic,city,isp,grade) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",gateway.virtualCode,gateway.name,gateway.user,gateway.pswd,gateway.addr,[NSNumber numberWithInt:gateway.port],gateway.commName,gateway.serialNumber,gateway.changeId,gateway.position,gateway.authCode,gateway.IPCPublic,gateway.city,gateway.ISP,[NSNumber numberWithInt:gateway.grade]];
+    [_db executeUpdate:@"INSERT INTO gateway (vircode, name,user,pswd,addr,port,comm,sn,changeid,position,authcode,ipcpublic,city,isp,grade,ARMSAddr,ARMSPort) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",gateway.virtualCode,gateway.name,gateway.user,gateway.pswd,gateway.addr,[NSNumber numberWithInt:gateway.port],gateway.commName,gateway.serialNumber,gateway.changeId,gateway.position,gateway.authCode,gateway.IPCPublic,gateway.city,gateway.ISP,[NSNumber numberWithInt:gateway.grade],gateway.ARMSAddr,[NSNumber numberWithInt:gateway.ARMSPort]];
     }
     
     [_db commit];
@@ -623,7 +623,7 @@
 
 - (void)addGateway:(SHGateway *)gateway
 {
-    [_db executeUpdate:@"INSERT INTO gateway (vircode, name,user,pswd,addr,port,comm,sn,changeid,position,authcode,ipcpublic,city,isp,grade) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",gateway.virtualCode,gateway.name,gateway.user,gateway.pswd,gateway.addr,[NSNumber numberWithInt:gateway.port],gateway.commName,gateway.serialNumber,gateway.changeId,gateway.position,gateway.authCode,gateway.IPCPublic,gateway.city,gateway.ISP,[NSNumber numberWithInt:gateway.grade]];
+    [_db executeUpdate:@"INSERT INTO gateway (vircode, name,user,pswd,addr,port,comm,sn,changeid,position,authcode,ipcpublic,city,isp,grade,ARMSAddr,ARMSPort) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",gateway.virtualCode,gateway.name,gateway.user,gateway.pswd,gateway.addr,[NSNumber numberWithInt:gateway.port],gateway.commName,gateway.serialNumber,gateway.changeId,gateway.position,gateway.authCode,gateway.IPCPublic,gateway.city,gateway.ISP,[NSNumber numberWithInt:gateway.grade],gateway.ARMSAddr,[NSNumber numberWithInt:gateway.ARMSPort]];
 
 }
 
@@ -844,6 +844,8 @@
         record.city = [rs stringForColumn:@"city"];
         record.ISP = [rs stringForColumn:@"isp"];
         record.grade = [rs intForColumn:@"grade"];
+        record.ARMSAddr = [rs stringForColumn:@"ARMSAddr"];
+        record.ARMSPort = [rs intForColumn:@"ARMSPort"];
         
         [tempArray addObject:record];
         

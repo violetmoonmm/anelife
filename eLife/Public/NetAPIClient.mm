@@ -43,8 +43,8 @@
 #define BUFFER_SIZE 102400 //buffer
 
 //#define SERVER_DOMAIN @"www.dahuayun.com"
-//#define SERVER_DOMAIN @"www.dahuaweb.com"
-#define SERVER_DOMAIN @"www.aesyun.com"
+#define SERVER_DOMAIN @"www.dahuaweb.com"
+//#define SERVER_DOMAIN @"www.aesyun.com"
 
 #define MQ_TOPIC_PUBLIC @"zw.public.all.receive.info" //MQ主题 公共消息
 #define MQ_TOPIC_ALARM @"zw.public.single.receive" //MQ主题 报警消息
@@ -120,6 +120,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     
     NSInteger _shTaskStep;
     
+    
+    int tempLoginID;//呼叫转移网关loginid
+    NSString *vtoID;//门口机id
 }
 
 
@@ -397,7 +400,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     });
 }
 
-- (void)userRegister:(NSString *)user pswd:(NSString *)pswd email:(NSString *)email successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback
+- (void)userRegister:(NSString *)user pswd:(NSString *)pswd email:(NSString *)email authCode:(NSString *)authCode  authCodeText:(NSString *)authCodeText successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback
 {
     __weak __typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -408,7 +411,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 
         
         int ret;
-        if (0 ==  (ret = ICRC_Http_RegisterAccount([self->_serverAddr UTF8String], self->_serverPort, [user UTF8String], [email UTF8String], [pswd UTF8String]))) {
+        if (0 ==  (ret = ICRC_Http_RegisterAccount([self->_serverAddr UTF8String], self->_serverPort, [user UTF8String], [email UTF8String], [pswd UTF8String], [authCode UTF8String], [authCodeText UTF8String], "", ""))) {
             
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -474,6 +477,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                     [User currentUser].virtualCode = [NSString stringWithUTF8String:conn->sVirtualCode];
                     [User currentUser].city = [NSString stringWithUTF8String:conn->sCity];
                     [User currentUser].ISP = [NSString stringWithUTF8String:conn->sISP];
+                    [User currentUser].authCodeText = [NSString stringWithUTF8String:conn->sAuthCodeText];
                     
                     char *token = conn->sToken;
                     NSLog(@"return token %s",token);
@@ -635,14 +639,15 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
         
         [self redirect];
         
-        char resetCode[100] = {0};
+        char authCodeSeed[100] = {0};
+        char authCodeIndex[100] = {0};
         char smsNum[100] = {0};
-        int err = ICRC_Http_PasswordRestorePrepare([_serverAddr UTF8String], _serverPort, [user UTF8String], resetCode, smsNum);
+        int err = ICRC_Http_PasswordRestorePrepare([_serverAddr UTF8String], _serverPort, [user UTF8String], authCodeSeed, authCodeIndex, smsNum);
         if (0 == err) {
-            NSString *strResCode = [NSString stringWithUTF8String:resetCode];
-    
+            NSString *strAuthCodeSeed = [NSString stringWithUTF8String:authCodeSeed];
+            NSString *strAuthCodeSeedIndex = [NSString stringWithUTF8String:authCodeIndex];
             NSString *strSmsNum = [NSString stringWithUTF8String:smsNum];
-            NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:strResCode,@"ResetCode",strSmsNum,@"SMSNum", nil];
+            NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:strAuthCodeSeed,@"AuthCodeSeed",strAuthCodeSeedIndex,@"AuthCodeSeedIndex",strSmsNum,@"SMSNum", nil];
             
             if (successCallback) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -662,11 +667,11 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 }
 
 //发送重置密码
-- (void)resetPasswordWithUser:(NSString *)user pswd:(NSString *)pswd verifCode:(NSString *)verifCode successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback
+- (void)resetPasswordWithUser:(NSString *)user pswd:(NSString *)pswd successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
 
-        int err = ICRC_Http_PasswordRestore([_serverAddr UTF8String], _serverPort, [user UTF8String], [verifCode UTF8String], [pswd UTF8String]);
+        int err = ICRC_Http_PasswordRestore([_serverAddr UTF8String], _serverPort, [user UTF8String], [pswd UTF8String]);
         
         if (err == 0) {
             if (successCallback) {
@@ -684,6 +689,31 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
         }
     });
     
+}
+
+//重置身份识别码
+- (void)resetAuthCodeWithUser:(NSString *)user pswd:(NSString *)pswd  authCode:(NSString *)authCode successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        int err = ICRC_Http_PatchAuthCode([_serverAddr UTF8String], _serverPort, [user UTF8String], [pswd UTF8String],[authCode UTF8String]);
+        
+        if (err == 0) {
+            if (successCallback) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successCallback();
+                });
+            }
+        }
+        else if (failureCallback)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureCallback(err);
+            });
+            
+        }
+    });
+
 }
 
 - (void)retrievePassword:(NSString *)user email:(NSString *)email successCallback:(void (^)(void))successCallback failureCallback:(void (^)(int errCode))failureCallback
@@ -1086,6 +1116,132 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 }
 
 
+//查询ipc码流
+- (void)getIpcBitrate:(SHDevice *)device successCallback:(void (^)(VideoQuality grade))successCallback failureCallback:(void (^)(void))failureCallback
+{
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        SHGateway *gateway = [self lookupGatewayById:device.gatewaySN];
+        int bitRate = 0;
+        VideoQuality grade;
+        if (SH_GetExtraBitrate(gateway.loginId, (char *)[device.serialNumber UTF8String], bitRate)) {
+            if (bitRate >= 256) {
+                grade = VideoQualityClear;
+            }
+            else {
+                grade = VideoQualityFluent;
+            }
+            
+            if (successCallback) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successCallback(grade);
+                    
+                });
+            }
+        }
+        else if (failureCallback)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureCallback();
+                
+            });
+        }
+    });
+    
+
+}
+
+//设置码流
+- (void)setIpcBitrate:(SHDevice *)device quality:(VideoQuality)quality successCallback:(void (^)(void))successCallback failureCallback:(void (^)(void))failureCallback
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        SHGateway *gateway = [self lookupGatewayById:device.gatewaySN];
+        int bitrate = 0;
+        if (quality == VideoQualityClear) {
+            bitrate = 256;
+        }
+        else {
+            bitrate = 100;
+        }
+        if (SH_SetExtraBitrate(gateway.loginId, (char *)[device.serialNumber UTF8String], bitrate)) {
+            if (successCallback) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successCallback();
+                    
+                });
+            }
+        }
+        else if (failureCallback)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                failureCallback();
+            });
+        }
+    });
+}
+
+
+
+- (void)queryIpcVideoCount:(SHDevice *)device successCallback:(void (^)(BOOL max))successCallback failureCallback:(void (^)(void))failureCallback
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        char buf[1024] = {0};
+        NSInteger result = -1;
+        BOOL max = NO;
+        SHGateway *gateway = [self lookupGatewayById:device.gatewaySN];
+   
+        NSDictionary *param = [NSDictionary dictionaryWithObject:gateway.serialNumber forKey:@"sn"];
+        NSError *error;
+        NSData *data = [NSJSONSerialization dataWithJSONObject:param options:0 error:&error];
+        NSString *strParam = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        if (HTTP_SimpleQuery((char *)[gateway.ARMSAddr UTF8String], gateway.ARMSPort, (char *)[[User currentUser].name UTF8String], (char *)[[User currentUser].password UTF8String], "GetRemoteMedia", (char *)[strParam UTF8String], buf, 1024)) {
+            
+            NSString *str = [NSString stringWithUTF8String:buf];
+            NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *err;
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+            if (dic) {
+                NSLog(@"%@",[dic description]);
+                
+                result = [[dic objectForKey:@"result"] integerValue];
+                if (result == 0) {//0 成功
+                    NSInteger maxCount = [[dic objectForKey:@"maxVideoCount"] integerValue];
+                    NSInteger currentCount = [[dic objectForKey:@"currentVideoCount"] integerValue];
+                    if (currentCount >= maxCount) {
+                        max = YES;
+                    }
+        
+                }
+            }
+            
+            
+        }
+        
+        if (result == 0)
+        {
+            if (successCallback) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successCallback(max);
+                    
+                });
+            }
+        }
+        else if (failureCallback)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                failureCallback();
+            });
+        }
+    });
+
+}
+
 - (void)queryIPCPublicInfo:(SHGateway *)gateway
 {
     NSLog(@"queryIPCPublicInfo %@",gateway.serialNumber);
@@ -1134,6 +1290,29 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     }
 }
 
+- (void)unlockSuccessCallback:(void(^)(void))successCallback
+              failureCallback:(void(^)(void))failureCallback
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+
+        if (SH_RemoteOpenDoor(tempLoginID, (char *)[vtoID UTF8String])) {
+            if (successCallback) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successCallback();
+                    
+                });
+            }
+        }
+        else if (failureCallback)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                failureCallback();
+            });
+        }
+    });
+}
 
 
 #pragma mark 获取配置
@@ -1374,6 +1553,8 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                     gateway.city = [NSString stringWithUTF8String:deviceDetail.sCity];
                     gateway.ISP = [NSString stringWithUTF8String:deviceDetail.sISP];
                     gateway.grade = deviceDetail.iGValue;
+                    gateway.ARMSAddr = [NSString stringWithUTF8String:deviceDetail.sARMSNetwork];
+                    gateway.ARMSPort = deviceDetail.iARMSPort;
                     
                     [[DBManager defaultManager] updateGateway:gateway];
                 }
@@ -4580,6 +4761,43 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 }
 
 #pragma mark 回调处理
+
+- (void)onCallRedirectCallBack:(unsigned int )loginId params:(NSDictionary *)params
+{
+     NSLog(@"onCallRedirectCallBack params %@",[params description]);
+    
+    tempLoginID = loginId;
+    
+    SHGateway *gateway = [self lookupGatewayByLoginId:loginId];
+    
+    NSString *strData = [params objectForKey:@"Data"];
+    
+    NSError *erro;
+    NSDictionary *dataDic = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:[strData dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&erro];
+    
+    vtoID = [dataDic objectForKey:@"RemoteID"];
+    
+    NSString *target = [dataDic objectForKey:@"Target"];
+
+    id ipc = nil;//门口机对应的ipc
+    
+    for (SHVideoDevice *device in gateway.ipcArray)
+    {
+        if ([device.ip isEqualToString:target]) {
+            ipc = device;
+            break;
+        }
+    }
+    
+    if (!ipc) {
+    
+        ipc = [NSNull null];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:CallRedirectNotification object:nil userInfo:[NSDictionary dictionaryWithObject:ipc forKey:CallRedirectIPCKey]];
+}
+
+
 - (void)onFileDownloadCallBack:(unsigned int )loginId params:(NSDictionary *)params
 {
     NSLog(@"onFileDownloadCallBack params %@",[params description]);
@@ -5219,6 +5437,8 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
             gateway.city = [NSString stringWithUTF8String:deviceDetail.sCity];
             gateway.ISP = [NSString stringWithUTF8String:deviceDetail.sISP];
             gateway.grade = deviceDetail.iGValue;
+            gateway.ARMSAddr = [NSString stringWithUTF8String:deviceDetail.sARMSNetwork];
+            gateway.ARMSPort = deviceDetail.iARMSPort;
             
             NSString *strAddr = [NSString stringWithUTF8String:deviceDetail.sNetAddr];
             if ([strAddr length] > 0) {
@@ -5432,6 +5652,8 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                 gateway.city = [NSString stringWithUTF8String:deviceDetail.sCity];
                 gateway.ISP = [NSString stringWithUTF8String:deviceDetail.sISP];
                 gateway.grade = deviceDetail.iGValue;
+                gateway.ARMSAddr = [NSString stringWithUTF8String:deviceDetail.sARMSNetwork];
+                gateway.ARMSPort = deviceDetail.iARMSPort;
             }
             
             gateway.loginId = SH_AddGateWay(gwInfo);
@@ -6023,6 +6245,9 @@ void OnEventNotify(unsigned int hLoginID,emEventType type,char * eventInfo,void 
         }
         else if (type == emDownFile) {
             [client onFileDownloadCallBack:hLoginID params:dic];
+        }
+        else if (type == emRequestOpenDoor) {
+            [client onCallRedirectCallBack:hLoginID params:dic];
         }
     });
     

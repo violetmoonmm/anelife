@@ -62,3 +62,8 @@ NSString *const GetGatewayConfigStepNotificationKey = @"GetGatewayConfigStepNoti
 
 NSString *const FileDownloadNotification = @"FileDownloadNotification";//下载文件通知
 //NSString *const FileDownloadNotificationDataKey = @"FileDownloadNotificationDataKey";//下载文件通知数据key
+
+NSString *const CallRedirectNotification = @"MQRecvCallRedirectNotification";//呼叫转移
+NSString *const CallRedirectIPCKey = @"CallRedirectIPCKey";//呼叫转移ipc
+
+NSString *const PlayVideoNotification = @"PlayVideoNotification";//视频播放通知

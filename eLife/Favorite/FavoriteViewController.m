@@ -118,6 +118,7 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
+    
 
     if (![Util clientIsLastVersion]) {
         [(CustomTabBarController *)((AppDelegate *)[UIApplication sharedApplication].delegate).tabBarController displayTrackPoint:YES atIndex:3];

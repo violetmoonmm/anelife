@@ -22,7 +22,7 @@
 #define VT_UNIX
 
 
-//模拟器
-//#define SIMULATOR
+//禁止视频
+//#define INVALID_VIDEO
 
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F54764A21AFE02B900860D8C /* WebsClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = F54764A01AFE02B800860D8C /* WebsClient.mm */; };
+		F54764A31AFE02B900860D8C /* WebsClient.h in Headers */ = {isa = PBXBuildFile; fileRef = F54764A11AFE02B900860D8C /* WebsClient.h */; };
 		F569CFDA1A4BF596007C514B /* Base64.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFC11A4BF596007C514B /* Base64.mm */; };
 		F569CFDB1A4BF596007C514B /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = F569CFC21A4BF596007C514B /* Base64.h */; };
 		F569CFDC1A4BF596007C514B /* BaseClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = F569CFC31A4BF596007C514B /* BaseClient.mm */; };
@@ -41,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F54764A01AFE02B800860D8C /* WebsClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WebsClient.mm; sourceTree = "<group>"; };
+		F54764A11AFE02B900860D8C /* WebsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebsClient.h; sourceTree = "<group>"; };
 		F569CFB31A4BF52D007C514B /* libSmartHomeSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSmartHomeSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F569CFC11A4BF596007C514B /* Base64.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Base64.mm; sourceTree = "<group>"; };
 		F569CFC21A4BF596007C514B /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
@@ -108,6 +112,8 @@
 		F569CFC01A4BF596007C514B /* SmartHomeSDK */ = {
 			isa = PBXGroup;
 			children = (
+				F54764A01AFE02B800860D8C /* WebsClient.mm */,
+				F54764A11AFE02B900860D8C /* WebsClient.h */,
 				F59C4AC71A4E7BE600B94FDA /* MultiCast.mm */,
 				F59C4AC81A4E7BE600B94FDA /* MultiCast.h */,
 				F5B0F46F1A5BC8E70078CC84 /* aes.mm */,
@@ -158,6 +164,7 @@
 				F569CFE31A4BF596007C514B /* DvipMsg.h in Headers */,
 				F569CFED1A4BF596007C514B /* MuteX.h in Headers */,
 				F59C4ACA1A4E7BE600B94FDA /* MultiCast.h in Headers */,
+				F54764A31AFE02B900860D8C /* WebsClient.h in Headers */,
 				F569CFF21A4BF596007C514B /* Trace.h in Headers */,
 				F569CFEB1A4BF596007C514B /* MD5Inc.h in Headers */,
 				F569CFDB1A4BF596007C514B /* Base64.h in Headers */,
@@ -233,6 +240,7 @@
 				F569CFDC1A4BF596007C514B /* BaseClient.mm in Sources */,
 				F569CFF01A4BF596007C514B /* ShApi.mm in Sources */,
 				F569CFEA1A4BF596007C514B /* MD5Impl.mm in Sources */,
+				F54764A21AFE02B900860D8C /* WebsClient.mm in Sources */,
 				F569CFEC1A4BF596007C514B /* MuteX.mm in Sources */,
 				F569CFE61A4BF596007C514B /* ISClient.mm in Sources */,
 				F569CFE21A4BF596007C514B /* DvipMsg.mm in Sources */,

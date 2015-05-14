@@ -9,16 +9,11 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol AlarmViewControllerDelegate <NSObject>
-
-- (void)cancelAlarm;
-
-@end
 
 @interface AlarmViewController : UIViewController
 
 
 @property (nonatomic,strong) NSMutableArray *alarmRecords;
-@property (nonatomic,assign) id<AlarmViewControllerDelegate> delegate;
+
 
 @end

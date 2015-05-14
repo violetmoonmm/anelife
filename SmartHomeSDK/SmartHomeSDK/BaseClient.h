@@ -14,6 +14,15 @@
 #include "MD5Inc.h"
 #include "aes.h"
 
+enum EmStatus
+{
+    emNone,
+    emIdle,
+    emRegistering,
+    emRegistered,
+    emUnRegistered
+};
+
 
 typedef struct _EventInfo
 {
@@ -70,15 +79,6 @@ public:
 class CBaseClient
 {
 public:
-    
-    enum EmStatus
-    {
-        emNone,
-        emIdle,
-        emRegistering,
-        emRegistered,
-        emUnRegistered
-    };
     
     CBaseClient(void);
     virtual ~CBaseClient(void);
@@ -326,7 +326,6 @@ public:
         m_reqList.erase(it);
         return 1;
     }
-    
     
 private:
     /////////线程处理////////////
