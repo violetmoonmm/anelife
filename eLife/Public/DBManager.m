@@ -89,7 +89,8 @@
     
     //家庭信息表
      NSString  *const HOME_MSG_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS homemsg (id integer primary key autoincrement, msgid integer , type integer, time integer, fullContent text, pic text,thumbnail text,msgstatus integer); ";
-   BOOL bret = [_db executeUpdate:HOME_MSG_TABLE_CREATE_SQL];
+   
+    BOOL bret = [_db executeUpdate:HOME_MSG_TABLE_CREATE_SQL];
     if (!bret) {
         NSLog(@"can not create table");
     }
@@ -124,11 +125,9 @@
 
     
     //设备列表
-    NSString *REMOTE_DEVICE_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS device (id integer primary key autoincrement,sn text ,udn text, name text,roomid text,gatewaysn text, gatewayvc text,type text,cameraid text,ctrlurl text,servicetype text, serviceId text ,eventurl text,range text,icon text); ";
+    NSString *REMOTE_DEVICE_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS device (id integer primary key autoincrement,sn text ,udn text, name text,roomid text,gatewaysn text, gatewayvc text,type text,cameraid text,range text,icon text); ";
     [_db executeUpdate:REMOTE_DEVICE_TABLE_CREATE_SQL];
     
-    
-
     
     //房间列表
     NSString *REMOTE_ROOM_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS room (id integer primary key autoincrement,roomid text ,name text,floorid text,type integer,gatewaysn text,gatewayvc text); ";
@@ -141,29 +140,27 @@
     
     
     //报警防区表
-    NSString *REMOTE_ALARMZONE_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS alarmzone (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text,ctrlurl text,servicetype text, serviceId text ,eventurl text,sensortype text,sensormethod text); ";
+    NSString *REMOTE_ALARMZONE_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS alarmzone (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text,sensortype text,sensormethod text,ipcid text); ";
     [_db executeUpdate:REMOTE_ALARMZONE_TABLE_CREATE_SQL];
     
     
     //情景模式表
-    NSString *SCENE_MODE_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS scenemode (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text,ctrlurl text,servicetype text, serviceId text ,eventurl text,range text); ";
+    NSString *SCENE_MODE_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS scenemode (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text); ";
     [_db executeUpdate:SCENE_MODE_TABLE_CREATE_SQL];
     
     //ammeter表
-    NSString *AMMETER_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS ammeter (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text,ctrlurl text,servicetype text, serviceId text ,eventurl text); ";
+    NSString *AMMETER_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS ammeter (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text); ";
     [_db executeUpdate:AMMETER_TABLE_CREATE_SQL];
     
     //环境监测器
-    NSString *ENVMONITOR_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS envmonitor (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text,ctrlurl text,servicetype text, serviceId text ,eventurl text); ";
+    NSString *ENVMONITOR_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS envmonitor (id integer primary key autoincrement,sn text ,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,cameraid text); ";
     [_db executeUpdate:ENVMONITOR_TABLE_CREATE_SQL];
     
     //面板配置表
     NSString *const PANEL_CONFIG_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS panel (id integer primary key autoincrement,config text); ";
     [_db executeUpdate:PANEL_CONFIG_TABLE_CREATE_SQL];
     
-//    //网关授权用户表
-//    NSString *AUTHUSER_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS authuser (id integer primary key autoincrement,sn text ,udn text,name text,); ";
-//    [_db executeUpdate:ENVMONITOR_TABLE_CREATE_SQL];
+
 }
 
 #pragma mark 信息
@@ -649,10 +646,7 @@
     BOOL b = [_db executeUpdate:@"DELETE  FROM device WHERE gatewaysn = ?",gatewaySN];
     
     for (SHDevice *tempDevice in devices) {
-        UpnpService *service = nil;
-        if ([tempDevice.serviceList count]) {
-            service = [tempDevice.serviceList objectAtIndex:0];
-        }
+
         
         NSString *strRange = @"";
         
@@ -665,7 +659,7 @@
             
         }
         
-        b =  [_db executeUpdate:@"INSERT INTO device (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,ctrlurl,servicetype,serviceId,eventurl,range,icon) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,service.controlUrl,service.type,service.serviceId,service.eventUrl,strRange,tempDevice.icon];
+        b =  [_db executeUpdate:@"INSERT INTO device (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,range,icon) VALUES (?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,strRange,tempDevice.icon];
     }
     
     [_db commit];
@@ -692,13 +686,9 @@
     BOOL b = [_db executeUpdate:@"DELETE  FROM alarmzone WHERE gatewaysn = ?",gatewaySN];
     
     for (SHAlarmZone *tempDevice in alarmZones) {
-        UpnpService *service = nil;
-        if ([tempDevice.serviceList count]) {
-            service = [tempDevice.serviceList objectAtIndex:0];
-        }
+
         
-        
-        b =  [_db executeUpdate:@"INSERT INTO alarmzone (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,ctrlurl,servicetype,serviceId,eventurl,sensortype,sensormethod) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,service.controlUrl,service.type,service.serviceId,service.eventUrl,tempDevice.sensorType,tempDevice.sensorMethod];
+        b =  [_db executeUpdate:@"INSERT INTO alarmzone (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,sensortype,sensormethod,ipcid) VALUES (?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,tempDevice.sensorType,tempDevice.sensorMethod],tempDevice.ipcID;
     }
     
     [_db commit];
@@ -711,23 +701,10 @@
     BOOL b = [_db executeUpdate:@"DELETE  FROM scenemode WHERE gatewaysn = ?",gatewaySN];
     
     for (SHDevice *tempDevice in sceneModes) {
-        UpnpService *service = nil;
-        if ([tempDevice.serviceList count]) {
-            service = [tempDevice.serviceList objectAtIndex:0];
-        }
         
         NSString *strRange = @"";
         
-        if ([NSJSONSerialization isValidJSONObject:tempDevice.range]) {
-            NSError *error;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tempDevice.range options:0 error:&error];
-            if (jsonData) {
-                strRange = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            }
-            
-        }
-        
-        b =  [_db executeUpdate:@"INSERT INTO scenemode (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,ctrlurl,servicetype,serviceId,eventurl,range) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,service.controlUrl,service.type,service.serviceId,service.eventUrl,strRange];
+        b =  [_db executeUpdate:@"INSERT INTO scenemode (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid) VALUES (?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId];
     }
     
     [_db commit];
@@ -741,12 +718,8 @@
     BOOL b = [_db executeUpdate:@"DELETE  FROM ammeter WHERE gatewaysn = ?",gatewaySN];
     
     for (SHDevice *tempDevice in ammeters) {
-        UpnpService *service = nil;
-        if ([tempDevice.serviceList count]) {
-            service = [tempDevice.serviceList objectAtIndex:0];
-        }
         
-        b =  [_db executeUpdate:@"INSERT INTO ammeter (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,ctrlurl,servicetype,serviceId,eventurl) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,service.controlUrl,service.type,service.serviceId,service.eventUrl];
+        b =  [_db executeUpdate:@"INSERT INTO ammeter (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid) VALUES (?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId];
     }
     
     [_db commit];
@@ -760,12 +733,8 @@
     BOOL b = [_db executeUpdate:@"DELETE  FROM envmonitor WHERE gatewaysn = ?",gatewaySN];
     
     for (SHDevice *tempDevice in envMonitors) {
-        UpnpService *service = nil;
-        if ([tempDevice.serviceList count]) {
-            service = [tempDevice.serviceList objectAtIndex:0];
-        }
-        
-        b =  [_db executeUpdate:@"INSERT INTO envmonitor (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,ctrlurl,servicetype,serviceId,eventurl) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,service.controlUrl,service.type,service.serviceId,service.eventUrl];
+
+        b =  [_db executeUpdate:@"INSERT INTO envmonitor (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid) VALUES (?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId];
     }
     
     [_db commit];
@@ -917,14 +886,6 @@
         }
        
         
-        UpnpService *service = [[UpnpService alloc] init];
-        service.controlUrl = [rs stringForColumn:@"ctrlurl"];
-        service.serviceId = [rs stringForColumn:@"serviceId"];
-        service.type = [rs stringForColumn:@"servicetype"];
-        service.eventUrl = [rs stringForColumn:@"eventurl"];
-        
-        record.serviceList = [NSMutableArray arrayWithObject:service];
-        
         [tempArray addObject:record];
         
     }
@@ -984,16 +945,9 @@
         record.cameraId = [rs stringForColumn:@"cameraid"];
         record.sensorType = [rs stringForColumn:@"sensortype"];
         record.sensorMethod = [rs stringForColumn:@"sensormethod"];
+        record.ipcID = [rs stringForColumn:@"ipcid"];
         
         
-        
-        UpnpService *service = [[UpnpService alloc] init];
-        service.controlUrl = [rs stringForColumn:@"ctrlurl"];
-        service.serviceId = [rs stringForColumn:@"serviceId"];
-        service.type = [rs stringForColumn:@"servicetype"];
-        service.eventUrl = [rs stringForColumn:@"eventurl"];
-        
-        record.serviceList = [NSMutableArray arrayWithObject:service];
         
         [tempArray addObject:record];
         
@@ -1023,27 +977,7 @@
         record.gatewayVC = [rs stringForColumn:@"gatewayvc"];
         record.type = [rs stringForColumn:@"type"];
         record.cameraId = [rs stringForColumn:@"cameraid"];
-        
-        NSString *strRange  = [rs stringForColumn:@"range"];
-        
-        record.range = strRange;
-        
-        NSError *erro;
-        id objRange = [NSJSONSerialization JSONObjectWithData:[strRange dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&erro];
-        
-        if (objRange) {
-            record.range = objRange;
-        }
-        
-        
-        UpnpService *service = [[UpnpService alloc] init];
-        service.controlUrl = [rs stringForColumn:@"ctrlurl"];
-        service.serviceId = [rs stringForColumn:@"serviceId"];
-        service.type = [rs stringForColumn:@"servicetype"];
-        service.eventUrl = [rs stringForColumn:@"eventurl"];
-        
-        record.serviceList = [NSMutableArray arrayWithObject:service];
-        
+
         [tempArray addObject:record];
         
     }
@@ -1072,14 +1006,7 @@
         record.gatewayVC = [rs stringForColumn:@"gatewayvc"];
         record.type = [rs stringForColumn:@"type"];
         record.cameraId = [rs stringForColumn:@"cameraid"];
-        
-        UpnpService *service = [[UpnpService alloc] init];
-        service.controlUrl = [rs stringForColumn:@"ctrlurl"];
-        service.serviceId = [rs stringForColumn:@"serviceId"];
-        service.type = [rs stringForColumn:@"servicetype"];
-        service.eventUrl = [rs stringForColumn:@"eventurl"];
-        
-        record.serviceList = [NSMutableArray arrayWithObject:service];
+
         
         [tempArray addObject:record];
         
@@ -1110,13 +1037,6 @@
         record.type = [rs stringForColumn:@"type"];
         record.cameraId = [rs stringForColumn:@"cameraid"];
         
-        UpnpService *service = [[UpnpService alloc] init];
-        service.controlUrl = [rs stringForColumn:@"ctrlurl"];
-        service.serviceId = [rs stringForColumn:@"serviceId"];
-        service.type = [rs stringForColumn:@"servicetype"];
-        service.eventUrl = [rs stringForColumn:@"eventurl"];
-        
-        record.serviceList = [NSMutableArray arrayWithObject:service];
         
         [tempArray addObject:record];
         

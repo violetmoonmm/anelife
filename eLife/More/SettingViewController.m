@@ -110,15 +110,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)refreshDeviceList:(id)sender
-{
-    [self showWaitingStatus];
-    
-    [[NetAPIClient sharedClient] refreshDeviceListCompleted:^{
-        
-        [self showRefreshFinished];
-    }];
-}
+
 
 - (void)showWaitingStatus
 {
@@ -155,7 +147,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -178,13 +170,11 @@
     NSString *text = nil;
     
  
+
     if (indexPath.section == 0) {
-        text = @"刷新网关数据";
-    }
-    else if (indexPath.section == 1) {
         text = @"报警通知";
     }
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 1) {
         text = @"关于安E生活";
     }
     else {
@@ -226,23 +216,20 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-  
+
     if (indexPath.section == 0) {
-        [self refreshDeviceList:nil];
-    }
-    else if (indexPath.section == 1) {
         
         NSString *nibName = [Util nibNameWithClass:[AlarmSettingViewController class]];
         AlarmSettingViewController *vc = [[AlarmSettingViewController alloc] initWithNibName:nibName bundle:nil];
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 1) {
         
         NSString *nibName = [Util nibNameWithClass:[AboutViewController class]];
         AboutViewController *vc = [[AboutViewController alloc] initWithNibName:nibName bundle:nil];
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else if (indexPath.section == 3) {
+    else if (indexPath.section == 2) {
         [self logout];
     }
 }

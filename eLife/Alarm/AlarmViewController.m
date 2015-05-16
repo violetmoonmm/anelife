@@ -109,7 +109,7 @@ static float cellHeight = 44;
     [zw_dssdk dssdk_rtv_stop:(__bridge void *)(videoWnd)];
 #endif
     
-    [(AppDelegate *)[UIApplication sharedApplication].delegate dismissCallView];
+    [(AppDelegate *)[UIApplication sharedApplication].delegate dismissAlarmView];
     
 //    [self.navigationController.view removeFromSuperview];
 
@@ -309,11 +309,11 @@ static float cellHeight = 44;
         fplayScale = (CGFloat)[[UIScreen mainScreen] scale];
     }
     
-    NSString *videoUrl = [record videoAddr];
-    NSString *pubVideoUrl = [record pubVideoAddr];
+    NSString *url = [record videoAddr];
+    NSString *pubUrl = [record pubVideoAddr];
     
     
-    NSLog(@"play video url:%@  pubUrl:%@",videoUrl,pubVideoUrl);
+    NSLog(@"play video url:%@  pubUrl:%@",url,pubUrl);
     
 #ifndef INVALID_VIDEO
     
@@ -323,37 +323,36 @@ static float cellHeight = 44;
     tempHud.mode = MBProgressHUDModeIndeterminate;
     [tempHud show:YES];
     
-    if (videoUrl)
-    {
-        int ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[videoUrl UTF8String]:fplayScale];
-        if (ret == 1) {
-            
-            [[UIApplication sharedApplication] setIdleTimerDisabled:YES];//防止自动锁屏
-            
-            playBtn.hidden = YES;
-            
-        }
-        else if (pubVideoUrl) {
-            
-            int ret1 = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[pubVideoUrl UTF8String]:fplayScale];
-            
-            if (ret1 == 1) {
-                
-                [[UIApplication sharedApplication] setIdleTimerDisabled:YES];//防止自动锁屏
-                
-                playBtn.hidden = YES;
-                
-            }
-            else {
-                NSString *msg = [NSString stringWithFormat:@"%@(错误码:%d\n%@(错误码:%d)",videoUrl,ret,pubVideoUrl,ret1];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"打开视频失败" message:msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                [alert show];
-                
-                playBtn.hidden = NO;
-            }
-            
-        }
+    int ret = -1;
+    int ret1 = -1;
+    if (url) {
+        ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[url UTF8String] :fplayScale];
+    }
+    
+  
+    if (ret != 1 && pubUrl) {
         
+        ret1 = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[pubUrl UTF8String] :fplayScale];
+        
+    }
+    
+    
+    if (ret == 1 || ret1 == 1) {
+//        self.isPlaying = YES;
+        playBtn.hidden = YES;
+        
+        
+        //看视频的时候防止锁屏
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        
+    }
+    else {
+        NSString *msg = [NSString stringWithFormat:@"%@(错误码:%d)\n%@(错误码:%d)",url,ret,pubUrl,ret1];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"打开视频失败" message:msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        
+//        self.isPlaying = NO;
+        playBtn.hidden = NO;
     }
     
     [tempHud hide:YES];

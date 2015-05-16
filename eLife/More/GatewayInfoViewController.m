@@ -12,6 +12,7 @@
 #import "Util.h"
 #import "NotificationDefine.h"
 #import "GatewayUsersViewController.h"
+#import "QRCodeEncoderViewController.h"
 
 #define CELL_HEIGHT 44
 #define EDIT_TIMEOUT 15
@@ -36,8 +37,10 @@
     
     MBProgressHUD *hud;
     
-    UIButton *authBtn;
-    UIButton *authUserBtn;
+    UIButton *synConfigBtn;//同步配置
+    UIButton *authBtn;//重新认证
+    UIButton *QRCodeBtn;//二维码授权
+    UIButton *editPswdBtn;//管理密码修改
 }
 
 @end
@@ -175,7 +178,7 @@
             break;
     }
     
-    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 72, CELL_HEIGHT)];
+    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 58, CELL_HEIGHT)];
     lbl.backgroundColor = [UIColor clearColor];
     lbl.text = titleText;
     lbl.textColor = [UIColor darkGrayColor];
@@ -185,7 +188,7 @@
     
     NSInteger spacingX = 12;
     NSInteger txtFiledH = 40;
-    UITextField *txtField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lbl.frame)+spacingX, (CELL_HEIGHT-txtFiledH)/2, CGRectGetWidth(tableView.frame)-CGRectGetMaxX(lbl.frame)-80, txtFiledH)];
+    UITextField *txtField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lbl.frame)+spacingX, (CELL_HEIGHT-txtFiledH)/2, CGRectGetWidth(tableView.frame)-CGRectGetMaxX(lbl.frame)-68, txtFiledH)];
     txtField.text = detailText;
     if (!isEditing) {
         txtField.textColor = [UIColor darkGrayColor];
@@ -246,32 +249,62 @@
     [expandBtn addTarget:self action:@selector(showOrHideDetail:) forControlEvents:UIControlEventTouchUpInside];
     [footer addSubview:expandBtn];
     
-    if (!authBtn)
-    {
-        UIButton *addBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
-        addBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, 54, 300, 44);
-        [addBtn setTitle:@"认证" forState:UIControlStateNormal];
-        [addBtn setBackgroundImage:[UIImage imageNamed:@"reg_btn"] forState:UIControlStateNormal];
-        [addBtn addTarget:self action:@selector(reauth:) forControlEvents:UIControlEventTouchUpInside];
-      
-        authBtn = addBtn;
-    }
+    if (self.gateway.authorized) {
 
-    [footer addSubview:authBtn];
-    
-    if (!authUserBtn)
-    {
-        UIButton *userBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
-        userBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, CGRectGetMaxY(authBtn.frame)+10, 300, 44);
-        [userBtn setTitle:@"查看授权用户" forState:UIControlStateNormal];
-        [userBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-        [userBtn setBackgroundImage:[UIImage imageNamed:@"AuthUsers"] forState:UIControlStateNormal];
-        [userBtn addTarget:self action:@selector(viewAuthUsers:) forControlEvents:UIControlEventTouchUpInside];
+        if (!synConfigBtn)
+        {
+            synConfigBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            synConfigBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, 54, 300, 44);
+            [synConfigBtn setTitle:@"同步配置" forState:UIControlStateNormal];
+            [synConfigBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [synConfigBtn setBackgroundImage:[UIImage imageNamed:@"reg_btn"] forState:UIControlStateNormal];
+            [synConfigBtn addTarget:self action:@selector(synConfig:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        [footer addSubview:synConfigBtn];
         
-        authUserBtn = userBtn;
+        if (!QRCodeBtn)
+        {
+           
+            QRCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            QRCodeBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, CGRectGetMaxY(synConfigBtn.frame)+10, 300, 44);
+            [QRCodeBtn setTitle:@"二维码授权" forState:UIControlStateNormal];
+            [QRCodeBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [QRCodeBtn setBackgroundImage:[UIImage imageNamed:@"LongWhiteBtn"] forState:UIControlStateNormal];
+            [QRCodeBtn addTarget:self action:@selector(AuthQRCode:) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
+        [footer addSubview:QRCodeBtn];
+        
+        if (!editPswdBtn)
+        {
+            
+            editPswdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            editPswdBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, CGRectGetMaxY(QRCodeBtn.frame)+10, 300, 44);
+            [editPswdBtn setTitle:@"管理密码修改" forState:UIControlStateNormal];
+            [editPswdBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+            [editPswdBtn setBackgroundImage:[UIImage imageNamed:@"LongWhiteBtn"] forState:UIControlStateNormal];
+            [editPswdBtn addTarget:self action:@selector(changePswd:) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
+        
+        [footer addSubview:editPswdBtn];
+
+    }
+    else {
+        if (!authBtn)
+        {
+            authBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
+            authBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, 54, 300, 44);
+            [authBtn setTitle:@"认证" forState:UIControlStateNormal];
+            [authBtn setBackgroundImage:[UIImage imageNamed:@"reg_btn"] forState:UIControlStateNormal];
+            [authBtn addTarget:self action:@selector(reauth:) forControlEvents:UIControlEventTouchUpInside];
+            
+          
+        }
+        
+        [footer addSubview:authBtn];
     }
     
-    [footer addSubview:authUserBtn];
     
     
     return footer;
@@ -280,7 +313,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 156;
+    return 210;
 }
 
 
@@ -387,8 +420,8 @@
 
 - (void)showWaitingStatus
 {
-    hud = [[MBProgressHUD alloc] initWithView:self.view.window];
-    [self.view.window addSubview:hud];
+    hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:hud];
     hud.labelText = @"请稍后...";
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.removeFromSuperViewOnHide = YES;
@@ -408,15 +441,57 @@
     [hud hide:YES afterDelay:1.5];
 }
 
-//查看授权用户
-- (void)viewAuthUsers:(id)sender
+
+//- (void)showRefreshFinished
+//{
+//    //    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reqTimeout) object:nil];
+//    
+//    hud.labelText = @"同步完成";
+//    hud.mode = MBProgressHUDModeCustomView;
+//    
+//    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+//    
+//    [hud hide:YES afterDelay:1.5];
+//}
+
+//同步配置
+- (void)synConfig:(id)sender
 {
-    NSString *nibName = [Util nibNameWithClass:[GatewayUsersViewController class]];
-    GatewayUsersViewController *vc = [[GatewayUsersViewController alloc] initWithNibName:nibName bundle:nil];
-    vc.gateway = self.gateway;
+    
+    MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:tempHud];
+    tempHud.labelText = @"正在同步...";
+    tempHud.mode = MBProgressHUDModeIndeterminate;
+    tempHud.removeFromSuperViewOnHide = YES;
+    [tempHud show:YES];
+    
+    [[NetAPIClient sharedClient] synchronizeConfig:self.gateway completionCallback:^{
+
+        tempHud.labelText = @"同步完成";
+        tempHud.mode = MBProgressHUDModeCustomView;
+        
+        tempHud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        
+        [tempHud hide:YES afterDelay:1.5];
+    }];
+    
+}
+
+
+
+//二维码授权
+- (void)AuthQRCode:(id)sender
+{
+    NSString *nibName = [Util nibNameWithClass:[QRCodeEncoderViewController class]];
+    QRCodeEncoderViewController *vc = [[QRCodeEncoderViewController alloc] initWithNibName:nibName bundle:nil];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+//管理密码修改
+- (void)changePswd:(id)sender
+{
+    
+}
 
 //重新授权
 - (void)reauth:(id)sender

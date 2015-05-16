@@ -59,12 +59,12 @@
     
     for (SHGateway *gateway in gateways)
     {
-        [gateway addObserver:self forKeyPath:@"shFetchingStep" options:0 context:NULL];
+        [gateway addObserver:self forKeyPath:@"getConfigStep" options:0 context:NULL];
     }
     
     if ([gateways count]) {
         SHGateway *firstGateway = [gateways objectAtIndex:0];
-        if (firstGateway.shFetchingStep == SHFetchingStepFinished) {
+        if (firstGateway.getConfigStep == GetConfigStepFinished) {
             [self readMeterAtGateway:firstGateway];
         }
         else {
@@ -116,7 +116,7 @@
     
     for (SHGateway *gateway in gateways)
     {
-        [gateway removeObserver:self forKeyPath:@"shFetchingStep"];
+        [gateway removeObserver:self forKeyPath:@"getConfigStep"];
     }
 }
 
@@ -172,7 +172,7 @@
         
         SHGateway *tempGateway = [self selectedGateway];
         
-        if (tempGateway.shFetchingStep != SHFetchingStepFinished ) {
+        if (tempGateway.getConfigStep != GetConfigStepFinished ) {
             [self showWaitingStatus];
         }
         else {

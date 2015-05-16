@@ -25,13 +25,13 @@
 
 
 
-typedef enum _SHFetchingStep
+typedef enum _GetConfigStep
 {
-    SHFetchingStepWaiting = 0,
-    SHFetchingStepDoing = 1,
-    SHFetchingStepFinished = 2
+    GetConfigStepWaiting = 0,
+    GetConfigStepDoing = 1,
+    GetConfigStepFinished = 2
     
-} SHFetchingStep;
+} GetConfigStep;
 
 
 typedef enum _GatewayState
@@ -229,9 +229,8 @@ typedef struct _SHRange
 @property (nonatomic,strong,readonly) NSMutableArray *ammeterArray;//电表
 @property (nonatomic,strong,readonly) NSMutableArray *envMonitorArray;//环境监测仪器
 
-@property (nonatomic,strong,readonly) NSMutableArray *authUserArray;//授权用户列表
 
-@property (nonatomic) SHFetchingStep shFetchingStep;//智能家居配置获取step
+@property (nonatomic) GetConfigStep getConfigStep;//智能家居配置获取step
 
 
 //ipc远程 (for temp use...)
@@ -285,6 +284,7 @@ typedef struct _SHRange
 //@property (nonatomic,strong) NSString *deviceId;//设备id
 @property (nonatomic,strong) NSString *sensorType;//报警类型
 @property (nonatomic,strong) NSString *sensorMethod;
+@property (nonatomic,strong) NSString *ipcID;//联动视频ipcid
 
 @end
 
@@ -296,15 +296,6 @@ typedef struct _SHRange
 
 @end
 
-@interface UpnpService : NSObject
-
-@property (nonatomic,strong) NSString *type;//服务类型
-@property (nonatomic,strong) NSString *serviceId;//服务id
-@property (nonatomic,strong) NSString *controlUrl;//控制url
-@property (nonatomic,strong) NSString *eventUrl;//订阅url
-@property bool subscrible;//是否可以订阅
-
-@end
 
 
 

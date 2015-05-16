@@ -64,10 +64,9 @@
     [_gateways addObjectsFromArray:[NetAPIClient sharedClient].gatewayList];
     
     
-    
     if ([_gateways count]) {
         SHGateway *firstGateway = [_gateways objectAtIndex:0];
-        if (firstGateway.shFetchingStep == SHFetchingStepFinished) {
+        if (firstGateway.getConfigStep == GetConfigStepFinished) {
             [self readMeter:0];
         }
         else {
@@ -82,7 +81,7 @@
     
     for (SHGateway *gateway in _gateways)
     {
-        [gateway addObserver:self forKeyPath:@"shFetchingStep" options:0 context:NULL];
+        [gateway addObserver:self forKeyPath:@"getConfigStep" options:0 context:NULL];
     }
     
     
@@ -138,7 +137,7 @@
 
     for (SHGateway *gateway in _gateways)
     {
-        [gateway removeObserver:self forKeyPath:@"shFetchingStep"];
+        [gateway removeObserver:self forKeyPath:@"getConfigStep"];
     }
 }
 
@@ -382,7 +381,7 @@
         
         SHGateway *tempGateway = [self selectedGateway];
         
-        if (tempGateway.shFetchingStep != SHFetchingStepFinished ) {
+        if (tempGateway.getConfigStep != GetConfigStepFinished ) {
             [self showWaitingStatus];
         }
         else {
@@ -514,7 +513,7 @@
     NSInteger index = [_gateways indexOfObject:gateway];
     
     if (index == selectedIndex) {//当前显示的网关
-        if (gateway.shFetchingStep == SHFetchingStepFinished) {//获取配置完成
+        if (gateway.getConfigStep == GetConfigStepFinished) {//获取配置完成
             
             [self readMeter:selectedIndex];
             

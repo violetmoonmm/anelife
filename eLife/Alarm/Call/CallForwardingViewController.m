@@ -121,7 +121,7 @@
     bgdView.frame = bgdFrame;
 }
 
-- (void)goBack:(UIButton *)sender
+- (void)goBack
 {
 
     [(AppDelegate *)[UIApplication sharedApplication].delegate dismissCallView];
@@ -143,44 +143,37 @@
     
     NSLog(@"url:%@  pubUrl:%@",url,pubUrl);
 
+    int ret = -1;
+    int ret1 = -1;
     if (url) {
-        int ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[url UTF8String] :fplayScale];
-        if (ret == 1) {//打开视频成功
-            
-//            self.isPlaying = YES;
-//            playBtn.hidden = YES;
-            
-            
-            //看视频的时候防止锁屏
-            [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-            
-            
-        }
-        else if (pubUrl) {//失败
-            
-            int ret1 = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[pubUrl UTF8String] :fplayScale];
-            
-            if (ret1 == 1) {
-//                self.isPlaying = YES;
-//                playBtn.hidden = YES;
-                
-                
-                //看视频的时候防止锁屏
-                [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-                
-            }
-            else {
-                NSString *msg = [NSString stringWithFormat:@"%@(错误码:%d)\n%@(错误码:%d)",url,ret,pubUrl,ret1];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"打开视频失败" message:msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                [alert show];
-                
-//                self.isPlaying = NO;
-//                playBtn.hidden = NO;
-            }
-            
-        }
+        ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[url UTF8String] :fplayScale];
+    }
+    
+    if (ret != 1 && pubUrl) {
+        
+        ret1 = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[pubUrl UTF8String] :fplayScale];
         
     }
+    
+    
+    if (ret == 1 || ret1 == 1) {
+//        isPlaying = YES;
+//        playBtn.hidden = YES;
+        
+        
+        //看视频的时候防止锁屏
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        
+    }
+    else {
+        NSString *msg = [NSString stringWithFormat:@"%@(错误码:%d)\n%@(错误码:%d)",url,ret,pubUrl,ret1];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"打开视频失败" message:msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        
+//        isPlaying = NO;
+//        playBtn.hidden = NO;
+    }
+
     
     [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
     
@@ -194,7 +187,7 @@
 - (IBAction)hungup:(id)sender
 {
     
-    [self goBack:nil];
+    [self goBack];
 }
 
 //开锁

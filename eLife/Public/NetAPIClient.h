@@ -132,8 +132,6 @@ enum DisConnectReason
 //根据网关id查网关
 - (SHGateway *)lookupGatewayById:(NSString *)gatewaySN;
 
-//刷新设备列表
-- (void)refreshDeviceListCompleted:(void(^)(void))completedCallback;
 
 
 //查询ipc列表
@@ -178,7 +176,11 @@ enum DisConnectReason
 //删除网关授权用户
 - (void)removeAuthUser:(GatewayUser *)user fromGateway:(SHGateway *)gateway successCallback:(void (^)(void))successCallback failureCallback:(void (^)(void))failureCallback;
 
+//查询网关授权用户
+- (void)getAuthUsersOfGateway:(SHGateway *)gateway successCallback:(void (^)(NSArray *))successCallback failureCallback:(void (^)(void))failureCallback;
 
+//同步配置
+- (void)synchronizeConfig:(SHGateway *)gateway completionCallback:(void (^)(void))completionCallback;
 
 #pragma mark 回调处理
 - (void)onEventCallBack:(unsigned int )loginId params:(NSDictionary *)params;

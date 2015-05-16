@@ -513,7 +513,7 @@
 		F5640BF81ADE4A5700558334 /* G10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5640BF41ADE4A5700558334 /* G10@2x.png */; };
 		F5640BF91ADE4A5700558334 /* G20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5640BF51ADE4A5700558334 /* G20@2x.png */; };
 		F5640BFA1ADE4A5700558334 /* G30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5640BF61ADE4A5700558334 /* G30@2x.png */; };
-		F5640BFC1ADE537600558334 /* AuthUsers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5640BFB1ADE537600558334 /* AuthUsers@2x.png */; };
+		F5640BFC1ADE537600558334 /* LongWhiteBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5640BFB1ADE537600558334 /* LongWhiteBtn@2x.png */; };
 		F5640C001ADE555500558334 /* GatewayUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5640BFE1ADE555500558334 /* GatewayUsersViewController.m */; };
 		F5640C011ADE555500558334 /* GatewayUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5640BFF1ADE555500558334 /* GatewayUsersViewController.xib */; };
 		F5640C031ADE56A700558334 /* GatewayUsersViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5640C021ADE56A700558334 /* GatewayUsersViewController_iPad.xib */; };
@@ -567,6 +567,12 @@
 		F57223781B0489070008FE8F /* CallForwardingViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F57223771B0489070008FE8F /* CallForwardingViewController_iPad.xib */; };
 		F572237B1B04A0110008FE8F /* GrayBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F57223791B04A0110008FE8F /* GrayBtn@2x.png */; };
 		F572237C1B04A0110008FE8F /* GrayBtnHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F572237A1B04A0110008FE8F /* GrayBtnHl@2x.png */; };
+		F573B0861B06DF0700715640 /* QRCodeEncoderViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F573B0841B06DF0700715640 /* QRCodeEncoderViewController.mm */; };
+		F573B0871B06DF0700715640 /* QRCodeEncoderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F573B0851B06DF0700715640 /* QRCodeEncoderViewController.xib */; };
+		F573B0E51B06EEBA00715640 /* DataMatrix.mm in Sources */ = {isa = PBXBuildFile; fileRef = F573B0DF1B06EEBA00715640 /* DataMatrix.mm */; };
+		F573B0E61B06EEBA00715640 /* QR_Encode.mm in Sources */ = {isa = PBXBuildFile; fileRef = F573B0E01B06EEBA00715640 /* QR_Encode.mm */; };
+		F573B0E71B06EEBA00715640 /* QREncoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = F573B0E41B06EEBA00715640 /* QREncoder.mm */; };
+		F573B0E91B06EF5500715640 /* QRCodeEncoderViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F573B0E81B06EF5500715640 /* QRCodeEncoderViewController_iPad.xib */; };
 		F5783CA11ADFB04E0064846A /* BgdMusicOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5783C9A1ADFB04E0064846A /* BgdMusicOn@2x.png */; };
 		F5783CA21ADFB04E0064846A /* MusicPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5783C9B1ADFB04E0064846A /* MusicPlay@2x.png */; };
 		F5783CA31ADFB04E0064846A /* MusicPlayHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5783C9C1ADFB04E0064846A /* MusicPlayHl@2x.png */; };
@@ -1436,7 +1442,7 @@
 		F5640BF41ADE4A5700558334 /* G10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "G10@2x.png"; sourceTree = "<group>"; };
 		F5640BF51ADE4A5700558334 /* G20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "G20@2x.png"; sourceTree = "<group>"; };
 		F5640BF61ADE4A5700558334 /* G30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "G30@2x.png"; sourceTree = "<group>"; };
-		F5640BFB1ADE537600558334 /* AuthUsers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AuthUsers@2x.png"; sourceTree = "<group>"; };
+		F5640BFB1ADE537600558334 /* LongWhiteBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LongWhiteBtn@2x.png"; sourceTree = "<group>"; };
 		F5640BFD1ADE555500558334 /* GatewayUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GatewayUsersViewController.h; sourceTree = "<group>"; };
 		F5640BFE1ADE555500558334 /* GatewayUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GatewayUsersViewController.m; sourceTree = "<group>"; };
 		F5640BFF1ADE555500558334 /* GatewayUsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GatewayUsersViewController.xib; sourceTree = "<group>"; };
@@ -1506,6 +1512,17 @@
 		F57223771B0489070008FE8F /* CallForwardingViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallForwardingViewController_iPad.xib; sourceTree = "<group>"; };
 		F57223791B04A0110008FE8F /* GrayBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GrayBtn@2x.png"; sourceTree = "<group>"; };
 		F572237A1B04A0110008FE8F /* GrayBtnHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GrayBtnHl@2x.png"; sourceTree = "<group>"; };
+		F573B0831B06DF0700715640 /* QRCodeEncoderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeEncoderViewController.h; sourceTree = "<group>"; };
+		F573B0841B06DF0700715640 /* QRCodeEncoderViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QRCodeEncoderViewController.mm; sourceTree = "<group>"; };
+		F573B0851B06DF0700715640 /* QRCodeEncoderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeEncoderViewController.xib; sourceTree = "<group>"; };
+		F573B0DE1B06EEBA00715640 /* DataMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMatrix.h; sourceTree = "<group>"; };
+		F573B0DF1B06EEBA00715640 /* DataMatrix.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataMatrix.mm; sourceTree = "<group>"; };
+		F573B0E01B06EEBA00715640 /* QR_Encode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QR_Encode.mm; sourceTree = "<group>"; };
+		F573B0E11B06EEBA00715640 /* QR_Encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QR_Encode.h; sourceTree = "<group>"; };
+		F573B0E21B06EEBA00715640 /* QREncoder-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QREncoder-Prefix.pch"; sourceTree = "<group>"; };
+		F573B0E31B06EEBA00715640 /* QREncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QREncoder.h; sourceTree = "<group>"; };
+		F573B0E41B06EEBA00715640 /* QREncoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QREncoder.mm; sourceTree = "<group>"; };
+		F573B0E81B06EF5500715640 /* QRCodeEncoderViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRCodeEncoderViewController_iPad.xib; sourceTree = "<group>"; };
 		F5783C9A1ADFB04E0064846A /* BgdMusicOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BgdMusicOn@2x.png"; sourceTree = "<group>"; };
 		F5783C9B1ADFB04E0064846A /* MusicPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlay@2x.png"; sourceTree = "<group>"; };
 		F5783C9C1ADFB04E0064846A /* MusicPlayHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MusicPlayHl@2x.png"; sourceTree = "<group>"; };
@@ -2018,6 +2035,10 @@
 				F545D9071B01E9DC000A0EF5 /* AlarmVideoViewController.m */,
 				F545D9081B01E9DC000A0EF5 /* AlarmVideoViewController.xib */,
 				F545D90B1B01EA1C000A0EF5 /* AlarmVideoViewController_iPad.xib */,
+				F573B0831B06DF0700715640 /* QRCodeEncoderViewController.h */,
+				F573B0841B06DF0700715640 /* QRCodeEncoderViewController.mm */,
+				F573B0851B06DF0700715640 /* QRCodeEncoderViewController.xib */,
+				F573B0E81B06EF5500715640 /* QRCodeEncoderViewController_iPad.xib */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -2087,6 +2108,7 @@
 		049F1DAD18D30329007D17EE /* eLife */ = {
 			isa = PBXGroup;
 			children = (
+				F573B0DD1B06EEBA00715640 /* QREncoder */,
 				04F822881978C0D30083453F /* LibHeader */,
 				F555C5921A205C5400DC8DB3 /* Alarm&&Call */,
 				9A5F4E891A13403F00FB0F64 /* DeviceCtrlViews */,
@@ -2505,7 +2527,7 @@
 				F5783C9E1ADFB04E0064846A /* MusicPlayLastHl@2x.png */,
 				F5783C9F1ADFB04E0064846A /* MusicPlayNext@2x.png */,
 				F5783CA01ADFB04E0064846A /* MusicPlayNextHl@2x.png */,
-				F5640BFB1ADE537600558334 /* AuthUsers@2x.png */,
+				F5640BFB1ADE537600558334 /* LongWhiteBtn@2x.png */,
 				F5640BF31ADE4A5600558334 /* G00@2x.png */,
 				F5640BF41ADE4A5700558334 /* G10@2x.png */,
 				F5640BF51ADE4A5700558334 /* G20@2x.png */,
@@ -2995,6 +3017,21 @@
 			path = Call;
 			sourceTree = "<group>";
 		};
+		F573B0DD1B06EEBA00715640 /* QREncoder */ = {
+			isa = PBXGroup;
+			children = (
+				F573B0DE1B06EEBA00715640 /* DataMatrix.h */,
+				F573B0DF1B06EEBA00715640 /* DataMatrix.mm */,
+				F573B0E01B06EEBA00715640 /* QR_Encode.mm */,
+				F573B0E11B06EEBA00715640 /* QR_Encode.h */,
+				F573B0E21B06EEBA00715640 /* QREncoder-Prefix.pch */,
+				F573B0E31B06EEBA00715640 /* QREncoder.h */,
+				F573B0E41B06EEBA00715640 /* QREncoder.mm */,
+			);
+			name = QREncoder;
+			path = QREncoder/QREncoder;
+			sourceTree = SOURCE_ROOT;
+		};
 		F591079D1A4A66A700FEEA62 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3307,6 +3344,7 @@
 				F5650FA71ABD104600482E5C /* LeftBtnHl@2x.png in Resources */,
 				F53760B219EF97FD008EF3C2 /* TypeSelectorBtn_Black@2x.png in Resources */,
 				F53760FC19EF97FD008EF3C2 /* Alarm.aif in Resources */,
+				F573B0E91B06EF5500715640 /* QRCodeEncoderViewController_iPad.xib in Resources */,
 				F537606A19EF97FD008EF3C2 /* msg_other.png in Resources */,
 				F5963B6B1A538C33006DAD6D /* BigStepCurtainMid@2x.png in Resources */,
 				F5F380881A6E4CE300000838 /* SetGesturePasswordController.xib in Resources */,
@@ -3377,6 +3415,7 @@
 				F56E3FD31AE4FF5400D9F18A /* 57p.png in Resources */,
 				04F000BA196D406A00E77E98 /* ChangePasswordViewController.xib in Resources */,
 				F5375FE319EF97FD008EF3C2 /* FavoriteNormal@2x.png in Resources */,
+				F573B0871B06DF0700715640 /* QRCodeEncoderViewController.xib in Resources */,
 				F5963B6D1A538C33006DAD6D /* BigStepCurtainMin@2x.png in Resources */,
 				F5375F9C19EF97FD008EF3C2 /* energy_bgd.png in Resources */,
 				F537601C19EF97FD008EF3C2 /* SpeedHighTextSelected@2x.png in Resources */,
@@ -3413,7 +3452,7 @@
 				F53760F719EF97FD008EF3C2 /* whiteArrow.png in Resources */,
 				04F1BBA5199BB319005B3625 /* ChangeEmailViewController_iPad.xib in Resources */,
 				F5963B7B1A53B423006DAD6D /* small_scene_custom_green@2x.png in Resources */,
-				F5640BFC1ADE537600558334 /* AuthUsers@2x.png in Resources */,
+				F5640BFC1ADE537600558334 /* LongWhiteBtn@2x.png in Resources */,
 				F59645881A2D765000F69F8A /* EnergyView_iPad.xib in Resources */,
 				F5375F9819EF97FD008EF3C2 /* del_device@2x.png in Resources */,
 				F578B1451A1DC9DF00BD7C1E /* LowSpeedGray@2x.png in Resources */,
@@ -3924,10 +3963,13 @@
 				04F1911F195AE5B400A616B8 /* AboutViewController.m in Sources */,
 				04FB2AB818D69E9E002507DC /* ServiceViewController.m in Sources */,
 				F58D25011A3A8EDD00D5F39D /* AlarmServiceController.m in Sources */,
+				F573B0E51B06EEBA00715640 /* DataMatrix.mm in Sources */,
 				F5F3804E1A6E41D700000838 /* ACFTPEntry.m in Sources */,
 				F5F3805C1A6E41D700000838 /* FtpShareViewController.m in Sources */,
+				F573B0E71B06EEBA00715640 /* QREncoder.mm in Sources */,
 				F5F3807B1A6E435700000838 /* CreatGesturePasswordController.m in Sources */,
 				F58D250C1A3ADF6E00D5F39D /* PhotoBrowseController.m in Sources */,
+				F573B0E61B06EEBA00715640 /* QR_Encode.mm in Sources */,
 				041F835719AB15BB00C16D2A /* BasicLampCell.m in Sources */,
 				04FB2B9818D6E469002507DC /* FMDatabasePool.m in Sources */,
 				F59107A61A4A66A700FEEA62 /* RAMCollectionAuxView.m in Sources */,
@@ -3973,6 +4015,7 @@
 				04F48B4518FD271D0071DFC8 /* JSBadgeView.m in Sources */,
 				F5F380511A6E41D700000838 /* ACFTPDeleteFileRequest.m in Sources */,
 				F545D8FD1B019E84000A0EF5 /* AuthCodeViewController.m in Sources */,
+				F573B0861B06DF0700715640 /* QRCodeEncoderViewController.mm in Sources */,
 				F555C5961A205C7700DC8DB3 /* AlarmViewController.m in Sources */,
 				F539B7081AEA3F1A00D1ED1B /* BasicBackgroundMusicCell.m in Sources */,
 				F54B07E31AEF7A2100B6A39A /* AlarmSettingViewController.m in Sources */,
@@ -4176,7 +4219,7 @@
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4216,7 +4259,7 @@
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

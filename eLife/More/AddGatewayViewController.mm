@@ -181,7 +181,7 @@
             break;
     }
     
-    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 62, CELL_HEIGHT)];
+    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 58, CELL_HEIGHT)];
     lbl.backgroundColor = [UIColor clearColor];
     lbl.text = titleText;
     lbl.textColor = [UIColor darkGrayColor];
@@ -191,7 +191,7 @@
     
     NSInteger spacingX = 12;
     NSInteger txtFiledH = 40;
-    UITextField *txtField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lbl.frame)+spacingX, (CELL_HEIGHT-txtFiledH)/2, CGRectGetWidth(tableView.frame)-CGRectGetMaxX(lbl.frame)-80, txtFiledH)];
+    UITextField *txtField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lbl.frame)+spacingX, (CELL_HEIGHT-txtFiledH)/2, CGRectGetWidth(tableView.frame)-CGRectGetMaxX(lbl.frame)-68, txtFiledH)];
     txtField.text = detailText;
 //    txtField.textColor = [UIColor darkGrayColor];
     txtField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

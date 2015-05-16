@@ -38,8 +38,6 @@
     
     IBOutlet UITableView *_tblView;
     
-    IBOutlet UIButton *_btnUpload;
-    IBOutlet UIButton *_btnDownload;
     
     NSInteger ftpMethod;//0 下载 1 上传
     
@@ -87,7 +85,6 @@
     addBtn.frame = CGRectMake(0, 0, 44, 44);
     [addBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
     [addBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
-    //    [returnBtn setTitle:@"添加" forState:UIControlStateNormal];
     UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithCustomView:addBtn];
     self.navigationItem.rightBarButtonItem = rightBtnItem;
     rightBtn = addBtn;
@@ -96,9 +93,6 @@
     //_tblView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tblView.backgroundColor = [UIColor colorWithRed:230/255. green:230/255. blue:230/255. alpha:1];
     _tblView.backgroundView = nil;
-    
-    
-    _btnDownload.selected = YES;
     
 
     
@@ -176,45 +170,10 @@
     return [subDirArray count];
 }
 
-- (void)setRightItem
-{
-    if (0 == ftpMethod) {
-        self.navigationItem.rightBarButtonItem = nil;
-        [rightBtn setImage:[UIImage imageNamed:@"Download"] forState:UIControlStateNormal];
-        UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-        self.navigationItem.rightBarButtonItem = rightBtnItem;
-    }
-    else {
-        self.navigationItem.rightBarButtonItem = nil;
-        [rightBtn setImage:[UIImage imageNamed:@"Upload"] forState:UIControlStateNormal];
-        UIBarButtonItem *rightBtnItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-        self.navigationItem.rightBarButtonItem = rightBtnItem;
-    }
-}
-
-- (IBAction)btnDownloadAction:(id)sender
-{
-    _btnDownload.selected = YES;
-    _btnUpload.selected = NO;
-    
-    ftpMethod = 0;
-    
-    [self setRightItem];
-}
-
-- (IBAction)btnUploadAction:(id)sender
-{
-    _btnUpload.selected = YES;
-    _btnDownload.selected = NO;
-    
-    ftpMethod = 1;
-    
-    [self setRightItem];
-}
 
 - (void)clickRightBtn
 {
-    if (ftpMethod == 0 && [_downloadFiles count]) {
+    if ([_downloadFiles count]) {
         
         [self showWaitingStatus];
         
@@ -496,101 +455,60 @@
     for (UIView *v in [cell.contentView subviews]) {
         [v removeFromSuperview];
     }
-    
 
-   
-    
-    
     UIFont *textFont = [UIFont systemFontOfSize:16];
     UIFont *detailFont = [UIFont systemFontOfSize:14];
     
-  
+    
     if (0 == indexPath.section) {
-        if (0 == indexPath.row) {
-            
-            NSString *title = @"场景";
-            CGSize size = [title sizeWithFont:textFont];
-            
-            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (TEXT_HEIGHT-size.height)/2, 100, size.height)];
-            textLabel.text = title;
-            textLabel.font = textFont;
-            textLabel.backgroundColor = [UIColor clearColor];
-            textLabel.textColor = [UIColor blackColor];
-            
-            [cell.contentView addSubview:textLabel];
-            
-            
-            cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        NSString *entry = nil;
+        if ([_entries count]) {
+            entry = [_entries objectAtIndex:(indexPath.row)];
         }
-        else {
-            
-            
-            NSString *entry = nil;
-            if ([_entries count]) {
-                entry = [_entries objectAtIndex:(indexPath.row-1)];
+        
+        NSRange r = [entry rangeOfString:@"/" options:NSBackwardsSearch];
+        NSRange nameRange = NSMakeRange(r.location + r.length, [entry length] - (r.location + r.length));
+        NSString *fileName = [entry substringWithRange:nameRange];
+        
+        CGSize size = [fileName sizeWithFont:detailFont];
+        
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, (DETAIL_HEIGHT-size.height)/2, 280, size.height)];
+        textLabel.text = fileName;
+        textLabel.font = detailFont;
+        textLabel.backgroundColor = [UIColor clearColor];
+        textLabel.textColor = [UIColor blackColor];
+        
+        [cell.contentView addSubview:textLabel];
+        
+        
+        
+        BOOL checked = NO;
+        for (NSIndexPath *tempIndexPath in _downloadPaths) {
+            if (NSOrderedSame == [tempIndexPath  compare:indexPath]) {
+                checked = YES;
+                break;
             }
-            
-            NSRange r = [entry rangeOfString:@"/" options:NSBackwardsSearch];
-            NSRange nameRange = NSMakeRange(r.location + r.length, [entry length] - (r.location + r.length));
-            NSString *fileName = [entry substringWithRange:nameRange];
-
-            CGSize size = [fileName sizeWithFont:detailFont];
-            
-            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, (DETAIL_HEIGHT-size.height)/2, 280, size.height)];
-            textLabel.text = fileName;
-            textLabel.font = detailFont;
-            textLabel.backgroundColor = [UIColor clearColor];
-            textLabel.textColor = [UIColor blackColor];
-            
-            [cell.contentView addSubview:textLabel];
-            
-            
-            
-            BOOL checked = NO;
-            for (NSIndexPath *tempIndexPath in _downloadPaths) {
-                if (NSOrderedSame == [tempIndexPath  compare:indexPath]) {
-                    checked = YES;
-                    break;
-                }
-            }
-            
-            
-            cell.accessoryType = checked ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
         }
+        
+        
+        cell.accessoryType = checked ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     }
-    else {
-        if (0 == indexPath.row) {
-            
-            NSString *title = @"其他";
-            CGSize size = [title sizeWithFont:textFont];
-            
-            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (TEXT_HEIGHT-size.height)/2, 100, size.height)];
-            textLabel.text = title;
-            textLabel.backgroundColor = [UIColor clearColor];
-            textLabel.textColor = [UIColor blackColor];
-            textLabel.font = textFont;
-            [cell.contentView addSubview:textLabel];
-            
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-    }
-
+    
+    
+    
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        
-        return [_entries count]+1;
-    }
-    
-    return 1;
+
+    return [_entries count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return  2;
+    return  1;
 }
 
 

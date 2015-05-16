@@ -206,7 +206,7 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
     NSDictionary *userInfo = [ntf userInfo];
     NSInteger step = [[userInfo objectForKey:GetGatewayConfigStepNotificationKey] integerValue];
     
-    if (step == SHFetchingStepFinished) {
+    if (step == GetConfigStepFinished) {
         [self associateCellWithGateway:gateway];
     }
 }
@@ -245,21 +245,7 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
 
 }
 
-- (void)handleRefreshDevicesStartNtf:(NSNotification *)ntf
-{
-    for (SHGateway *gateway in _gateways)
-    {
-        
-        [self removeAssociateCellWithGateway:gateway];
-    }
-}
 
-- (void)handleRefreshDevicesEndNtf:(NSNotification *)ntf
-{
-//    for (SHGateway *gateway in _gateways) {
-//        [self associateCellWithGateway:gateway];
-//    }
-}
 
 - (void)reachabilityChanged:(NSNotification *)ntf
 {
@@ -383,9 +369,6 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefreshDevicesStartNtf:) name:RefreshDeviceListStartNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefreshDevicesEndNtf:) name:RefreshDeviceListEndNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleGetGatewayConfigStepNtf:) name:GetGatewayConfigStepNotification object:nil];
     
@@ -1357,13 +1340,13 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
 
 - (void)entryEnvironmentService
 {
-    NSString *nibName = [Util nibNameWithClass:[EnvironmentalMonitoringController class]];
-    EnvironmentalMonitoringController *viewController = [[EnvironmentalMonitoringController alloc] initWithNibName:nibName bundle:nil];
-    
-    UINavigationController *navController = ((AppDelegate*)[UIApplication sharedApplication].delegate).mainNavController;
-    
-    [navController setNavigationBarHidden:NO];
-    [navController pushViewController:viewController animated:YES];
+//    NSString *nibName = [Util nibNameWithClass:[EnvironmentalMonitoringController class]];
+//    EnvironmentalMonitoringController *viewController = [[EnvironmentalMonitoringController alloc] initWithNibName:nibName bundle:nil];
+//    
+//    UINavigationController *navController = ((AppDelegate*)[UIApplication sharedApplication].delegate).mainNavController;
+//    
+//    [navController setNavigationBarHidden:NO];
+//    [navController pushViewController:viewController animated:YES];
 }
 
 

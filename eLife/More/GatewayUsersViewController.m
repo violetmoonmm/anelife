@@ -24,6 +24,7 @@
     UIButton *editBtn;
     
     NSInteger removeIndex;//将要删除用户index
+    NSMutableArray *usersArray;
 }
 
 @end
@@ -52,19 +53,39 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     
-    if (self.gateway.shFetchingStep != SHFetchingStepFinished) {
-        [self showWaitingStatus];
-    }
-    else {
-        [self.tableView reloadData];
-    }
+    usersArray = [NSMutableArray arrayWithCapacity:1];
+
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleGetGatewayConfigStepNtf:) name:GetGatewayConfigStepNotification object:nil];
+    [self showWaitingStatus];
+    
+    [[NetAPIClient sharedClient] getAuthUsersOfGateway:self.gateway successCallback:^(NSArray *users){
+        
+        [self hideWaitingStatus];
+        
+        [usersArray addObjectsFromArray:users];
+        
+        [self.tableView reloadData];
+        
+    }failureCallback:^{
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"查询失败!";
+        [hud  hide:YES afterDelay:1.5];
+    }];
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
 }
 
 /*
@@ -138,25 +159,7 @@
 }
 
 
-- (void)handleGetGatewayConfigStepNtf:(NSNotification *)ntf
-{
-    SHGateway *ntfGateway = ntf.object;
-    NSDictionary *userInfo = [ntf userInfo];
-    NSInteger step = [[userInfo objectForKey:GetGatewayConfigStepNotificationKey] integerValue];
-  
-    if ([ntfGateway isEqual:self.gateway]) {
-        
-        if (step == SHFetchingStepFinished) {
-            [self hideWaitingStatus];
-            
-            [self.tableView reloadData];
-        }
-        else {
-            [self showWaitingStatus];
-        }
-    }
-    
-}
+
 
 - (void)showCtrlFailedHint:(NSString *)info
 {
@@ -187,7 +190,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    return [self.gateway.authUserArray count];
+    return [usersArray count];
 }
 
 
@@ -208,7 +211,7 @@
         [v removeFromSuperview];
     }
     
-    GatewayUser *user = [self.gateway.authUserArray objectAtIndex:indexPath.row];
+    GatewayUser *user = [usersArray objectAtIndex:indexPath.row];
 
     NSInteger originX = 10;
     NSInteger profileSize = 60;
@@ -302,6 +305,13 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    GatewayUser *user = [usersArray objectAtIndex:indexPath.row];
+    
+    if ([user.phoneNumber isEqualToString:[User currentUser].name]) {
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -327,15 +337,15 @@
 {
     if ([inputText isEqualToString:@"666666"]) {
 
-        MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self.view.window];
-        [self.view.window addSubview:tempHud];
+        MBProgressHUD *tempHud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:tempHud];
         tempHud.labelText = @"请稍后...";
         tempHud.mode = MBProgressHUDModeIndeterminate;
         tempHud.removeFromSuperViewOnHide = YES;
         [hud show:YES];
         
         
-        GatewayUser *user = [self.gateway.authUserArray objectAtIndex:removeIndex];
+        GatewayUser *user = [usersArray objectAtIndex:removeIndex];
         [[NetAPIClient sharedClient] removeAuthUser:user fromGateway:self.gateway successCallback:^{
             NSLog(@"删除用户成功");
             

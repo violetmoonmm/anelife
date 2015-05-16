@@ -35,8 +35,6 @@ NSString *const NeedRefreshGatewayKey = @"NeedRefreshGatewayKey";//需要刷新�
 
 NSString *const DeviceListGetReadyNotifacation = @"DeviceListGetReadyNotifacation";//设备列表ready
 
-NSString *const RefreshDeviceListStartNotification = @"RefreshDeviceListStartNotification";//刷新设备列表开始通知
-NSString *const RefreshDeviceListEndNotification = @"RefreshDeviceListEndNotification";//刷新设备列表完成通知
 
 NSString *const LogoutNotification = @"LogoutNotification";//登出
 

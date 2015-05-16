@@ -15,6 +15,12 @@
 #import "MBProgressHUD.h"
 #import "AddGatewayViewController.h"
 #import "GatewayInfoViewController.h"
+#import "GatewayUsersViewController.h"
+
+#define TAG_AUTHUSER 200
+#define TAG_GATEWAY 300
+
+#define CELL_H 168
 
 @interface GatewayListViewController () <UITableViewDataSource,UITableViewDelegate>
 {
@@ -80,7 +86,8 @@
     
     
 
-    
+    tblView.allowsSelection = NO;
+    tblView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tblView.backgroundColor = [UIColor colorWithRed:230/255. green:230/255. blue:230/255. alpha:1];
     tblView.backgroundView = nil;
 
@@ -251,7 +258,30 @@
     [self performSelector:@selector(reqTimeout) withObject:nil afterDelay:10];
 }
 
+//查看授权用户
+- (void)viewAuthUsers:(UIButton *)sender
+{
+    
+    NSInteger index = sender.tag - TAG_AUTHUSER;
+    SHGateway *gateway = [gatewayList objectAtIndex:index];
+    
+    NSString *nibName = [Util nibNameWithClass:[GatewayUsersViewController class]];
+    GatewayUsersViewController *vc = [[GatewayUsersViewController alloc] initWithNibName:nibName bundle:nil];
+    vc.gateway = gateway;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
+- (void)manageGateway:(UIButton *)sender
+{
+    NSInteger index = sender.tag - TAG_GATEWAY;
+    SHGateway *gateway = [gatewayList objectAtIndex:index];
+    
+    NSString *nibName = [Util nibNameWithClass:[GatewayInfoViewController class]];
+    GatewayInfoViewController *viewController = [[GatewayInfoViewController alloc] initWithNibName:nibName bundle:nil];
+    
+    viewController.gateway = gateway;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
 
 - (void)handleGatewayStatusChangeNtf:(NSNotification *)ntf
 {
@@ -295,25 +325,26 @@
 
 #pragma mark - Table view data source
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    
-    return 10;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 10;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    
+//    return 10;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 10;
+//}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 124;
+    return CELL_H;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    
 
     return 1;
 }
@@ -347,6 +378,7 @@
     NSInteger spacingY = 4;
     NSInteger originY = 2;
     NSInteger originX = 10;
+    NSInteger rightMargin = originX;
     NSInteger lblHeight = 20;
     
     //网关名
@@ -402,10 +434,9 @@
     
     //本地在线状态
     NSString *statusTxt = [NSString stringWithFormat:@"本地:%@",gateway.status.localOnline ? @"在线" : @"离线"];
-    NSInteger limitWidth = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 300 : 758);
-    NSInteger statusWidth = 70;
-    NSInteger spacingX = 4;//右边间隔
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(limitWidth - statusWidth - spacingX, CGRectGetMinY(titleLabel.frame), statusWidth, lblHeight)];
+    NSInteger limitWidth = CGRectGetWidth(tblView.bounds);
+    NSInteger statusWidth = 80;
+    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(limitWidth - statusWidth - rightMargin, CGRectGetMinY(titleLabel.frame), statusWidth, lblHeight)];
     statusLabel.text = statusTxt;
     statusLabel.textColor = [UIColor darkGrayColor];
     statusLabel.textAlignment = NSTextAlignmentRight;
@@ -416,7 +447,7 @@
     
     //远程在线状态
     NSString *remoteTxt = [NSString stringWithFormat:@"远程:%@",gateway.status.remoteOnline ? @"在线" : @"离线"];
-    UILabel *remoteLabel = [[UILabel alloc] initWithFrame:CGRectMake(limitWidth - statusWidth - spacingX, CGRectGetMinY(snLabel.frame), statusWidth, lblHeight)];
+    UILabel *remoteLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(statusLabel.frame), CGRectGetMinY(snLabel.frame), statusWidth, lblHeight)];
     remoteLabel.text = remoteTxt;
     remoteLabel.textColor = [UIColor darkGrayColor];
     remoteLabel.textAlignment = NSTextAlignmentRight;
@@ -428,7 +459,7 @@
     
     //认证是否成功
     NSString *authTxt = gateway.authorized ? @"认证成功" : @"认证失败";
-    UILabel *authLabel = [[UILabel alloc] initWithFrame:CGRectMake(limitWidth - statusWidth - spacingX, CGRectGetMinY(cityLabel.frame), statusWidth, lblHeight)];
+    UILabel *authLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(statusLabel.frame), CGRectGetMinY(cityLabel.frame), statusWidth, lblHeight)];
     authLabel.text = authTxt;
     authLabel.textColor = [UIColor darkGrayColor];
     authLabel.textAlignment = NSTextAlignmentRight;
@@ -472,6 +503,39 @@
     gradeIcon.image = img;
     [cell.contentView addSubview:gradeIcon];
     
+    CGFloat btnW = 94;
+    CGFloat btnH = 40;
+    
+    //查看授权用户
+    UIButton *authUserBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    authUserBtn.frame = CGRectMake(limitWidth - btnW - rightMargin, CGRectGetMaxY(gradeLbl.frame)+2, btnW, btnH);
+    [authUserBtn setBackgroundImage:[UIImage imageNamed:@"GrayBtn"] forState:UIControlStateNormal];
+    [authUserBtn setBackgroundImage:[UIImage imageNamed:@"GrayBtnHl"] forState:UIControlStateHighlighted];
+    [authUserBtn setTitle:@"查看授权用户" forState:UIControlStateNormal];
+    [authUserBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    authUserBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [authUserBtn addTarget:self action:@selector(viewAuthUsers:) forControlEvents:UIControlEventTouchUpInside];
+    authUserBtn.tag = TAG_AUTHUSER + indexPath.row;
+    [cell.contentView addSubview:authUserBtn];
+    
+    //网关管理
+    UIButton *gatewayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    gatewayBtn.frame = CGRectMake(CGRectGetMinX(authUserBtn.frame) - btnW - 10, CGRectGetMaxY(gradeLbl.frame)+2, btnW, btnH);
+    [gatewayBtn setBackgroundImage:[UIImage imageNamed:@"GrayBtn"] forState:UIControlStateNormal];
+    [gatewayBtn setBackgroundImage:[UIImage imageNamed:@"GrayBtnHl"] forState:UIControlStateHighlighted];
+    [gatewayBtn setTitle:@"网关管理" forState:UIControlStateNormal];
+    [gatewayBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    gatewayBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [gatewayBtn addTarget:self action:@selector(manageGateway:) forControlEvents:UIControlEventTouchUpInside];
+    gatewayBtn.tag = TAG_GATEWAY + indexPath.row;
+    [cell.contentView addSubview:gatewayBtn];
+    
+    //自定义分割线
+    UIView *sep = [[UIView alloc] initWithFrame:CGRectMake(0, CELL_H-1, CGRectGetWidth(tableView.frame), 1)];
+    sep.backgroundColor = [UIColor grayColor];
+    sep.alpha = 0.2;
+    [cell.contentView addSubview:sep];
+    
     return cell;
 }
 
@@ -479,18 +543,13 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    SHGateway *gateway = [gatewayList objectAtIndex:indexPath.row];
-    
-//    NSString *nibName = [Util nibNameWithClass:[EditGatewayViewController class]];
-//    EditGatewayViewController *viewController = [[EditGatewayViewController alloc] initWithNibName:nibName bundle:nil];
+//    SHGateway *gateway = [gatewayList objectAtIndex:indexPath.row];
+//    
+//    NSString *nibName = [Util nibNameWithClass:[GatewayInfoViewController class]];
+//    GatewayInfoViewController *viewController = [[GatewayInfoViewController alloc] initWithNibName:nibName bundle:nil];
 //    
 //    viewController.gateway = gateway;
-    
-    NSString *nibName = [Util nibNameWithClass:[GatewayInfoViewController class]];
-    GatewayInfoViewController *viewController = [[GatewayInfoViewController alloc] initWithNibName:nibName bundle:nil];
-    
-    viewController.gateway = gateway;
-    [self.navigationController pushViewController:viewController animated:YES];
+//    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 

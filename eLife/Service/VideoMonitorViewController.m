@@ -43,7 +43,7 @@
     
     IBOutlet VideoChannelView *channelView;
     
-    IBOutlet UIButton *playView;
+    IBOutlet UIButton *playBtn;
     
     IBOutlet UIButton *videoCoverBtn;
     
@@ -220,7 +220,7 @@
     [sideBar addSubview:landscapeBtn];
     landscapeBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 
-    playView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    playBtn.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     
     
 }
@@ -379,7 +379,7 @@
 - (void)playVideoAtIndex:(NSInteger)index
 {
 #ifndef INVALID_VIDEO  
-    playView.hidden = YES;
+    playBtn.hidden = YES;
     
     float fplayScale = 1.0;
     if ([UIScreen instancesRespondToSelector:@selector(scale)])
@@ -451,42 +451,35 @@
          NSLog(@"获取视频码流失败");
      }];
     
+    int ret = -1;
+    int ret1 = -1;
     if (url) {
-        int ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[url UTF8String]:fplayScale];
-        if (ret == 1) {//播放成功
-            
-            
-            isPlaying = YES;
-            
-            [[UIApplication sharedApplication] setIdleTimerDisabled:YES];//防止自动锁屏
-            
-            NSLog(@"playingUrl:%@",url);
-            
-        }
-        else if (pubUrl) {
-            
-            int ret1 = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[pubUrl UTF8String]:fplayScale];
-            
-            if (ret1 == 1)
-            {
-                
-                isPlaying = YES;
-                
-                [[UIApplication sharedApplication] setIdleTimerDisabled:YES];//防止自动锁屏
-                
-                NSLog(@"playingUrl:%@",pubUrl);
-            }
-            else  {
-                NSString *msg = [NSString stringWithFormat:@"%@(错误码:%d)\n%@(错误码:%d)",url,ret,pubUrl,ret1];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"打开视频失败" message:msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                [alert show];
-                
-                playView.hidden = NO;
-                isPlaying = NO;
-            }
-            
-        }
-
+        ret = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[url UTF8String] :fplayScale];
+    }
+    
+    if (ret != 1 && pubUrl) {
+        
+        ret1 = [zw_dssdk dssdk_rtv_start:(__bridge void *)(videoWnd):(char*)[pubUrl UTF8String] :fplayScale];
+        
+    }
+    
+    
+    if (ret == 1 || ret1 == 1) {
+        isPlaying = YES;
+        playBtn.hidden = YES;
+        
+        
+        //看视频的时候防止锁屏
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        
+    }
+    else {
+        NSString *msg = [NSString stringWithFormat:@"%@(错误码:%d)\n%@(错误码:%d)",url,ret,pubUrl,ret1];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"打开视频失败" message:msg delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        
+        isPlaying = NO;
+        playBtn.hidden = NO;
     }
     
     [tempHud hide:YES];
@@ -511,7 +504,7 @@
     
     isPlaying = NO;
     
-    playView.hidden = NO;
+    playBtn.hidden = NO;
     
     [self hideVideoContrl];
 
@@ -543,6 +536,7 @@
     
     [self performSelector:@selector(hideVideoContrl) withObject:nil afterDelay:HIDE_TIME];
     
+    [self setBitrateBtnState:UIControlStateNormal];
     
     sideBar.hidden = NO;
     bitrateBtn.hidden = NO;
@@ -865,7 +859,7 @@
     
 #endif
     
-    playView.hidden = NO;
+    playBtn.hidden = NO;
 }
 
 - (void)handleStatusChangeNtf:(NSNotification *)ntf

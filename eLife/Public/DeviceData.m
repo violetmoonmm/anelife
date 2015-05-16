@@ -70,7 +70,7 @@
         _ipcArray = [NSMutableArray array];
         _ammeterArray = [NSMutableArray array];
         _envMonitorArray = [NSMutableArray array];
-        _authUserArray = [NSMutableArray array];
+     
         
         _status = [[SHGatewayStatus alloc] init];
     }
@@ -152,11 +152,7 @@
 
 @end
 
-@implementation UpnpService
 
-@synthesize type,serviceId,subscrible,controlUrl,eventUrl;
-
-@end
 
 @implementation SHLayout
 

@@ -40,8 +40,6 @@ extern NSString *const DelGatewayNotificationKey;//删除绑定
 extern NSString *const EditGatewayNotication;//修改网关信息
 extern NSString *const NeedRefreshGatewayKey;//需要刷新网关数据
 
-extern NSString *const RefreshDeviceListStartNotification;//刷新设备列表开始通知
-extern NSString *const RefreshDeviceListEndNotification;//刷新设备列表完成通知
 
 extern NSString *const LogoutNotification;//退出登录通知
 

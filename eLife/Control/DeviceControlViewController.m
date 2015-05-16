@@ -267,9 +267,7 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleGetDevicesReadyNtf:) name:DeviceListGetReadyNotifacation object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefreshDevicesStartNtf:) name:RefreshDeviceListStartNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRefreshDevicesEndNtf:) name:RefreshDeviceListEndNotification object:nil];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
@@ -943,7 +941,7 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
 {
     SHGateway *gateway = [self selectedGateway];
     
-    if (gateway && gateway.shFetchingStep != SHFetchingStepFinished) {
+    if (gateway && gateway.getConfigStep != GetConfigStepFinished) {
         
         [self showWaitingStatus];
         
@@ -1314,18 +1312,6 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
 }
 
 
-- (void)handleRefreshDevicesStartNtf:(NSNotification *)ntf
-{
-    NSLog(@"refresh start");
-
-    [self showWaitingStatus];
-}
-
-- (void)handleRefreshDevicesEndNtf:(NSNotification *)ntf
-{
-    [self hideWaitingStatus];
-
-}
 
 
 - (void)reachabilityChanged:(NSNotification *)ntf
@@ -1373,7 +1359,7 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
     
      if ([gateway isEqual:slcGateway]) {
          
-         if (step == SHFetchingStepFinished) {
+         if (step == GetConfigStepFinished) {
              [self hideWaitingStatus];
              
              [self refreshTable];
@@ -1422,7 +1408,7 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
         
         if (index == selectedIndex) {
             
-            if (gateway.shFetchingStep != SHFetchingStepFinished ) {
+            if (gateway.getConfigStep != GetConfigStepFinished ) {
                 [self showWaitingStatus];
             }
             else {

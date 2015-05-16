@@ -990,73 +990,6 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     
 }
 
-//刷新设备列表
-- (void)refreshDeviceListCompleted:(void(^)(void))completedCallback
-{
-    NSNotification *ntf = [NSNotification notificationWithName:RefreshDeviceListStartNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] performSelector:@selector(postNotification:) onThread:[NSThread mainThread] withObject:ntf waitUntilDone:YES];
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        _shTaskStep = SHTaskStepDoing;
-        
-        NSLog(@"refreshDeviceList start");
-        
-        
-        for (int i=0 ; i<[self.gatewayList count]; i++)
-        {
-            SHGateway *gateway = [self.gatewayList objectAtIndex:i];
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                gateway.shFetchingStep = SHFetchingStepDoing;//正在获取
-            });
-            
-            
-            
-            [self getConfigOfGateway:gateway];//配置
-            
-            [self getGatewayChangeId:gateway];//changeid
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                gateway.shFetchingStep = SHFetchingStepFinished;
-            });
-            
-            [[DBManager defaultManager] updateGateway:gateway];
-            //            //查询设备状态
-            //            [self queryDeviceStateOfGateway:gateway];
-            
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (completedCallback) {
-                completedCallback();
-            }
-            
-        });
-        
-        
-      
-        
-        NSNotification *ntf = [NSNotification notificationWithName:RefreshDeviceListEndNotification object:nil];
-        [[NSNotificationCenter defaultCenter] performSelector:@selector(postNotification:) onThread:[NSThread mainThread] withObject:ntf waitUntilDone:YES];
-        
-        //查询状态
-        for (SHGateway *gateway in self.gatewayList)
-        {
-            [self queryDeviceStateOfGateway:gateway];
-        }
-        
-        NSLog(@"refreshDeviceList end");
-        
-        _shTaskStep = SHTaskStepFinished;
-        
-        
-        
-    });
-    
-}
 
 
 - (NSInteger)numberOfGateways
@@ -1628,20 +1561,18 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                 if ([oldChangeId isEqualToString:gateway.changeId] || ([gateway.changeId length] == 0)) {
                     [self getGatewayConfigFromDB:gateway];
                     
-                    [self getAuthUsersOfGateway:gateway];
-                    
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        gateway.shFetchingStep = SHFetchingStepFinished;
-                        
-                        [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
+                        gateway.getConfigStep = GetConfigStepFinished;
+
+                        [self postGettingConfigStepNtf:gateway];
                         
                     });
                 }
                 else {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        gateway.shFetchingStep = SHFetchingStepDoing;//正在获取
-                        
-                        [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepDoing] forKey:GetGatewayConfigStepNotificationKey]];
+                        gateway.getConfigStep = GetConfigStepDoing;//正在获取
+
+                        [self postGettingConfigStepNtf:gateway];
                     });
                     
                     
@@ -1650,9 +1581,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                     [[DBManager defaultManager] updateGateway:gateway];//获取完配置后去更新数据库的changeid
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        gateway.shFetchingStep = SHFetchingStepFinished;
+                        gateway.getConfigStep = GetConfigStepFinished;
                         
-                        [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:GetConfigStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
                     });
                     
                     
@@ -1667,9 +1598,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                  [self getGatewayConfigFromDB:gateway];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    gateway.shFetchingStep = SHFetchingStepFinished;
+                    gateway.getConfigStep = GetConfigStepFinished;
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:GetConfigStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
                 });
             }
             
@@ -1740,7 +1671,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     memset(buffer, 0, BUFFER_SIZE);
     
     NSError *err;
-    NSDictionary *dic;
+    NSDictionary *dic = nil;
     
     if (SH_GetConfig(loginId, (char *)[configName UTF8String], buffer, &bufSize)) {
         
@@ -1800,6 +1731,40 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
         }
         
     }
+}
+
+
+- (void)getAlarmLinkage:(SHGateway *)gateway
+{
+    
+    NSDictionary *data = [self getConfigByName:@"AlarmLinkage" loginId:gateway.loginId];
+    if (data) {
+        id table = [data objectForKey:@"table"];
+        if ([table isKindOfClass:[NSDictionary class]]) {
+            id profiles = [table objectForKey:@"Profiles"];
+            if ([profiles isKindOfClass:[NSArray class]]) {
+                NSArray *array = (NSArray *)profiles;
+                
+                for (NSDictionary *tempObj in array) {
+                    
+                    NSDictionary *condition = [tempObj objectForKey:@"Condition"];
+                    NSString *zoneID = [condition objectForKey:@"ZoneID"];
+                    NSString *ipcId = [tempObj objectForKey:@"IPCID"];
+    
+                   for (SHAlarmZone *alarmZone in gateway.alarmZoneArray)
+                   {
+                       if ([zoneID isEqualToString:alarmZone.serialNumber]) {
+                           alarmZone.ipcID = ipcId;
+                           break;
+                       }
+                   }
+                }
+            }
+        }
+
+        
+    }
+
 }
 
 
@@ -2669,40 +2634,74 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 
 }
 
-
-- (void)getAuthUsersOfGateway:(SHGateway *)gateway
+- (void)getAuthUsersOfGateway:(SHGateway *)gateway successCallback:(void (^)(NSArray *))successCallback failureCallback:(void (^)(void))failureCallback
 {
-    [gateway.authUserArray removeAllObjects];
     
-    //获取情景模式
-    NSDictionary *authUsersDic = [self getConfigByName:@"AuthUser" loginId:gateway.loginId];
-    if (authUsersDic) {
-        if ([authUsersDic isKindOfClass:[NSDictionary class]]) {
-            id users = [authUsersDic objectForKey:@"authList"];
-            if ([users isKindOfClass:[NSArray class]]) {
-                NSArray *array = (NSArray *)users;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        NSMutableArray *authUsers = [NSMutableArray arrayWithCapacity:1];
+        
+        NSDictionary *authUsersDic = [self getConfigByName:@"AuthUser" loginId:gateway.loginId];
+        if (authUsersDic) {
+            if ([authUsersDic isKindOfClass:[NSDictionary class]]) {
+                id users = [authUsersDic objectForKey:@"authList"];
+                if ([users isKindOfClass:[NSArray class]]) {
+                    NSArray *array = (NSArray *)users;
+                    
+                    for (NSDictionary *tempUserDic in array) {
+                        
+                        GatewayUser *user = [[GatewayUser alloc] init];
+                        user.authID = [tempUserDic objectForKey:@"AuthID"];
+                        user.phoneNumber = [tempUserDic objectForKey:@"PhoneNumber"];
+                        user.meid = [tempUserDic objectForKey:@"MEID"];
+                        user.deviceModel = [tempUserDic objectForKey:@"Model"];
+                        user.enable = [[tempUserDic objectForKey:@"Enable"] boolValue];
+                        user.online = [[tempUserDic objectForKey:@"Online"] boolValue];
+                        
+                        [authUsers addObject:user];
+                        
+                    }
+                    
+                    [authUsers sortUsingComparator:^NSComparisonResult(GatewayUser *obj1, GatewayUser *obj2)
+                    {
+//                        if ([obj1.phoneNumber isEqualToString:[User currentUser].name]) {
+//                            return NSOrderedAscending;//本机号码最先
+//                        }
+//                        
+//                        if ([obj2.phoneNumber isEqualToString:[User currentUser].name]) {
+//                            return NSOrderedAscending;
+//                        }
 
-                for (NSDictionary *tempUserDic in array) {
- 
-                    GatewayUser *user = [[GatewayUser alloc] init];
-                    user.authID = [tempUserDic objectForKey:@"AuthID"];
-                    user.phoneNumber = [tempUserDic objectForKey:@"PhoneNumber"];
-                    user.meid = [tempUserDic objectForKey:@"MEID"];
-                    user.deviceModel = [tempUserDic objectForKey:@"Model"];
-                    user.enable = [[tempUserDic objectForKey:@"Enable"] boolValue];
-                    user.online = [[tempUserDic objectForKey:@"Online"] boolValue];
-                    
-                    [gateway.authUserArray addObject:user];
-                    
+                        if (obj1.online && !obj2.online) {
+                            return NSOrderedAscending;//在线的排在前面
+                        }
+                        
+                        if (!obj1.online && obj2.online) {
+                            return NSOrderedDescending;
+                        }
+
+                        return [obj1.phoneNumber compare:obj2.phoneNumber];
+                    }];
                 }
-                
-                
+            }
+            
+            if (successCallback) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    successCallback(authUsers);
+                });
             }
         }
-        
-    }
+        else if (failureCallback) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureCallback();
+            });
+        }
+    });
+    
 
 }
+
+
 
 - (void)getConfigOfGateway:(SHGateway *)gateway
 {
@@ -2716,7 +2715,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     [gateway.roomArray removeAllObjects];
     [gateway.ammeterArray removeAllObjects];
     [gateway.envMonitorArray removeAllObjects];
-    [gateway.authUserArray removeAllObjects];
+
     
     
 //    [self getAlarmZonesOfGateway:gateway];
@@ -2731,7 +2730,8 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 //    [self getEnvMonitorsOfGateway:gateway];
     
     [self getAllDeviceOfGateway:gateway];
-    [self getAuthUsersOfGateway:gateway];
+    [self getAlarmLinkage:gateway];
+
     
     [[DBManager defaultManager] insertSceneMode:gateway.sceneModeArray gatewaySN:gateway.serialNumber];
     
@@ -5048,14 +5048,23 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     
     alarm.alarmType = strType;
     
-    if ([gateway.ipcArray count] > 0) {
-        SHVideoDevice *ipc = [gateway.ipcArray objectAtIndex:0];
-        alarm.videoAddr = ipc.videoUrl;
-        alarm.pubVideoAddr = ipc.pubVideoUrl;
-    }
-    else {
-        alarm.videoAddr = @"";
-        alarm.pubVideoAddr = @"";
+//    if ([gateway.ipcArray count] > 0) {
+//        SHVideoDevice *ipc = [gateway.ipcArray objectAtIndex:0];
+//        alarm.videoAddr = ipc.videoUrl;
+//        alarm.pubVideoAddr = ipc.pubVideoUrl;
+//    }
+//    else {
+//        alarm.videoAddr = @"";
+//        alarm.pubVideoAddr = @"";
+//    }
+    
+    for (SHVideoDevice *ipc in gateway.ipcArray)
+    {
+        if ([ipc.serialNumber isEqualToString:alarmZone.ipcID]) {
+            alarm.videoAddr = ipc.videoUrl;
+            alarm.pubVideoAddr = ipc.pubVideoUrl;
+            break;
+        }
     }
     
     
@@ -5187,13 +5196,10 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
         if (gateway.status.state == GatewayStatusOffline) {
             //断线后重连成功,重新查询设备状态
             [self queryDeviceStateOfGateway:gateway];//重新查询设备状态
-            
-            [self getAuthUsersOfGateway:gateway];//查询网关授权用户
+
         }
         else if (gateway.status.state == GatewayStatusLoginFailed) {
             //之前登录失败，现在重连成功
-            
-            [self getAuthUsersOfGateway:gateway];//查询网关授权用户
            
             NSString *oldChangeId = gateway.changeId;
             
@@ -5203,9 +5209,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
             
             if (![oldChangeId isEqualToString:gateway.changeId]) { //是否要重新获取配置
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    gateway.shFetchingStep = SHFetchingStepDoing;//正在获取
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepDoing] forKey:GetGatewayConfigStepNotificationKey]];
+                    gateway.getConfigStep = GetConfigStepDoing;//正在获取
+
+                    [self postGettingConfigStepNtf:gateway];
                 });
                 
                 
@@ -5214,9 +5220,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                 [[DBManager defaultManager] updateGateway:gateway];//获取完配置后去更新数据库的changeid
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    gateway.shFetchingStep = SHFetchingStepFinished;
+                    gateway.getConfigStep = GetConfigStepFinished;
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepDoing] forKey:GetGatewayConfigStepNotificationKey]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:GetConfigStepDoing] forKey:GetGatewayConfigStepNotificationKey]];
                 });
                 
             }
@@ -5515,17 +5521,17 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
             
             //获取配置
             dispatch_async(dispatch_get_main_queue(), ^{
-                gateway.shFetchingStep = SHFetchingStepDoing;//正在获取
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepDoing] forKey:GetGatewayConfigStepNotificationKey]];
+                gateway.getConfigStep = GetConfigStepDoing;//正在获取
+
+                [self postGettingConfigStepNtf:gateway];
             });
             
             [self getConfigOfGateway:gateway];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                gateway.shFetchingStep = SHFetchingStepFinished;//获取完成
+                gateway.getConfigStep = GetConfigStepFinished;//获取完成
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:GetConfigStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
             });
             
             
@@ -5725,17 +5731,17 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                 
                 //获取配置
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    gateway.shFetchingStep = SHFetchingStepDoing;//正在获取
+                    gateway.getConfigStep = GetConfigStepDoing;//正在获取
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepDoing] forKey:GetGatewayConfigStepNotificationKey]];
+                    [self postGettingConfigStepNtf:gateway];
                 });
                 
                 [self getConfigOfGateway:gateway];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    gateway.shFetchingStep = SHFetchingStepFinished;//获取完成
+                    gateway.getConfigStep = GetConfigStepFinished;//获取完成
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:SHFetchingStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:GetConfigStepFinished] forKey:GetGatewayConfigStepNotificationKey]];
                 });
                 
                 
@@ -5906,8 +5912,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if( SH_DelAuth(gateway.loginId, (char *)[user.phoneNumber UTF8String], (char *)[user.meid UTF8String]))
         {
-            [gateway.authUserArray removeObject:user];
-            
+  
             if (successCallback) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     successCallback();
@@ -5923,6 +5928,53 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     });
 }
 
+
+- (void)synchronizeConfig:(SHGateway *)gateway completionCallback:(void (^)(void))completionCallback
+{
+    _shTaskStep = SHTaskStepDoing;
+    
+    NSLog(@"synchronizeConfig start");
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            gateway.getConfigStep = GetConfigStepDoing;//正在获取
+            
+            [self postGettingConfigStepNtf:gateway];
+        });
+        
+        
+        [self getConfigOfGateway:gateway];//配置
+        
+        [self getGatewayChangeId:gateway];//changeid
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            gateway.getConfigStep = GetConfigStepFinished;
+            [self postGettingConfigStepNtf:gateway];
+        });
+        
+        [[DBManager defaultManager] updateGateway:gateway];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completionCallback) {
+                completionCallback();
+            }
+            
+        });
+        
+        NSLog(@"synchronizeConfig end");
+        
+        [self queryDeviceStateOfGateway:gateway];//查询设备状态
+    });
+    
+   _shTaskStep = SHTaskStepFinished;
+    
+}
+
+- (void)postGettingConfigStepNtf:(SHGateway *)gateway
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:GetGatewayConfigStepNotification object:gateway userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:gateway.getConfigStep] forKey:GetGatewayConfigStepNotificationKey]];
+}
 
 #pragma mark 信息查询
 
