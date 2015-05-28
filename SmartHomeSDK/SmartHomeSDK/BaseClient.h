@@ -153,11 +153,12 @@ public:
     // 取得报警防区状态
     int GetArmMode(char *pszDeviceId,bool & bEnable,std::string strGwVCode="");
     
-    // 视频遮挡配置
+    // ipc接口
     int GetVideoCovers(char *pszDeviceId,bool &bEnable,std::string strGwVCode="");
     int SetVideoCovers(char *pszDeviceId,bool bEnable,std::string strGwVCode="");
     int SetExtraBitrate(char *pszDeviceId,int iBitRate,std::string strGwVCode="");
     int GetExtraBitrate(char *pszDeviceId,int &iBitRate,std::string strGwVCode="");
+    int PTZControl(char *pszDeviceId,char* pszMethod,char * pszCode,int arg1,int arg2,int arg3,std::string strGwVCode="");
     
     int RemoteOpenDoor(char *pszShortNumber,std::string strGwVCode="");
     
@@ -166,6 +167,7 @@ public:
     
     int AuthManager_getAuthList(std::string & strAuthList,std::string strGwVCode="");
     int AuthManager_delAuth(char *pszPhone,char* pszMeid,std::string strGwVCode="");
+    
     
     //magicbox
     int MagicBox_Control(std::string strAction,std::string & strOutParams,std::string strGwVCode="");

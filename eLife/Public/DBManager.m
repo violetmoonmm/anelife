@@ -115,9 +115,7 @@
     //能耗表
     NSString *ENERGY_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS energy (id integer primary key autoincrement,current text ,prior text,time integer); ";
     [_db executeUpdate:ENERGY_TABLE_CREATE_SQL];
-    
-    
-    
+
     
     //网关表
     NSString *GATEWAY_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS gateway (id integer primary key autoincrement,vircode text ,name text,user text,pswd text,addr text,port integer,comm text,sn text , changeid text,position text,authcode text,ipcpublic bit,city text,isp text,grade integer,ARMSAddr text,ARMSPort integer); ";
@@ -157,10 +155,13 @@
     [_db executeUpdate:ENVMONITOR_TABLE_CREATE_SQL];
     
     //面板配置表
-    NSString *const PANEL_CONFIG_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS panel (id integer primary key autoincrement,config text); ";
+    NSString *PANEL_CONFIG_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS panel (id integer primary key autoincrement,config text); ";
     [_db executeUpdate:PANEL_CONFIG_TABLE_CREATE_SQL];
     
 
+    //红外遥控器
+    NSString *IRC_TABLE_CREATE_SQL = @" CREATE TABLE IF NOT EXISTS remotecontrol (id integer primary key autoincrement,sn text,udn text,name text,roomid text, gatewaysn text,gatewayvc text,type text,module text); ";
+    [_db executeUpdate:IRC_TABLE_CREATE_SQL];
 }
 
 #pragma mark 信息
@@ -688,7 +689,7 @@
     for (SHAlarmZone *tempDevice in alarmZones) {
 
         
-        b =  [_db executeUpdate:@"INSERT INTO alarmzone (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,sensortype,sensormethod,ipcid) VALUES (?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,tempDevice.sensorType,tempDevice.sensorMethod],tempDevice.ipcID;
+        b =  [_db executeUpdate:@"INSERT INTO alarmzone (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid,sensortype,sensormethod,ipcid) VALUES (?,?,?,?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId,tempDevice.sensorType,tempDevice.sensorMethod,tempDevice.ipcID];
     }
     
     [_db commit];
@@ -701,8 +702,7 @@
     BOOL b = [_db executeUpdate:@"DELETE  FROM scenemode WHERE gatewaysn = ?",gatewaySN];
     
     for (SHDevice *tempDevice in sceneModes) {
-        
-        NSString *strRange = @"";
+
         
         b =  [_db executeUpdate:@"INSERT INTO scenemode (sn,udn, name,roomid,gatewaysn,gatewayvc,type,cameraid) VALUES (?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.cameraId];
     }
@@ -746,6 +746,21 @@
     
 }
 
+
+- (void)insertRemoteControl:(NSArray *)remoteControls gatewaySN:(NSString *)gatewaySN
+{
+    [_db beginTransaction];
+    
+    BOOL b = [_db executeUpdate:@"DELETE  FROM remotecontrol WHERE gatewaysn = ?",gatewaySN];
+    
+    for (SHInfraredRemoteControl *tempDevice in remoteControls) {
+        
+        b =  [_db executeUpdate:@"INSERT INTO remotecontrol (sn,udn, name,roomid,gatewaysn,gatewayvc,type,module) VALUES (?,?,?,?,?,?,?,?)",tempDevice.serialNumber,tempDevice.udn,tempDevice.name,tempDevice.roomId,tempDevice.gatewaySN,tempDevice.gatewayVC,tempDevice.type,tempDevice.moduleName];
+    }
+    
+    [_db commit];
+}
+
 - (void)updateGateway:(SHGateway *)gateway
 {
     //    [_db beginTransaction];
@@ -781,6 +796,9 @@
     
     //删除环境检测器
     b = [_db executeUpdate:@"DELETE  FROM envmonitor WHERE gatewayvc = ?",gateway.serialNumber];
+    
+    //删除红外遥控器
+    b = [_db executeUpdate:@"DELETE  FROM remotecontrol WHERE gatewayvc = ?",gateway.serialNumber];
     
     [_db commit];
 }
@@ -1048,7 +1066,33 @@
 }
 
 
+- (NSArray *)queryRemoteControlsByGatewaySN:(NSString *)gatewaySN
+{
+    NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:1];
+    
+    FMResultSet *rs = [_db executeQuery:@"SELECT * FROM remotecontrol WHERE gatewaysn = ?",gatewaySN];
+    
+    while ([rs next]) {
+        
+        SHInfraredRemoteControl *record = [[SHInfraredRemoteControl alloc] init];
+        record.serialNumber = [rs stringForColumn:@"sn"];
+        record.udn = [rs stringForColumn:@"udn"];
+        record.name = [rs stringForColumn:@"name"];
+        record.roomId = [rs stringForColumn:@"roomid"];
+        record.gatewaySN = [rs stringForColumn:@"gatewaysn"];
+        record.gatewayVC = [rs stringForColumn:@"gatewayvc"];
+        record.type = [rs stringForColumn:@"type"];
+        record.moduleName = [rs stringForColumn:@"module"];
+        
+        [tempArray addObject:record];
+        
+    }
+    
+    [rs close];
+    
+    return tempArray;
 
+}
 
 - (NSInteger)numberOfGateways
 {

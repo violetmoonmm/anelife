@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "BasicCell.h"
 
-@interface BasicStateCell : BasicCell
+@interface BasicStateCell : UIView
+
+//@property (nonatomic,strong) NSString *deviceId;
+@property (nonatomic,strong) NSString *gatewayId;
 
 - (void)setDisplayDevices:(NSArray *)devices;
 
-//- (void)associateWithDevices:(NSArray *)deviceArray;
 
 @end

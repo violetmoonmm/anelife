@@ -7,3 +7,5 @@
 #endif
 
 #define VT_UNIX
+#define HIGHFIRST
+#define __alpha

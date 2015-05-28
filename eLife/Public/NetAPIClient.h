@@ -278,6 +278,11 @@ enum DisConnectReason
 - (void)bgdMusicPlayLast:(SHDevice *)device successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback;//背景音乐播放上一曲
 - (void)bgdMusicPlayNext:(SHDevice *)device successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback;//背景音乐播放下一曲
 
+/*
+ *红外遥控
+ */
+- (void)remoteControl:(SHInfraredRemoteControl *)device key:(NSString *)key successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback;
+
 #pragma mark 抄表 & 环境监测
 
 - (void)readEnvironmentMonitor:(SHDevice *)device successCallback:(void(^)(NSDictionary *))successCallback failureCallback:(void(^)(void))failureCallback;

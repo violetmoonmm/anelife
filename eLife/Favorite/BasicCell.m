@@ -34,6 +34,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -82,6 +87,16 @@
     
     [self displayDeviceStatus];
     
+}
+
+- (void)setDeviceId:(NSString *)deviceId
+{
+    _deviceId = deviceId;
+}
+
+- (void)setGatewayId:(NSString *)gatewayId
+{
+    _gatewayId = gatewayId;
 }
 
 - (void)showCtrlFailedHint

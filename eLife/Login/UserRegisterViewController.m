@@ -172,7 +172,7 @@
     }
     else {
         
-        NSString *authCodeText = [authCode stringByReplacingCharactersInRange:NSMakeRange(2, 4) withString:@"*"];
+        NSString *authCodeText = [authCode stringByReplacingCharactersInRange:NSMakeRange(2, 4) withString:@"****"];
         
         [self showWaitingStatus];
         

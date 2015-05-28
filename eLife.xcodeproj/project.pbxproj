@@ -473,6 +473,8 @@
 		F539B7051AEA194600D1ED1B /* MusicPauseHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F539B7031AEA194600D1ED1B /* MusicPauseHl@2x.png */; };
 		F539B7081AEA3F1A00D1ED1B /* BasicBackgroundMusicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F539B7071AEA3F1A00D1ED1B /* BasicBackgroundMusicCell.m */; };
 		F539B70B1AEA3F2A00D1ED1B /* BasicGroundHeatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F539B70A1AEA3F2A00D1ED1B /* BasicGroundHeatCell.m */; };
+		F53C356E1B0F14770000DFEA /* RemoteControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = F53C356C1B0F14770000DFEA /* RemoteControlView.m */; };
+		F53C356F1B0F14770000DFEA /* RemoteControlView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F53C356D1B0F14770000DFEA /* RemoteControlView_iPad.xib */; };
 		F540556E1AEB8DB100174C62 /* BaseDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F540556D1AEB8DB100174C62 /* BaseDeviceViewController.m */; };
 		F540DB7A1A5E5DCA0079A4D2 /* HHFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F540DB791A5E5DCA0079A4D2 /* HHFullScreenViewController.m */; };
 		F540DB7C1A5E60F60079A4D2 /* HHFullScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F540DB7B1A5E60F60079A4D2 /* HHFullScreenViewController.xib */; };
@@ -492,6 +494,38 @@
 		F54B07E41AEF7A2100B6A39A /* AlarmSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F54B07E21AEF7A2100B6A39A /* AlarmSettingViewController.xib */; };
 		F54B07E61AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F54B07E51AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib */; };
 		F54FB54C1AC3E77E002D56E3 /* bichildren_room.png in Resources */ = {isa = PBXBuildFile; fileRef = F54FB54B1AC3E77E002D56E3 /* bichildren_room.png */; };
+		F55010941B10125500FBFA31 /* RemoteControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F55010931B10125500FBFA31 /* RemoteControlView.xib */; };
+		F55010B41B101CF600FBFA31 /* RC0@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010951B101CF600FBFA31 /* RC0@2X.png */; };
+		F55010B51B101CF600FBFA31 /* RC0Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010961B101CF600FBFA31 /* RC0Hl@2x.png */; };
+		F55010B61B101CF600FBFA31 /* RC1@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010971B101CF600FBFA31 /* RC1@2X.png */; };
+		F55010B71B101CF600FBFA31 /* RC1Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010981B101CF600FBFA31 /* RC1Hl@2x.png */; };
+		F55010B81B101CF600FBFA31 /* RC2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010991B101CF600FBFA31 /* RC2@2X.png */; };
+		F55010B91B101CF600FBFA31 /* RC2Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F550109A1B101CF600FBFA31 /* RC2Hl@2x.png */; };
+		F55010BA1B101CF600FBFA31 /* RC3@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F550109B1B101CF600FBFA31 /* RC3@2X.png */; };
+		F55010BB1B101CF600FBFA31 /* RC3Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F550109C1B101CF600FBFA31 /* RC3Hl@2x.png */; };
+		F55010BC1B101CF600FBFA31 /* RC4@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F550109D1B101CF600FBFA31 /* RC4@2X.png */; };
+		F55010BD1B101CF600FBFA31 /* RC4Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F550109E1B101CF600FBFA31 /* RC4Hl@2x.png */; };
+		F55010BE1B101CF600FBFA31 /* RC5@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F550109F1B101CF600FBFA31 /* RC5@2X.png */; };
+		F55010BF1B101CF600FBFA31 /* RC5Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A01B101CF600FBFA31 /* RC5Hl@2x.png */; };
+		F55010C01B101CF600FBFA31 /* RC6@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A11B101CF600FBFA31 /* RC6@2X.png */; };
+		F55010C11B101CF600FBFA31 /* RC6Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A21B101CF600FBFA31 /* RC6Hl@2x.png */; };
+		F55010C21B101CF600FBFA31 /* RC7@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A31B101CF600FBFA31 /* RC7@2X.png */; };
+		F55010C31B101CF600FBFA31 /* RC7Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A41B101CF600FBFA31 /* RC7Hl@2x.png */; };
+		F55010C41B101CF600FBFA31 /* RC8@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A51B101CF600FBFA31 /* RC8@2X.png */; };
+		F55010C51B101CF600FBFA31 /* RC8Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A61B101CF600FBFA31 /* RC8Hl@2x.png */; };
+		F55010C61B101CF600FBFA31 /* RC9@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A71B101CF600FBFA31 /* RC9@2X.png */; };
+		F55010C71B101CF600FBFA31 /* RC9Hl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A81B101CF600FBFA31 /* RC9Hl@2x.png */; };
+		F55010C81B101CF600FBFA31 /* RCBackspace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010A91B101CF600FBFA31 /* RCBackspace@2x.png */; };
+		F55010C91B101CF600FBFA31 /* RCBackspaceHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010AA1B101CF600FBFA31 /* RCBackspaceHl@2x.png */; };
+		F55010CA1B101CF600FBFA31 /* RCGobackHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010AB1B101CF600FBFA31 /* RCGobackHl@2x.png */; };
+		F55010CB1B101CF600FBFA31 /* RCHp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010AC1B101CF600FBFA31 /* RCHp@2x.png */; };
+		F55010CC1B101CF600FBFA31 /* RCHpHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010AD1B101CF600FBFA31 /* RCHpHl@2x.png */; };
+		F55010CD1B101CF600FBFA31 /* RCMute@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010AE1B101CF600FBFA31 /* RCMute@2x.png */; };
+		F55010CE1B101CF600FBFA31 /* RCMuteHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010AF1B101CF600FBFA31 /* RCMuteHl@2x.png */; };
+		F55010CF1B101CF600FBFA31 /* RCOK@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010B01B101CF600FBFA31 /* RCOK@2X.png */; };
+		F55010D01B101CF600FBFA31 /* RCOKHl@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010B11B101CF600FBFA31 /* RCOKHl@2X.png */; };
+		F55010D11B101CF600FBFA31 /* RCPower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010B21B101CF600FBFA31 /* RCPower@2x.png */; };
+		F55010D21B101CF600FBFA31 /* RCPowerHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55010B31B101CF600FBFA31 /* RCPowerHl@2x.png */; };
 		F553EDD51B02F96A00064BD3 /* BitrateView.m in Sources */ = {isa = PBXBuildFile; fileRef = F553EDD41B02F96A00064BD3 /* BitrateView.m */; };
 		F555C5961A205C7700DC8DB3 /* AlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F555C5941A205C7700DC8DB3 /* AlarmViewController.m */; };
 		F555C5971A205C7700DC8DB3 /* AlarmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F555C5951A205C7700DC8DB3 /* AlarmViewController.xib */; };
@@ -506,6 +540,10 @@
 		F555C5AB1A205EA300DC8DB3 /* 信息.png in Resources */ = {isa = PBXBuildFile; fileRef = F555C5A11A205EA300DC8DB3 /* 信息.png */; };
 		F555C5AC1A205EA300DC8DB3 /* RightArrowGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F555C5A21A205EA300DC8DB3 /* RightArrowGray@2x.png */; };
 		F555C5AD1A205EA300DC8DB3 /* New@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F555C5A31A205EA300DC8DB3 /* New@2x.png */; };
+		F55AE7CC1B1301DC00420FC9 /* BigRCOffline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55AE7C81B1301DC00420FC9 /* BigRCOffline@2x.png */; };
+		F55AE7CD1B1301DC00420FC9 /* BigRCOnline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55AE7C91B1301DC00420FC9 /* BigRCOnline@2x.png */; };
+		F55AE7CE1B1301DC00420FC9 /* RCOffline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55AE7CA1B1301DC00420FC9 /* RCOffline@2x.png */; };
+		F55AE7CF1B1301DC00420FC9 /* RCOnline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F55AE7CB1B1301DC00420FC9 /* RCOnline@2x.png */; };
 		F55EB3641A2C5C750056E832 /* LightIconOn.png in Resources */ = {isa = PBXBuildFile; fileRef = F55EB3631A2C5C750056E832 /* LightIconOn.png */; };
 		F55F98131A75DB66002CBAE5 /* BigPicBrowseView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55F98121A75DB66002CBAE5 /* BigPicBrowseView.m */; };
 		F56300021A2309A3007DA218 /* NetReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F56300011A2309A3007DA218 /* NetReachability.m */; };
@@ -722,6 +760,19 @@
 		F5B0F4691A5BB1CD0078CC84 /* ServiceContractViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5B0F4681A5BB1CD0078CC84 /* ServiceContractViewController_iPad.xib */; };
 		F5B0F46C1A5BB4200078CC84 /* agreement.html in Resources */ = {isa = PBXBuildFile; fileRef = F5B0F46B1A5BB4200078CC84 /* agreement.html */; };
 		F5B1F1361A78D86D00160804 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B1F1351A78D86D00160804 /* MessageUI.framework */; };
+		F5B2F6F01B0C22CC00C0B4E2 /* RCMenu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6E31B0C22CC00C0B4E2 /* RCMenu@2x.png */; };
+		F5B2F6F11B0C22CC00C0B4E2 /* RCGoBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6E41B0C22CC00C0B4E2 /* RCGoBack@2x.png */; };
+		F5B2F6F21B0C22CC00C0B4E2 /* RCPowerOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6E51B0C22CC00C0B4E2 /* RCPowerOff@2x.png */; };
+		F5B2F6F31B0C22CC00C0B4E2 /* RCPowerOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6E61B0C22CC00C0B4E2 /* RCPowerOn@2x.png */; };
+		F5B2F6F41B0C22CC00C0B4E2 /* RCHomepage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6E71B0C22CC00C0B4E2 /* RCHomepage@2x.png */; };
+		F5B2F6F51B0C22CC00C0B4E2 /* RCPlus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6E81B0C22CC00C0B4E2 /* RCPlus@2x.png */; };
+		F5B2F6F61B0C22CC00C0B4E2 /* RCDec@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6E91B0C22CC00C0B4E2 /* RCDec@2x.png */; };
+		F5B2F6F71B0C22CC00C0B4E2 /* RCUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6EA1B0C22CC00C0B4E2 /* RCUp@2x.png */; };
+		F5B2F6F81B0C22CC00C0B4E2 /* RCDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6EB1B0C22CC00C0B4E2 /* RCDown@2x.png */; };
+		F5B2F6F91B0C22CC00C0B4E2 /* RCBgd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6EC1B0C22CC00C0B4E2 /* RCBgd@2x.png */; };
+		F5B2F6FA1B0C22CC00C0B4E2 /* VideoIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6ED1B0C22CC00C0B4E2 /* VideoIndicator@2x.png */; };
+		F5B2F6FB1B0C22CC00C0B4E2 /* VideoIndicatorHl@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6EE1B0C22CC00C0B4E2 /* VideoIndicatorHl@2x.png */; };
+		F5B2F6FC1B0C22CC00C0B4E2 /* RCOKMid@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B2F6EF1B0C22CC00C0B4E2 /* RCOKMid@2X.png */; };
 		F5B6A8071A3EC7280074D742 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B6A8051A3EC7280074D742 /* Icon-120.png */; };
 		F5B6A8081A3EC7280074D742 /* Icon-180.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B6A8061A3EC7280074D742 /* Icon-180.png */; };
 		F5B6A80D1A3EDAD40074D742 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = F5B6A8091A3EDAD40074D742 /* Icon-58.png */; };
@@ -743,6 +794,10 @@
 		F5BAB8001A5FCD560052DEFF /* EnvironmentalMonitoringController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BAB7FE1A5FCD560052DEFF /* EnvironmentalMonitoringController.m */; };
 		F5BAB8011A5FCD560052DEFF /* EnvironmentalMonitoringController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5BAB7FF1A5FCD560052DEFF /* EnvironmentalMonitoringController.xib */; };
 		F5BAB8031A5FCDAB0052DEFF /* EnvironmentalMonitoringController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5BAB8021A5FCDAB0052DEFF /* EnvironmentalMonitoringController_iPad.xib */; };
+		F5D1D3181B15BE5F00F5282F /* GUserOffline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5D1D3141B15BE5F00F5282F /* GUserOffline@2x.png */; };
+		F5D1D3191B15BE5F00F5282F /* GUserOnline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5D1D3151B15BE5F00F5282F /* GUserOnline@2x.png */; };
+		F5D1D31A1B15BE5F00F5282F /* VideoMoveGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5D1D3161B15BE5F00F5282F /* VideoMoveGray@2x.png */; };
+		F5D1D31B1B15BE5F00F5282F /* VideoMoveGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5D1D3171B15BE5F00F5282F /* VideoMoveGreen@2x.png */; };
 		F5E1AFEC1A2EDED90092EA5B /* CustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E1AFEB1A2EDED90092EA5B /* CustomSlider.m */; };
 		F5F3804D1A6E41D700000838 /* ACFTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F380211A6E41D700000838 /* ACFTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F5F3804E1A6E41D700000838 /* ACFTPEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F380231A6E41D700000838 /* ACFTPEntry.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1391,6 +1446,9 @@
 		F539B7071AEA3F1A00D1ED1B /* BasicBackgroundMusicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicBackgroundMusicCell.m; sourceTree = "<group>"; };
 		F539B7091AEA3F2A00D1ED1B /* BasicGroundHeatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicGroundHeatCell.h; sourceTree = "<group>"; };
 		F539B70A1AEA3F2A00D1ED1B /* BasicGroundHeatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicGroundHeatCell.m; sourceTree = "<group>"; };
+		F53C356B1B0F14770000DFEA /* RemoteControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteControlView.h; sourceTree = "<group>"; };
+		F53C356C1B0F14770000DFEA /* RemoteControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteControlView.m; sourceTree = "<group>"; };
+		F53C356D1B0F14770000DFEA /* RemoteControlView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemoteControlView_iPad.xib; sourceTree = "<group>"; };
 		F540556C1AEB8DB100174C62 /* BaseDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDeviceViewController.h; sourceTree = "<group>"; };
 		F540556D1AEB8DB100174C62 /* BaseDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDeviceViewController.m; sourceTree = "<group>"; };
 		F540DB781A5E5DCA0079A4D2 /* HHFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHFullScreenViewController.h; sourceTree = "<group>"; };
@@ -1416,7 +1474,40 @@
 		F54B07E11AEF7A2100B6A39A /* AlarmSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmSettingViewController.m; sourceTree = "<group>"; };
 		F54B07E21AEF7A2100B6A39A /* AlarmSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmSettingViewController.xib; sourceTree = "<group>"; };
 		F54B07E51AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmSettingViewController_iPad.xib; sourceTree = "<group>"; };
+		F54F23FC1B0B165B00274D70 /* anelife.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = anelife.entitlements; sourceTree = "<group>"; };
 		F54FB54B1AC3E77E002D56E3 /* bichildren_room.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bichildren_room.png; sourceTree = "<group>"; };
+		F55010931B10125500FBFA31 /* RemoteControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemoteControlView.xib; sourceTree = "<group>"; };
+		F55010951B101CF600FBFA31 /* RC0@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC0@2X.png"; sourceTree = "<group>"; };
+		F55010961B101CF600FBFA31 /* RC0Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC0Hl@2x.png"; sourceTree = "<group>"; };
+		F55010971B101CF600FBFA31 /* RC1@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC1@2X.png"; sourceTree = "<group>"; };
+		F55010981B101CF600FBFA31 /* RC1Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC1Hl@2x.png"; sourceTree = "<group>"; };
+		F55010991B101CF600FBFA31 /* RC2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC2@2X.png"; sourceTree = "<group>"; };
+		F550109A1B101CF600FBFA31 /* RC2Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC2Hl@2x.png"; sourceTree = "<group>"; };
+		F550109B1B101CF600FBFA31 /* RC3@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC3@2X.png"; sourceTree = "<group>"; };
+		F550109C1B101CF600FBFA31 /* RC3Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC3Hl@2x.png"; sourceTree = "<group>"; };
+		F550109D1B101CF600FBFA31 /* RC4@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC4@2X.png"; sourceTree = "<group>"; };
+		F550109E1B101CF600FBFA31 /* RC4Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC4Hl@2x.png"; sourceTree = "<group>"; };
+		F550109F1B101CF600FBFA31 /* RC5@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC5@2X.png"; sourceTree = "<group>"; };
+		F55010A01B101CF600FBFA31 /* RC5Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC5Hl@2x.png"; sourceTree = "<group>"; };
+		F55010A11B101CF600FBFA31 /* RC6@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC6@2X.png"; sourceTree = "<group>"; };
+		F55010A21B101CF600FBFA31 /* RC6Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC6Hl@2x.png"; sourceTree = "<group>"; };
+		F55010A31B101CF600FBFA31 /* RC7@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC7@2X.png"; sourceTree = "<group>"; };
+		F55010A41B101CF600FBFA31 /* RC7Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC7Hl@2x.png"; sourceTree = "<group>"; };
+		F55010A51B101CF600FBFA31 /* RC8@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC8@2X.png"; sourceTree = "<group>"; };
+		F55010A61B101CF600FBFA31 /* RC8Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC8Hl@2x.png"; sourceTree = "<group>"; };
+		F55010A71B101CF600FBFA31 /* RC9@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC9@2X.png"; sourceTree = "<group>"; };
+		F55010A81B101CF600FBFA31 /* RC9Hl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RC9Hl@2x.png"; sourceTree = "<group>"; };
+		F55010A91B101CF600FBFA31 /* RCBackspace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCBackspace@2x.png"; sourceTree = "<group>"; };
+		F55010AA1B101CF600FBFA31 /* RCBackspaceHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCBackspaceHl@2x.png"; sourceTree = "<group>"; };
+		F55010AB1B101CF600FBFA31 /* RCGobackHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCGobackHl@2x.png"; sourceTree = "<group>"; };
+		F55010AC1B101CF600FBFA31 /* RCHp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCHp@2x.png"; sourceTree = "<group>"; };
+		F55010AD1B101CF600FBFA31 /* RCHpHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCHpHl@2x.png"; sourceTree = "<group>"; };
+		F55010AE1B101CF600FBFA31 /* RCMute@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCMute@2x.png"; sourceTree = "<group>"; };
+		F55010AF1B101CF600FBFA31 /* RCMuteHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCMuteHl@2x.png"; sourceTree = "<group>"; };
+		F55010B01B101CF600FBFA31 /* RCOK@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCOK@2X.png"; sourceTree = "<group>"; };
+		F55010B11B101CF600FBFA31 /* RCOKHl@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCOKHl@2X.png"; sourceTree = "<group>"; };
+		F55010B21B101CF600FBFA31 /* RCPower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCPower@2x.png"; sourceTree = "<group>"; };
+		F55010B31B101CF600FBFA31 /* RCPowerHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCPowerHl@2x.png"; sourceTree = "<group>"; };
 		F553EDD31B02F96A00064BD3 /* BitrateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitrateView.h; sourceTree = "<group>"; };
 		F553EDD41B02F96A00064BD3 /* BitrateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BitrateView.m; sourceTree = "<group>"; };
 		F555C5931A205C7700DC8DB3 /* AlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewController.h; sourceTree = "<group>"; };
@@ -1433,6 +1524,10 @@
 		F555C5A11A205EA300DC8DB3 /* 信息.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "信息.png"; sourceTree = "<group>"; };
 		F555C5A21A205EA300DC8DB3 /* RightArrowGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RightArrowGray@2x.png"; sourceTree = "<group>"; };
 		F555C5A31A205EA300DC8DB3 /* New@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "New@2x.png"; sourceTree = "<group>"; };
+		F55AE7C81B1301DC00420FC9 /* BigRCOffline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BigRCOffline@2x.png"; sourceTree = "<group>"; };
+		F55AE7C91B1301DC00420FC9 /* BigRCOnline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BigRCOnline@2x.png"; sourceTree = "<group>"; };
+		F55AE7CA1B1301DC00420FC9 /* RCOffline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCOffline@2x.png"; sourceTree = "<group>"; };
+		F55AE7CB1B1301DC00420FC9 /* RCOnline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCOnline@2x.png"; sourceTree = "<group>"; };
 		F55EB3631A2C5C750056E832 /* LightIconOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LightIconOn.png; sourceTree = "<group>"; };
 		F55F98111A75DB66002CBAE5 /* BigPicBrowseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigPicBrowseView.h; sourceTree = "<group>"; };
 		F55F98121A75DB66002CBAE5 /* BigPicBrowseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigPicBrowseView.m; sourceTree = "<group>"; };
@@ -1692,6 +1787,19 @@
 		F5B0F4681A5BB1CD0078CC84 /* ServiceContractViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceContractViewController_iPad.xib; sourceTree = "<group>"; };
 		F5B0F46B1A5BB4200078CC84 /* agreement.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = agreement.html; sourceTree = "<group>"; };
 		F5B1F1351A78D86D00160804 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F5B2F6E31B0C22CC00C0B4E2 /* RCMenu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCMenu@2x.png"; sourceTree = "<group>"; };
+		F5B2F6E41B0C22CC00C0B4E2 /* RCGoBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCGoBack@2x.png"; sourceTree = "<group>"; };
+		F5B2F6E51B0C22CC00C0B4E2 /* RCPowerOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCPowerOff@2x.png"; sourceTree = "<group>"; };
+		F5B2F6E61B0C22CC00C0B4E2 /* RCPowerOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCPowerOn@2x.png"; sourceTree = "<group>"; };
+		F5B2F6E71B0C22CC00C0B4E2 /* RCHomepage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCHomepage@2x.png"; sourceTree = "<group>"; };
+		F5B2F6E81B0C22CC00C0B4E2 /* RCPlus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCPlus@2x.png"; sourceTree = "<group>"; };
+		F5B2F6E91B0C22CC00C0B4E2 /* RCDec@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCDec@2x.png"; sourceTree = "<group>"; };
+		F5B2F6EA1B0C22CC00C0B4E2 /* RCUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCUp@2x.png"; sourceTree = "<group>"; };
+		F5B2F6EB1B0C22CC00C0B4E2 /* RCDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCDown@2x.png"; sourceTree = "<group>"; };
+		F5B2F6EC1B0C22CC00C0B4E2 /* RCBgd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCBgd@2x.png"; sourceTree = "<group>"; };
+		F5B2F6ED1B0C22CC00C0B4E2 /* VideoIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoIndicator@2x.png"; sourceTree = "<group>"; };
+		F5B2F6EE1B0C22CC00C0B4E2 /* VideoIndicatorHl@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoIndicatorHl@2x.png"; sourceTree = "<group>"; };
+		F5B2F6EF1B0C22CC00C0B4E2 /* RCOKMid@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RCOKMid@2X.png"; sourceTree = "<group>"; };
 		F5B6A8051A3EC7280074D742 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
 		F5B6A8061A3EC7280074D742 /* Icon-180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-180.png"; sourceTree = "<group>"; };
 		F5B6A8091A3EDAD40074D742 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = "<group>"; };
@@ -1717,6 +1825,10 @@
 		F5BAB7FE1A5FCD560052DEFF /* EnvironmentalMonitoringController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvironmentalMonitoringController.m; sourceTree = "<group>"; };
 		F5BAB7FF1A5FCD560052DEFF /* EnvironmentalMonitoringController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnvironmentalMonitoringController.xib; sourceTree = "<group>"; };
 		F5BAB8021A5FCDAB0052DEFF /* EnvironmentalMonitoringController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnvironmentalMonitoringController_iPad.xib; sourceTree = "<group>"; };
+		F5D1D3141B15BE5F00F5282F /* GUserOffline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GUserOffline@2x.png"; sourceTree = "<group>"; };
+		F5D1D3151B15BE5F00F5282F /* GUserOnline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GUserOnline@2x.png"; sourceTree = "<group>"; };
+		F5D1D3161B15BE5F00F5282F /* VideoMoveGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoMoveGray@2x.png"; sourceTree = "<group>"; };
+		F5D1D3171B15BE5F00F5282F /* VideoMoveGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VideoMoveGreen@2x.png"; sourceTree = "<group>"; };
 		F5E1AFEA1A2EDED90092EA5B /* CustomSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSlider.h; sourceTree = "<group>"; };
 		F5E1AFEB1A2EDED90092EA5B /* CustomSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSlider.m; sourceTree = "<group>"; };
 		F5F380201A6E41D700000838 /* ACFTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACFTPClient.h; sourceTree = "<group>"; };
@@ -2108,6 +2220,7 @@
 		049F1DAD18D30329007D17EE /* eLife */ = {
 			isa = PBXGroup;
 			children = (
+				F54F23FC1B0B165B00274D70 /* anelife.entitlements */,
 				F573B0DD1B06EEBA00715640 /* QREncoder */,
 				04F822881978C0D30083453F /* LibHeader */,
 				F555C5921A205C5400DC8DB3 /* Alarm&&Call */,
@@ -2383,6 +2496,10 @@
 				9A5F4E9D1A13403F00FB0F64 /* GroundHeatView_iPad.xib */,
 				F540556C1AEB8DB100174C62 /* BaseDeviceViewController.h */,
 				F540556D1AEB8DB100174C62 /* BaseDeviceViewController.m */,
+				F53C356B1B0F14770000DFEA /* RemoteControlView.h */,
+				F53C356C1B0F14770000DFEA /* RemoteControlView.m */,
+				F55010931B10125500FBFA31 /* RemoteControlView.xib */,
+				F53C356D1B0F14770000DFEA /* RemoteControlView_iPad.xib */,
 			);
 			path = DeviceCtrlViews;
 			sourceTree = "<group>";
@@ -2506,6 +2623,58 @@
 		F5375E3E19EF97FB008EF3C2 /* newVersion */ = {
 			isa = PBXGroup;
 			children = (
+				F5D1D3141B15BE5F00F5282F /* GUserOffline@2x.png */,
+				F5D1D3151B15BE5F00F5282F /* GUserOnline@2x.png */,
+				F5D1D3161B15BE5F00F5282F /* VideoMoveGray@2x.png */,
+				F5D1D3171B15BE5F00F5282F /* VideoMoveGreen@2x.png */,
+				F55AE7C81B1301DC00420FC9 /* BigRCOffline@2x.png */,
+				F55AE7C91B1301DC00420FC9 /* BigRCOnline@2x.png */,
+				F55AE7CA1B1301DC00420FC9 /* RCOffline@2x.png */,
+				F55AE7CB1B1301DC00420FC9 /* RCOnline@2x.png */,
+				F55010951B101CF600FBFA31 /* RC0@2X.png */,
+				F55010961B101CF600FBFA31 /* RC0Hl@2x.png */,
+				F55010971B101CF600FBFA31 /* RC1@2X.png */,
+				F55010981B101CF600FBFA31 /* RC1Hl@2x.png */,
+				F55010991B101CF600FBFA31 /* RC2@2X.png */,
+				F550109A1B101CF600FBFA31 /* RC2Hl@2x.png */,
+				F550109B1B101CF600FBFA31 /* RC3@2X.png */,
+				F550109C1B101CF600FBFA31 /* RC3Hl@2x.png */,
+				F550109D1B101CF600FBFA31 /* RC4@2X.png */,
+				F550109E1B101CF600FBFA31 /* RC4Hl@2x.png */,
+				F550109F1B101CF600FBFA31 /* RC5@2X.png */,
+				F55010A01B101CF600FBFA31 /* RC5Hl@2x.png */,
+				F55010A11B101CF600FBFA31 /* RC6@2X.png */,
+				F55010A21B101CF600FBFA31 /* RC6Hl@2x.png */,
+				F55010A31B101CF600FBFA31 /* RC7@2X.png */,
+				F55010A41B101CF600FBFA31 /* RC7Hl@2x.png */,
+				F55010A51B101CF600FBFA31 /* RC8@2X.png */,
+				F55010A61B101CF600FBFA31 /* RC8Hl@2x.png */,
+				F55010A71B101CF600FBFA31 /* RC9@2X.png */,
+				F55010A81B101CF600FBFA31 /* RC9Hl@2x.png */,
+				F55010A91B101CF600FBFA31 /* RCBackspace@2x.png */,
+				F55010AA1B101CF600FBFA31 /* RCBackspaceHl@2x.png */,
+				F55010AB1B101CF600FBFA31 /* RCGobackHl@2x.png */,
+				F55010AC1B101CF600FBFA31 /* RCHp@2x.png */,
+				F55010AD1B101CF600FBFA31 /* RCHpHl@2x.png */,
+				F55010AE1B101CF600FBFA31 /* RCMute@2x.png */,
+				F55010AF1B101CF600FBFA31 /* RCMuteHl@2x.png */,
+				F55010B01B101CF600FBFA31 /* RCOK@2X.png */,
+				F55010B11B101CF600FBFA31 /* RCOKHl@2X.png */,
+				F55010B21B101CF600FBFA31 /* RCPower@2x.png */,
+				F55010B31B101CF600FBFA31 /* RCPowerHl@2x.png */,
+				F5B2F6E31B0C22CC00C0B4E2 /* RCMenu@2x.png */,
+				F5B2F6E41B0C22CC00C0B4E2 /* RCGoBack@2x.png */,
+				F5B2F6E51B0C22CC00C0B4E2 /* RCPowerOff@2x.png */,
+				F5B2F6E61B0C22CC00C0B4E2 /* RCPowerOn@2x.png */,
+				F5B2F6E71B0C22CC00C0B4E2 /* RCHomepage@2x.png */,
+				F5B2F6E81B0C22CC00C0B4E2 /* RCPlus@2x.png */,
+				F5B2F6E91B0C22CC00C0B4E2 /* RCDec@2x.png */,
+				F5B2F6EA1B0C22CC00C0B4E2 /* RCUp@2x.png */,
+				F5B2F6EB1B0C22CC00C0B4E2 /* RCDown@2x.png */,
+				F5B2F6EC1B0C22CC00C0B4E2 /* RCBgd@2x.png */,
+				F5B2F6ED1B0C22CC00C0B4E2 /* VideoIndicator@2x.png */,
+				F5B2F6EE1B0C22CC00C0B4E2 /* VideoIndicatorHl@2x.png */,
+				F5B2F6EF1B0C22CC00C0B4E2 /* RCOKMid@2X.png */,
 				F57223791B04A0110008FE8F /* GrayBtn@2x.png */,
 				F572237A1B04A0110008FE8F /* GrayBtnHl@2x.png */,
 				F57223591B04438F0008FE8F /* VideoCountMax@2x.png */,
@@ -3222,7 +3391,13 @@
 					049F1DA318D30329007D17EE = {
 						DevelopmentTeam = 354N4LT2AM;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
 							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
 								enabled = 1;
 							};
 						};
@@ -3301,6 +3476,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5B2F6F51B0C22CC00C0B4E2 /* RCPlus@2x.png in Resources */,
+				F55010C61B101CF600FBFA31 /* RC9@2X.png in Resources */,
 				F5375FB619EF97FD008EF3C2 /* left_arrow1.png in Resources */,
 				F537601B19EF97FD008EF3C2 /* SpeedHighText@2x.png in Resources */,
 				9A742C6C19F8FDC700F868F4 /* StepCurtainMid@2x.png in Resources */,
@@ -3352,6 +3529,7 @@
 				F51B7C6E1A4AA11400BAD955 /* BigLightOff@2x.png in Resources */,
 				F555C5AB1A205EA300DC8DB3 /* 信息.png in Resources */,
 				F5375FBD19EF97FD008EF3C2 /* login_input.png in Resources */,
+				F55010C71B101CF600FBFA31 /* RC9Hl@2x.png in Resources */,
 				F52C4C061A514F6C00218996 /* PageFlipBlue@2x.png in Resources */,
 				F5963B7A1A53B423006DAD6D /* small_scene_custom_gray@2x.png in Resources */,
 				F5375FE819EF97FD008EF3C2 /* LDeviceCtrlBgd@2x.png in Resources */,
@@ -3359,6 +3537,7 @@
 				F53760EC19EF97FD008EF3C2 /* Userguide_enter_icon@2x.png in Resources */,
 				F58D25071A3A98BE00D5F39D /* AlarmServiceController_iPad.xib in Resources */,
 				F5375FEA19EF97FD008EF3C2 /* LightOff@2x.png in Resources */,
+				F55010D21B101CF600FBFA31 /* RCPowerHl@2x.png in Resources */,
 				F58D25091A3A98E300D5F39D /* MessageServiceController_iPad.xib in Resources */,
 				9A5F4EAB1A13403F00FB0F64 /* GroundHeatView.xib in Resources */,
 				F537600019EF97FD008EF3C2 /* ModeWetTextSelected@2x.png in Resources */,
@@ -3373,6 +3552,7 @@
 				F537607F19EF97FD008EF3C2 /* RecordingSignal002.png in Resources */,
 				F5375FFB19EF97FD008EF3C2 /* ModeHotText@2x.png in Resources */,
 				F5650FAA1ABD114900482E5C /* RemoveGateway@2x.png in Resources */,
+				F55010C21B101CF600FBFA31 /* RC7@2X.png in Resources */,
 				F57223681B0476E10008FE8F /* CallForwardingViewController.xib in Resources */,
 				F51B7C761A4AA11400BAD955 /* 学习.png in Resources */,
 				F59D5EBA1A26F0FC000C13D6 /* Capture@2x.png in Resources */,
@@ -3389,12 +3569,16 @@
 				F537602119EF97FD008EF3C2 /* SpeedMid@2x.png in Resources */,
 				F5375FFA19EF97FD008EF3C2 /* ModeHotSelected@2x.png in Resources */,
 				F53760CE19EF97FD008EF3C2 /* right_arrow.png in Resources */,
+				F55010CA1B101CF600FBFA31 /* RCGobackHl@2x.png in Resources */,
 				9A7B28BC1A15E86B00AF1BB7 /* CtrlOffBtnHl@2x.png in Resources */,
 				9A5F4E7F1A133AB000FB0F64 /* CurtainIcon@2x.png in Resources */,
 				F537600D19EF97FD008EF3C2 /* OtherBtnNormal@2x.png in Resources */,
 				F51B7C6D1A4AA11400BAD955 /* BigLight.png in Resources */,
 				F56D83F61A71D94F009E7501 /* LoginBtn@2x.png in Resources */,
+				F55010C81B101CF600FBFA31 /* RCBackspace@2x.png in Resources */,
 				F5375FED19EF97FD008EF3C2 /* LightOnGif.gif in Resources */,
+				F5B2F6F41B0C22CC00C0B4E2 /* RCHomepage@2x.png in Resources */,
+				F55010CF1B101CF600FBFA31 /* RCOK@2X.png in Resources */,
 				F5F3805A1A6E41D700000838 /* FtpServerEditViewController.xib in Resources */,
 				F59D5EAF1A26F0FC000C13D6 /* Speak@2x.png in Resources */,
 				F59D5EB41A26F0FC000C13D6 /* SceneNormal@2x.png in Resources */,
@@ -3423,6 +3607,7 @@
 				F537608619EF97FD008EF3C2 /* RecordingSignal007@2x.png in Resources */,
 				041037C519A59F9400507CCD /* FavoriteViewController_iPad.xib in Resources */,
 				F5F380761A6E42CF00000838 /* LLLockViewController.xib in Resources */,
+				F53C356F1B0F14770000DFEA /* RemoteControlView_iPad.xib in Resources */,
 				9AA189801A11A2C400FBA04F /* DeviceControlViewController.xib in Resources */,
 				F5F380581A6E41D700000838 /* FtpResourceViewController_iPad.xib in Resources */,
 				F5B9A9561A6F992200D690FC /* LLLCheckPasswordController_iPad.xib in Resources */,
@@ -3431,6 +3616,7 @@
 				F537603719EF97FD008EF3C2 /* StepCurtainMax@2x.png in Resources */,
 				9A7B28BD1A15E86B00AF1BB7 /* CtrlOnBtnHl@2x.png in Resources */,
 				F5AE98341A70A18F00B91F34 /* lock_learn_defalut@2x.png in Resources */,
+				F55010C31B101CF600FBFA31 /* RC7Hl@2x.png in Resources */,
 				F537605E19EF97FD008EF3C2 /* MessageSendFail@2x.png in Resources */,
 				F5375FE419EF97FD008EF3C2 /* FavoriteSelected@2x.png in Resources */,
 				F5928C991A37D5BD0034B49F /* 外框.png in Resources */,
@@ -3447,6 +3633,7 @@
 				F537609719EF97FD008EF3C2 /* SenderVoiceNodePlaying@2x.png in Resources */,
 				F5928C9A1A37D5BD0034B49F /* ServiceMessage@2x.png in Resources */,
 				F5375FE619EF97FD008EF3C2 /* FullScreenNormal@2x.png in Resources */,
+				F55010BB1B101CF600FBFA31 /* RC3Hl@2x.png in Resources */,
 				F5928C9E1A381B620034B49F /* ServiceEnv@2x.png in Resources */,
 				F54FB54C1AC3E77E002D56E3 /* bichildren_room.png in Resources */,
 				F53760F719EF97FD008EF3C2 /* whiteArrow.png in Resources */,
@@ -3459,6 +3646,8 @@
 				F53760AC19EF97FD008EF3C2 /* ToolViewInputText@2x.png in Resources */,
 				F5963B811A53B423006DAD6D /* small_scene_study_green@2x.png in Resources */,
 				F5963B841A53B616006DAD6D /* AllOpen@2x.png in Resources */,
+				F55010B61B101CF600FBFA31 /* RC1@2X.png in Resources */,
+				F55AE7CD1B1301DC00420FC9 /* BigRCOnline@2x.png in Resources */,
 				F537602319EF97FD008EF3C2 /* SpeedMidText@2x.png in Resources */,
 				F54157391AD90D6E0076C6F9 /* PageFlipOrange@2x.png in Resources */,
 				04FB2AB918D69E9E002507DC /* ServiceViewController.xib in Resources */,
@@ -3469,7 +3658,9 @@
 				F545D9001B019EA4000A0EF5 /* AuthCodeViewController_iPad.xib in Resources */,
 				F5375FDB19EF97FD008EF3C2 /* CurtainOnBtnHl@2x.png in Resources */,
 				F5375FA319EF97FD008EF3C2 /* grayArrow@2x.png in Resources */,
+				F5D1D31B1B15BE5F00F5282F /* VideoMoveGreen@2x.png in Resources */,
 				F53760B119EF97FD008EF3C2 /* ToolViewKeyboardHL@2x.png in Resources */,
+				F55010D01B101CF600FBFA31 /* RCOKHl@2X.png in Resources */,
 				F59C4AF21A4ED7FC00B94FDA /* BigSocketOn@2x.png in Resources */,
 				F58EE6571A398FB7003E0AF5 /* alarm@2x.png in Resources */,
 				F537605619EF97FD008EF3C2 /* chat_keyboard.png in Resources */,
@@ -3506,6 +3697,7 @@
 				04FB2B4C18D6CAF5002507DC /* eLifeMainWindow.xib in Resources */,
 				F59D5EB61A26F0FC000C13D6 /* PrivacyOn@2x.png in Resources */,
 				04EEDB911981FD270083F777 /* UserInfoViewController_iPad.xib in Resources */,
+				F5B2F6F81B0C22CC00C0B4E2 /* RCDown@2x.png in Resources */,
 				04E81A04196BE402002AC12E /* UserInfoViewController.xib in Resources */,
 				F537603119EF97FD008EF3C2 /* VideoPlayNormal@2x.png in Resources */,
 				F56D83F21A71D94F009E7501 /* 影音.png in Resources */,
@@ -3514,12 +3706,14 @@
 				F53760C919EF97FD008EF3C2 /* qrcode_back@2x.png in Resources */,
 				F5375F8519EF97FD008EF3C2 /* blackArrow.png in Resources */,
 				F540DB7E1A5E61190079A4D2 /* HHFullScreenViewController_iPad.xib in Resources */,
+				F55010C91B101CF600FBFA31 /* RCBackspaceHl@2x.png in Resources */,
 				F537607919EF97FD008EF3C2 /* ReceiverVoiceNodePlaying003@2x.png in Resources */,
 				F53760BA19EF97FD008EF3C2 /* VoiceBtn_BlackHL@2x.png in Resources */,
 				F537605519EF97FD008EF3C2 /* chat_footer_bg.png in Resources */,
 				F537601F19EF97FD008EF3C2 /* SpeedLowText@2x.png in Resources */,
 				F5375FEB19EF97FD008EF3C2 /* LightOffline@2x.png in Resources */,
 				F5B6A80F1A3EDAD40074D742 /* Icon-144.png in Resources */,
+				F55010C51B101CF600FBFA31 /* RC8Hl@2x.png in Resources */,
 				9A5F4EA01A13403F00FB0F64 /* AirConditionView_iPad.xib in Resources */,
 				F580ABF61A64C27D000DB103 /* GroundHeatOffline@2x.png in Resources */,
 				F59C4AF11A4ED7FC00B94FDA /* BigSocketOffline@2x.png in Resources */,
@@ -3530,14 +3724,17 @@
 				F578B15F1A1DC9DF00BD7C1E /* Auto@2x.png in Resources */,
 				F56CE2A71AA1FC1C00520E7C /* 114.png in Resources */,
 				04FB2AC418D6A06B002507DC /* LoginViewController.xib in Resources */,
+				F5B2F6FA1B0C22CC00C0B4E2 /* VideoIndicator@2x.png in Resources */,
 				F537602C19EF97FD008EF3C2 /* VerSeperator.png in Resources */,
 				F53760F819EF97FD008EF3C2 /* whiteArrow@2x.png in Resources */,
 				F56D83FB1A71DA16009E7501 /* LogoBlue@2x.png in Resources */,
+				F55010B81B101CF600FBFA31 /* RC2@2X.png in Resources */,
 				9A6FC1D21A0CA98D003BD5F6 /* PanelDel@2x.png in Resources */,
 				F537608B19EF97FD008EF3C2 /* SenderTextNodeBkgHL@2x.png in Resources */,
 				04EEDB8B1981E83C0083F777 /* EnergyViewController_iPad.xib in Resources */,
 				F51B7C771A4AA11400BAD955 /* 学习un.png in Resources */,
 				F51B7C751A4AA11400BAD955 /* 睡眠un.png in Resources */,
+				F55010941B10125500FBFA31 /* RemoteControlView.xib in Resources */,
 				F5375FF119EF97FD008EF3C2 /* ModeAuto@2x.png in Resources */,
 				F578B14E1A1DC9DF00BD7C1E /* RightIndicator@2x.png in Resources */,
 				F53760B719EF97FD008EF3C2 /* voice_rcd_hint.png in Resources */,
@@ -3557,6 +3754,7 @@
 				F578B1611A1DC9DF00BD7C1E /* AutoGreen@2x.png in Resources */,
 				F5783CA61ADFB04E0064846A /* MusicPlayNext@2x.png in Resources */,
 				F537600919EF97FD008EF3C2 /* OffBtnNormal@2x.png in Resources */,
+				F5D1D31A1B15BE5F00F5282F /* VideoMoveGray@2x.png in Resources */,
 				F5783CA41ADFB04E0064846A /* MusicPlayLast@2x.png in Resources */,
 				9A5F4EA51A13403F00FB0F64 /* CurtainView.xib in Resources */,
 				F5928C941A37D5BD0034B49F /* ServiceVideo@2x.png in Resources */,
@@ -3567,6 +3765,7 @@
 				F56CE2AB1AA1FC1C00520E7C /* 512.png in Resources */,
 				F555C5AD1A205EA300DC8DB3 /* New@2x.png in Resources */,
 				F539B6FA1AE9CC7400D1ED1B /* BgdMusicOff@2x.png in Resources */,
+				F5B2F6F21B0C22CC00C0B4E2 /* RCPowerOff@2x.png in Resources */,
 				F53760D119EF97FD008EF3C2 /* room_selected@2x.png in Resources */,
 				F537607319EF97FD008EF3C2 /* ReceiverVoiceNodeBkg@2x.png in Resources */,
 				F537604419EF97FD008EF3C2 /* operationbox_fail_web@2x.png in Resources */,
@@ -3574,6 +3773,7 @@
 				F5F3808A1A6E4D0F00000838 /* SetGesturePasswordController_iPad.xib in Resources */,
 				F53760EA19EF97FD008EF3C2 /* TableViewArrow@2x.png in Resources */,
 				F53760E619EF97FD008EF3C2 /* song_prev_pressed.png in Resources */,
+				F55010B51B101CF600FBFA31 /* RC0Hl@2x.png in Resources */,
 				9AA0015919F8926D00FE8733 /* IPSearchResultViewController.xib in Resources */,
 				F580ABF31A64C27D000DB103 /* GroundHeatOn@2x.png in Resources */,
 				F537606F19EF97FD008EF3C2 /* ReceiverTextNodeBkg@2x.png in Resources */,
@@ -3588,6 +3788,7 @@
 				F537607D19EF97FD008EF3C2 /* RecordingSignal001.png in Resources */,
 				04F000BF196D409500E77E98 /* ChangeEmailViewController.xib in Resources */,
 				F537609019EF97FD008EF3C2 /* SenderVoiceNodeBkgHL@2x.png in Resources */,
+				F55010C01B101CF600FBFA31 /* RC6@2X.png in Resources */,
 				F537600A19EF97FD008EF3C2 /* OnBtnHl@2x.png in Resources */,
 				F5375FE519EF97FD008EF3C2 /* FullScreenHl@2x.png in Resources */,
 				F5375FFE19EF97FD008EF3C2 /* ModeWetSelected@2x.png in Resources */,
@@ -3604,6 +3805,7 @@
 				F5928C971A37D5BD0034B49F /* 头像离线.png in Resources */,
 				F51B7C781A4AA11400BAD955 /* 娱乐.png in Resources */,
 				F578B1421A1DC9DF00BD7C1E /* Wet@2x.png in Resources */,
+				F55AE7CE1B1301DC00420FC9 /* RCOffline@2x.png in Resources */,
 				F537602D19EF97FD008EF3C2 /* VideoBgd@2x.png in Resources */,
 				F537608719EF97FD008EF3C2 /* RecordingSignal008@2x.png in Resources */,
 				F582D8CE1A4D606600290530 /* HouseCtrlSelected@2x.png in Resources */,
@@ -3619,6 +3821,7 @@
 				04F19121195AE5CE00A616B8 /* AboutViewController.xib in Resources */,
 				F57D87011A4942F200CA2FAE /* Custom@2x.png in Resources */,
 				9A6FC1CC1A0CA7B4003BD5F6 /* PanelAddBtn@2x.png in Resources */,
+				F55010C41B101CF600FBFA31 /* RC8@2X.png in Resources */,
 				F59D5EBB1A26F0FC000C13D6 /* CaptrueHl@2x.png in Resources */,
 				F5375FC419EF97FD008EF3C2 /* minus_pressed@2x.png in Resources */,
 				F537608A19EF97FD008EF3C2 /* SenderTextNodeBkgHL.png in Resources */,
@@ -3627,6 +3830,8 @@
 				F5640C011ADE555500558334 /* GatewayUsersViewController.xib in Resources */,
 				F59B45FE1A440CDE00879994 /* input_bgd@2x.png in Resources */,
 				F53760D219EF97FD008EF3C2 /* ScanQR1@2x.png in Resources */,
+				F5B2F6F01B0C22CC00C0B4E2 /* RCMenu@2x.png in Resources */,
+				F55010CE1B101CF600FBFA31 /* RCMuteHl@2x.png in Resources */,
 				9A5F4E841A133AB000FB0F64 /* SceneMode@2x.png in Resources */,
 				9AA0015D19F8AC0C00FE8733 /* IPSearchResultViewController_iPad.xib in Resources */,
 				9A5F4EA91A13403F00FB0F64 /* DimmerlightView_iPad.xib in Resources */,
@@ -3646,16 +3851,20 @@
 				F578B15B1A1DC9DF00BD7C1E /* HotGray@2x.png in Resources */,
 				F5375F7A19EF97FD008EF3C2 /* QRScan@2x.png in Resources */,
 				F537602619EF97FD008EF3C2 /* TabBar@2x.png in Resources */,
+				F55010CC1B101CF600FBFA31 /* RCHpHl@2x.png in Resources */,
+				F5B2F6F91B0C22CC00C0B4E2 /* RCBgd@2x.png in Resources */,
 				F537607519EF97FD008EF3C2 /* ReceiverVoiceNodePlaying.png in Resources */,
 				F5375F7719EF97FD008EF3C2 /* 37x-Checkmark.png in Resources */,
 				F5375F7819EF97FD008EF3C2 /* 37x-Checkmark@2x.png in Resources */,
 				F5F3807E1A6E43A000000838 /* CreatGesturePasswordController_iPad.xib in Resources */,
 				F51B7C651A4AA11400BAD955 /*  CtrlOnBtnHl@2x.png in Resources */,
 				F53760AD19EF97FD008EF3C2 /* ToolViewInputTextHL@2x.png in Resources */,
+				F55010B91B101CF600FBFA31 /* RC2Hl@2x.png in Resources */,
 				F5B9A9581A6F993B00D690FC /* LLLCreatePasswordController_iPad.xib in Resources */,
 				F537606B19EF97FD008EF3C2 /* msg_state_fail_resend.png in Resources */,
 				04F4596D1966982900A45628 /* ForgetPasswordViewController.xib in Resources */,
 				04F000A9196CCA6300E77E98 /* EnergyViewController.xib in Resources */,
+				F5B2F6FB1B0C22CC00C0B4E2 /* VideoIndicatorHl@2x.png in Resources */,
 				F537602419EF97FD008EF3C2 /* SpeedMidTextSelected@2x.png in Resources */,
 				F5375FE119EF97FD008EF3C2 /* Download@2x.png in Resources */,
 				04EEDB9B198241610083F777 /* SettingViewController.xib in Resources */,
@@ -3666,10 +3875,12 @@
 				F537601A19EF97FD008EF3C2 /* SpeedHighSelected@2x.png in Resources */,
 				F5897A2F1A42C6B100573DEE /* GoHome@2x.png in Resources */,
 				F537600B19EF97FD008EF3C2 /* OnBtnNormal@2x.png in Resources */,
+				F55010BC1B101CF600FBFA31 /* RC4@2X.png in Resources */,
 				F5375FF919EF97FD008EF3C2 /* ModeHot@2x.png in Resources */,
 				9A742C7119F8FDE200F868F4 /* SliderGray.png in Resources */,
 				F5650FA81ABD104600482E5C /* RightBtnHl@2x.png in Resources */,
 				F57D87021A4942F200CA2FAE /* CustomSelected@2x.png in Resources */,
+				F55010B71B101CF600FBFA31 /* RC1Hl@2x.png in Resources */,
 				F537601719EF97FD008EF3C2 /* SliderMin@2x.png in Resources */,
 				F537608119EF97FD008EF3C2 /* RecordingSignal003.png in Resources */,
 				F5650F9A1ABD05EF00482E5C /* CtrlBtnHl@2x.png in Resources */,
@@ -3681,7 +3892,9 @@
 				F5F3805E1A6E41D700000838 /* FtpShareViewController_iPad.xib in Resources */,
 				F537609919EF97FD008EF3C2 /* sendvoiceplaying2.png in Resources */,
 				F578B1461A1DC9DF00BD7C1E /* LowSpeedGreen@2x.png in Resources */,
+				F55010BD1B101CF600FBFA31 /* RC4Hl@2x.png in Resources */,
 				F578B14C1A1DC9DF00BD7C1E /* 箭头（下）.png in Resources */,
+				F55010BE1B101CF600FBFA31 /* RC5@2X.png in Resources */,
 				F5375FCD19EF97FD008EF3C2 /* AirconditionOnGif.gif in Resources */,
 				F578B1511A1DC9DF00BD7C1E /* 视频监控.png in Resources */,
 				F578B1431A1DC9DF00BD7C1E /* WetGray@2x.png in Resources */,
@@ -3701,6 +3914,7 @@
 				F53760E519EF97FD008EF3C2 /* song_prev_normal.png in Resources */,
 				9A4E18741A024DC400C3454D /* PanelEditViewController.xib in Resources */,
 				F51B7C6A1A4AA11400BAD955 /* BigCurtainOffline@2x.png in Resources */,
+				F55010BF1B101CF600FBFA31 /* RC5Hl@2x.png in Resources */,
 				F5375F9D19EF97FD008EF3C2 /* flat_misic_large@2x.png in Resources */,
 				F53760D319EF97FD008EF3C2 /* ScanQR2@2x.png in Resources */,
 				F5375FD619EF97FD008EF3C2 /* CurtainOff@2x.png in Resources */,
@@ -3711,7 +3925,9 @@
 				F55EB3641A2C5C750056E832 /* LightIconOn.png in Resources */,
 				F5375FF219EF97FD008EF3C2 /* ModeAutoSelected@2x.png in Resources */,
 				F59D5EB11A26F0FC000C13D6 /* 控制（情景）color.png in Resources */,
+				F5B2F6F31B0C22CC00C0B4E2 /* RCPowerOn@2x.png in Resources */,
 				F578B1581A1DC9DF00BD7C1E /* ColdGray@2x.png in Resources */,
+				F5D1D3191B15BE5F00F5282F /* GUserOnline@2x.png in Resources */,
 				F5375FE919EF97FD008EF3C2 /* LeftTriangle@2x.png in Resources */,
 				F56CE2A91AA1FC1C00520E7C /* 152.png in Resources */,
 				9A5F4E871A133AB000FB0F64 /* SHCtrlSelected@2x.png in Resources */,
@@ -3767,6 +3983,7 @@
 				9A6FC1CF1A0CA7B4003BD5F6 /* PanelNameBlue@2x.png in Resources */,
 				F578B15D1A1DC9DF00BD7C1E /* MidSpeedGray@2x.png in Resources */,
 				F578B1571A1DC9DF00BD7C1E /* Cold@2x.png in Resources */,
+				F5B2F6F11B0C22CC00C0B4E2 /* RCGoBack@2x.png in Resources */,
 				F5375F8919EF97FD008EF3C2 /* blueArrow@2x.png in Resources */,
 				F51B7C6F1A4AA11400BAD955 /* 电器.png in Resources */,
 				F537602F19EF97FD008EF3C2 /* VideoCloseNormal@2x.png in Resources */,
@@ -3778,9 +3995,11 @@
 				F5375FD819EF97FD008EF3C2 /* CurtainOffBtnNormal@2x.png in Resources */,
 				F537605819EF97FD008EF3C2 /* chat_voice.png in Resources */,
 				F5B0F4691A5BB1CD0078CC84 /* ServiceContractViewController_iPad.xib in Resources */,
+				F55010CD1B101CF600FBFA31 /* RCMute@2x.png in Resources */,
 				F5B9A94A1A6F701F00D690FC /* circle_indicator_selected@2x.png in Resources */,
 				04D04E8919777EC70002EC85 /* VideoMonitorViewController_iPad.xib in Resources */,
 				F5928C961A37D5BD0034B49F /* 通用电器.png in Resources */,
+				F5D1D3181B15BE5F00F5282F /* GUserOffline@2x.png in Resources */,
 				F5F3805F1A6E41D700000838 /* ChangeLogUnzip in Resources */,
 				F56F78A91ABFA0E8000638EB /* BlueUpBtn@2x.png in Resources */,
 				F537602B19EF97FD008EF3C2 /* Upload@2X.png in Resources */,
@@ -3797,6 +4016,7 @@
 				F59D5EB91A26F0FC000C13D6 /* PrivacyOff@2x.png in Resources */,
 				F555C5AA1A205EA300DC8DB3 /* CancelAlarm@2x.png in Resources */,
 				9AA189821A11A2EF00FBA04F /* DeviceControlViewController_iPad.xib in Resources */,
+				F5B2F6F71B0C22CC00C0B4E2 /* RCUp@2x.png in Resources */,
 				04D04E921977AE6E0002EC85 /* MoreViewController_iPad.xib in Resources */,
 				F56E3FD41AE4FF5400D9F18A /* 72p.png in Resources */,
 				F5B6A8071A3EC7280074D742 /* Icon-120.png in Resources */,
@@ -3828,6 +4048,7 @@
 				F59D5EB51A26F0FC000C13D6 /* SceneSelected@2x.png in Resources */,
 				04EFCC9F197CBD7100A331D2 /* ForgetPasswordViewController_iPad.xib in Resources */,
 				F537607819EF97FD008EF3C2 /* ReceiverVoiceNodePlaying002@2x.png in Resources */,
+				F55010B41B101CF600FBFA31 /* RC0@2X.png in Resources */,
 				F537600F19EF97FD008EF3C2 /* QuitFullScreenNormal@2x.png in Resources */,
 				F5963B801A53B423006DAD6D /* small_scene_study_gray@2x.png in Resources */,
 				F5375F9619EF97FD008EF3C2 /* Default-568h@2x.png in Resources */,
@@ -3835,6 +4056,7 @@
 				F578B14B1A1DC9DF00BD7C1E /* HighSpeedGreen@2x.png in Resources */,
 				F5375FF819EF97FD008EF3C2 /* ModeColdTextSelected@2x.png in Resources */,
 				F57223781B0489070008FE8F /* CallForwardingViewController_iPad.xib in Resources */,
+				F55AE7CC1B1301DC00420FC9 /* BigRCOffline@2x.png in Resources */,
 				F51B7C741A4AA11400BAD955 /* 睡眠.png in Resources */,
 				F5375FE019EF97FD008EF3C2 /* DeviceCtrlBgd@2x.png in Resources */,
 				F555C5991A205CA700DC8DB3 /* AlarmViewController_iPad.xib in Resources */,
@@ -3845,8 +4067,11 @@
 				F537607019EF97FD008EF3C2 /* ReceiverTextNodeBkgHL.png in Resources */,
 				F5375FB919EF97FD008EF3C2 /* line@2x.png in Resources */,
 				F54B07E61AEF7BAD00B6A39A /* AlarmSettingViewController_iPad.xib in Resources */,
+				F55010BA1B101CF600FBFA31 /* RC3@2X.png in Resources */,
 				F5375FB719EF97FD008EF3C2 /* light.png in Resources */,
 				F5963B8D1A53D788006DAD6D /* SocketOffline@2x.png in Resources */,
+				F55AE7CF1B1301DC00420FC9 /* RCOnline@2x.png in Resources */,
+				F55010CB1B101CF600FBFA31 /* RCHp@2x.png in Resources */,
 				F53760FD19EF97FD008EF3C2 /* call.caf in Resources */,
 				F59A56E51A5281240027CD9A /* StrLine@2x.png in Resources */,
 				F53760CD19EF97FD008EF3C2 /* red_btn.png in Resources */,
@@ -3857,6 +4082,7 @@
 				F5375FFC19EF97FD008EF3C2 /* ModeHotTextSelected@2x.png in Resources */,
 				F5897A271A42A2A500573DEE /* PortraitGray@2x.png in Resources */,
 				F582D8CB1A4D606600290530 /* DeviceCtrl@2x.png in Resources */,
+				F5B2F6FC1B0C22CC00C0B4E2 /* RCOKMid@2X.png in Resources */,
 				F555C5A51A205EA300DC8DB3 /* PressSpeak@2x.png in Resources */,
 				F580ABF21A64C27D000DB103 /* BigGroundHeatOn@2x.png in Resources */,
 				F537602219EF97FD008EF3C2 /* SpeedMidSelected@2x.png in Resources */,
@@ -3869,10 +4095,12 @@
 				F539B7051AEA194600D1ED1B /* MusicPauseHl@2x.png in Resources */,
 				F5650FB41ABD19F500482E5C /* AddGatewayViewController.xib in Resources */,
 				F537601619EF97FD008EF3C2 /* SliderMax@2x.png in Resources */,
+				F5B2F6F61B0C22CC00C0B4E2 /* RCDec@2x.png in Resources */,
 				F5928C931A37D5BD0034B49F /* ServiceEnergy@2x.png in Resources */,
 				F578B1561A1DC9DF00BD7C1E /* TempAddGreen@2x.png in Resources */,
 				F5928C911A37D5BD0034B49F /* 控制.png in Resources */,
 				F578B1521A1DC9DF00BD7C1E /* Wind@2x.png in Resources */,
+				F55010C11B101CF600FBFA31 /* RC6Hl@2x.png in Resources */,
 				F5650FA31ABD0FFF00482E5C /* EditGateway@2x.png in Resources */,
 				9A5F4E821A133AB000FB0F64 /* GuideIndicator@2x.png in Resources */,
 				F537600219EF97FD008EF3C2 /* ModeWindSelected@2x.png in Resources */,
@@ -3880,6 +4108,7 @@
 				F539B6FF1AEA16F300D1ED1B /* BigBgdMusicOff@2x.png in Resources */,
 				9A5F4E811A133AB000FB0F64 /* GuideFrame@2x.png in Resources */,
 				F539B7041AEA194600D1ED1B /* MusicPause@2x.png in Resources */,
+				F55010D11B101CF600FBFA31 /* RCPower@2x.png in Resources */,
 				F578B14F1A1DC9DF00BD7C1E /* BigACOn@2x.png in Resources */,
 				04D04E8819777EC70002EC85 /* ServiceViewController_iPad.xib in Resources */,
 				F56CE2A61AA1FC1C00520E7C /* 76.png in Resources */,
@@ -3906,6 +4135,7 @@
 				04E2008318F7FBA000EC3227 /* EGOImageLoader.m in Sources */,
 				04FB2AB318D69E8A002507DC /* MoreViewController.m in Sources */,
 				041F835B19AB15D400C16D2A /* BasicCurtainCell.m in Sources */,
+				F53C356E1B0F14770000DFEA /* RemoteControlView.m in Sources */,
 				9A5F4EAA1A13403F00FB0F64 /* GroundHeatView.m in Sources */,
 				F5B0F4651A5BB15E0078CC84 /* ServiceContractViewController.m in Sources */,
 				F5F380871A6E4CE300000838 /* SetGesturePasswordController.m in Sources */,
@@ -4119,10 +4349,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -4192,12 +4419,13 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CODE_SIGN_ENTITLEMENTS = eLife/anelife.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "eLife/eLife-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -4215,11 +4443,11 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = anelife;
-				PROVISIONING_PROFILE = "6bc0ea35-8124-4d8f-bcf5-5e085528b6ee";
+				PROVISIONING_PROFILE = "1aabe333-b7b3-4994-a92b-091de2b218e8";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4233,6 +4461,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CODE_SIGN_ENTITLEMENTS = eLife/anelife.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_INPUT_FILETYPE = automatic;
@@ -4255,11 +4484,11 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = anelife;
-				PROVISIONING_PROFILE = "6bc0ea35-8124-4d8f-bcf5-5e085528b6ee";
+				PROVISIONING_PROFILE = "1aabe333-b7b3-4994-a92b-091de2b218e8";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

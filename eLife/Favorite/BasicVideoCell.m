@@ -158,6 +158,7 @@
         //landscapeBtn.backgroundColor = [UIColor redColor];
         
         
+        
         [self registerNotification];
     }
     return self;
@@ -270,6 +271,8 @@
 #ifndef INVALID_VIDEO
     playBtn.hidden = YES;
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+    
     //播放视频
     float fplayScale = 1.0;
     if ([UIScreen instancesRespondToSelector:@selector(scale)])
@@ -367,7 +370,7 @@
     
     [self showVideoContrl];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+    
     
 #endif
 }
@@ -554,5 +557,7 @@
         bitrateView.hidden = YES;
     }];
 }
+
+
 
 @end

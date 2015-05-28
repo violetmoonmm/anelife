@@ -131,6 +131,9 @@
 - (void)playVideo
 {
 #ifndef INVALID_VIDEO
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+    
     //播放门口机视频
     float fplayScale = 1.0;
     if ([UIScreen instancesRespondToSelector:@selector(scale)])
@@ -175,7 +178,7 @@
     }
 
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+
     
 #endif
     

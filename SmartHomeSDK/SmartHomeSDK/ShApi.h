@@ -50,7 +50,7 @@ extern "C" {
         emAlarm,				//报警
         emDownFile,				//文件下载
         emRequestOpenDoor,		//呼叫转移事件
-        
+        emInfraredStudy,		//红外学习结果
     };
     
     //错误码
@@ -176,7 +176,7 @@ extern "C" {
     /*szConfigName 配置名称 读取支持的配置 HouseTypeInfo 户型图 Light(CommLight 普通型 LevelLight 可调光) 灯光
      Curtain 窗帘 GroundHeat 地暖 AirCondition 空调 IntelligentAmmeter 智能电表
      AlarmZone 报警防区 IPCamera IP摄像头 SceneMode情景模式 ChangeId配置变更ID
-     EnvironmentMonitor环境检测仪 BlanketSocket通用插座  All所有设备（灯、窗帘、、、IP摄像头 报警防区）
+     EnvironmentMonitor环境检测仪 BlanketSocket通用插座  InfraredRemoteControl红外遥控  All所有设备（灯、窗帘、、、IP摄像头 报警防区）
      ComInterface串口 DeviceController控制器
      ShareFile共享文件（.panel.zip为面板）
      AuthUser授权用户
@@ -243,6 +243,9 @@ extern "C" {
      上一曲 {"action":"lastPiece"}
      下一曲 {"action":"nextPiece"}
      设置音量 {"action":"setVolume","Volume":20}
+     InfraredRemoteControl
+     遥控 {"action":"control","ModuleName":"XiaomiBox_1.0","KeyName" : "powerOn"}
+     学习 {"action":"study","ModuleName":"XiaomiBox_1.0","KeyName" : "powerOn","WaitTime":15}
      */
     SH_API bool CALL_METHOD SH_Control(unsigned int hLoginID,char * pszDevType,char *pszDeviceId,char *pszParams,int iParamsLen);
     
@@ -330,6 +333,9 @@ extern "C" {
     SH_API bool CALL_METHOD SH_SetExtraBitrate(unsigned int hLoginID,char *pszDeviceId,int iBitRate);
     // 查询IPC辅码流值
     SH_API bool CALL_METHOD SH_GetExtraBitrate(unsigned int hLoginID,char *pszDeviceId,int & iBitRate);
+    
+    // 云台控制
+    SH_API bool CALL_METHOD SH_PTZControl(unsigned int hLoginID,char *pszDeviceId,char* pszMethod,char * pszCode,int arg1,int arg2,int arg3);
     
     
     // 门口机远程控制

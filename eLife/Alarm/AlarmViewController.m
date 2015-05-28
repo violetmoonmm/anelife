@@ -303,6 +303,8 @@ static float cellHeight = 44;
     
     playBtn.hidden = YES;
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+    
     float fplayScale = 1.0;
     if ([UIScreen instancesRespondToSelector:@selector(scale)])
     {
@@ -360,7 +362,7 @@ static float cellHeight = 44;
     
 #endif
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+
     
 }
 

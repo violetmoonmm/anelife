@@ -28,15 +28,13 @@
 #define PANEL_DIR @"panel"
 #define THUMBNAIL @"thumbnail.png"
 
-//远程模式
-#define KEY_IP_PORT  @"com.zwan.elife.ipport"
-#define KEY_IP  @"com.zwan.elife.ip"
-#define KEY_PORT  @"com.zwan.elife.port"
+//
+#define KEY_IP_PORT  @"com.xiaohua.elife.ipport"
+#define KEY_IP  @"com.xiaohua.elife.ip"
+#define KEY_PORT  @"com.xiaohua.elife.port"
 
-//本地模式
-#define KEY_IP_PORT_LOCAL  @"com.zwan.elife.ipport.local"
-#define KEY_IP_LOCAL  @"com.zwan.elife.ip.local"
-#define KEY_PORT_LOCAL  @"com.zwan.elife.port.local"
+
+
 
 #define CurrentPeriodKey @"CurrentPeriodKey"
 #define PriorPeriodKey @"PriorPeriodKey"

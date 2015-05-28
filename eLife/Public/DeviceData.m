@@ -272,4 +272,8 @@
 
 @end
 
+@implementation SHInfraredRemoteControl
 
+
+
+@end

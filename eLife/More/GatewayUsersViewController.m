@@ -321,7 +321,7 @@
 
          removeIndex = indexPath.row;
         
-        PopInputView *inputView = [[PopInputView alloc] initWithTitle:@"撤防操作" placeholder:@"请输入安全密码" delegate:self];
+        PopInputView *inputView = [[PopInputView alloc] initWithTitle:@"删除授权用户" placeholder:@"请输入安全密码" delegate:self];
         [inputView show];
         
         // Delete the row from the data source.
@@ -348,6 +348,8 @@
         GatewayUser *user = [usersArray objectAtIndex:removeIndex];
         [[NetAPIClient sharedClient] removeAuthUser:user fromGateway:self.gateway successCallback:^{
             NSLog(@"删除用户成功");
+            
+            [usersArray removeObject:user];
             
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:removeIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         }failureCallback:^{

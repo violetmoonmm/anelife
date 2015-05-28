@@ -35,6 +35,41 @@ void BinaryToHex(char *dst, const char *src, int srclen)
     dst[2*srclen] = '\0';
 }
 
+void AesKey(std::string & strKey)
+{
+    char sAesKey[16];
+    for (int i=0; i<16; i++)
+    {
+        sAesKey[i] = GetRandomInteger() & 255; //128bitsÀÊª˙ ˝√‹‘ø
+    }
+    
+    char hexkey[32+1];
+    BinaryToHex(hexkey, sAesKey, 16);
+    strKey = hexkey;
+}
+
+void AesCrypt(char* pszIn,char* pszAesKey,std::string & strOut)
+{
+    int orglen  = strlen(pszIn);
+    int padlen  = (-orglen)&15;
+    int reallen = orglen + padlen;
+    char *temp = new char[reallen];
+    memcpy(temp, pszIn, orglen);
+    memset(temp+orglen, '\0', padlen);
+    
+    AVAES aes;
+    av_aes_init(&aes, (unsigned char*)pszAesKey, 128, 0);
+    av_aes_crypt(&aes, (unsigned char*)temp, (unsigned char*)temp, (reallen>>4), NULL, 0);
+    
+    char *encryptpsw = new char[2*reallen+1];
+    BinaryToHex(encryptpsw, temp, reallen);
+    
+    strOut = encryptpsw;
+    
+    delete[] temp;
+    delete[] encryptpsw;
+}
+
 CBaseClient::CBaseClient(void)
 {
     m_hThread = 0;
@@ -1440,6 +1475,9 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                 else if ( strEventCode == "RequestOpenDoor") //∫ÙΩ–
                 {
                 }
+                else if (strEventCode == "InfraredStudy")
+                {
+                }
                 else
                 {
                     INFO_TRACE("event code not process now.eventcode="<<strEventCode);
@@ -1618,6 +1656,20 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                         std::string strEvent = jsonEvent.toUnStyledString();
                         INFO_TRACE("event notify: strEvent="<<strEvent);
                         m_cbOnEventNotify(uiLoginId,emRequestOpenDoor,(char*)strEvent.c_str(),m_pEventNotifyUser);
+                        //INFO_TRACE("event notify end");
+                    }
+                }
+                else if ( strEventCode == "InfraredStudy") //∫ÙΩ–
+                {
+                    if ( m_cbOnEventNotify )
+                    {
+                        Json::Value jsonEvent;
+                        jsonEvent["Type"]="InfraredStudy";
+                        jsonEvent["Action"]="InfraredStudy";
+                        jsonEvent["Data"]=jsEvent["Data"].toUnStyledString();
+                        std::string strEvent = jsonEvent.toUnStyledString();
+                        INFO_TRACE("event notify: strEvent="<<strEvent);
+                        m_cbOnEventNotify(uiLoginId,emInfraredStudy,(char*)strEvent.c_str(),m_pEventNotifyUser);
                         //INFO_TRACE("event notify end");
                     }
                 }
@@ -2212,6 +2264,69 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                     }
                 }
                     break;
+                case emInfraredRemoteControl:
+                {
+                    if (strAction == "control")
+                    {
+                        if (!jsonContent["ModuleName"].isNull()&& jsonContent["ModuleName"].isString() )
+                        {
+                            jsonInParams["ModuleName"] = jsonContent["ModuleName"].asString();
+                        }
+                        else
+                        {
+                            INFO_TRACE("no ModuleName!");
+                            //return -1;
+                        }
+                        
+                        if (!jsonContent["KeyName"].isNull()&& jsonContent["KeyName"].isString() )
+                        {
+                            jsonInParams["KeyName"] = jsonContent["KeyName"].asString();
+                        }
+                        else
+                        {
+                            ERROR_TRACE("no KeyName!");
+                            return -1;
+                        }
+                    }
+                    else if (strAction == "study")
+                    {
+                        if (!jsonContent["ModuleName"].isNull()&& jsonContent["ModuleName"].isString() )
+                        {
+                            jsonInParams["ModuleName"] = jsonContent["ModuleName"].asString();
+                        }
+                        else
+                        {
+                            INFO_TRACE("no ModuleName!");
+                            //return -1;
+                        }
+                        
+                        if (!jsonContent["KeyName"].isNull()&& jsonContent["KeyName"].isString() )
+                        {
+                            jsonInParams["KeyName"] = jsonContent["KeyName"].asString();
+                        }
+                        else
+                        {
+                            ERROR_TRACE("no KeyName!");
+                            return -1;
+                        }
+                        
+                        if (!jsonContent["WaitTime"].isNull()&& jsonContent["WaitTime"].isInt() )
+                        {
+                            jsonInParams["WaitTime"] = jsonContent["WaitTime"].asInt();
+                        }
+                        else
+                        {
+                            ERROR_TRACE("no WaitTime!");
+                            return -1;
+                        }
+                    }
+                    else
+                    {
+                        WARN_TRACE("unsurport action="<<strAction);
+                        return -1;
+                    }
+                }
+                    break;
                 default:
                 {
                     WARN_TRACE("unsurport device type="<<pszDevType);
@@ -2506,7 +2621,7 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
                     if ( !jsonOutParams.isNull())
                     {
                         strDevices = jsonOutParams.toUnStyledString();
-                        //strDevices = jsonOutParams.toStyledString();
+                        strDevices = jsonOutParams.toStyledString();
                     }
                 }
                 else
@@ -2879,6 +2994,65 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
             return iReturn;
         }
         
+        int CBaseClient::PTZControl(char *pszDeviceId,char* pszMethod,char * pszCode,int arg1,int arg2,int arg3,std::string strGwVCode)
+        {
+            int iRet = 0;
+            unsigned int uiObjectId = 0;
+            bool bRet = true;
+            int iReturn = 0;
+            
+            //¥¥Ω® µ¿˝
+            iRet = Dvip_instance("IPCamera.factory.instance",pszDeviceId,uiObjectId,m_waittime,strGwVCode);
+            if ( 0 != iRet )
+            {
+                ERROR_TRACE("IPCamera.factory.instance failed.");
+                return -1;
+            }
+            if ( 0 == uiObjectId )
+            {
+                ERROR_TRACE("IPCamera.factory.instance failed.objectid=0");
+                return -1;
+            }
+            
+            Json::Value jsonInParams;
+            jsonInParams["method"]=pszMethod;
+            jsonInParams["code"]=pszCode;
+            jsonInParams["arg1"]=arg1;
+            jsonInParams["arg2"]=arg2;
+            jsonInParams["arg3"]=arg3;
+            Json::Value jsonOutParams;
+            
+            INFO_TRACE(jsonInParams.toUnStyledString());
+            iRet = Dvip_method_json_b_json("IPCamera.ptzControl",uiObjectId,jsonInParams,bRet,jsonOutParams,m_waittime,strGwVCode);
+            if ( 0 > iRet )
+            {
+                ERROR_TRACE("IPCamera.ptzControl exec failed.");
+                iReturn = -1;
+            }
+            else
+            {
+                if ( bRet )
+                {
+                    INFO_TRACE("IPCamera.ptzControl ok! ");
+                }
+                else
+                {
+                    ERROR_TRACE("IPCamera.ptzControl exec failed.");
+                    iReturn = -1;
+                }
+            }
+            
+            // Õ∑≈ µ¿˝
+            iRet = Dvip_destroy("IPCamera.destroy",uiObjectId,m_waittime,strGwVCode);
+            if ( 0 != iRet )
+            {
+                ERROR_TRACE("IPCamera.destroy failed.");
+                //return -1;
+            }
+            
+            return iReturn;
+        }
+        
         //  ”∆µ’⁄µ≤≈‰÷√
         int CBaseClient::GetVideoCovers(char *pszDeviceId,bool &bEnable,std::string strGwVCode)
         {
@@ -3120,7 +3294,7 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
             bool bRet = true;
             int iReturn = 0;
             
-            INFO_TRACE("delAuth: pszPhone="<<pszPhone<<" pszMeid="<<pszMeid);
+            //INFO_TRACE("delAuth: pszPhone="<<pszPhone<<" pszMeid="<<pszMeid<<" pszUserName="<<pszUserName<<" pszPassWord="<<pszPassWord);
             //¥¥Ω® µ¿˝
             iRet = Dvip_instance("Authorize.factory.instance",uiObjectId,m_waittime,strGwVCode);
             if ( 0 != iRet )
@@ -3412,27 +3586,13 @@ int CBaseClient::Connect(char *pszIp,int iPort) //¡¨Ω”
             
             if ( strcmp(sUsername,"") && strcmp(sPasswrod,"") )
             {
-                int orglen  = strlen(sPasswrod);
-                int padlen  = (-orglen)&15;
-                int reallen = orglen + padlen;
-                char *temp = new char[reallen];
-                memcpy(temp, sPasswrod, orglen);
-                memset(temp+orglen, '\0', padlen);
-                
-                AVAES aes;
-                av_aes_init(&aes, (unsigned char*)sAesKey, 128, 0);
-                av_aes_crypt(&aes, (unsigned char*)temp, (unsigned char*)temp, (reallen>>4), NULL, 0);
-                
-                char *encryptpsw = new char[2*reallen+1];
-                BinaryToHex(encryptpsw, temp, reallen);
-                
                 jsonInParams["userName"] = sUsername;
-                jsonInParams["password"] = encryptpsw;
-                
-                delete[] temp;
-                delete[] encryptpsw;
+                std::string strPwd;
+                AesCrypt((char*)sPasswrod,(char*)sAesKey,strPwd);
+                jsonInParams["password"] = strPwd;
             }
             
+            INFO_TRACE(jsonInParams.toStyledString());
             iRet = Dvip_method_json_b_json("Authorize.alloc",uiObjectId,jsonInParams,bRet,jsonOutParams,m_waittime,strGwVCode);
             if ( 0 > iRet )
             {

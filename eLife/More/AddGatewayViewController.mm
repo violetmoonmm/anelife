@@ -116,6 +116,49 @@
 
 #pragma mark - Table view data source
 
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.frame), 100)];
+    
+    NSString *title = expand ? @"隐藏" : @"更多";
+    NSString *imageName = expand ? @"BlueUpBtn" : @"BlueDownBtn";
+    
+    UIButton *expandBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
+    expandBtn.frame = CGRectMake(CGRectGetWidth(tableView.frame)-74, 8, 64, 40);
+    [expandBtn setTitle:title forState:UIControlStateNormal];
+    [expandBtn setTitleColor:[UIColor colorWithRed:76/255. green:186/255. blue:255/255. alpha:1] forState:UIControlStateNormal];
+    [expandBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -24, 0, 0)];
+    [expandBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [expandBtn setImageEdgeInsets:UIEdgeInsetsMake(0,44,0,0)];
+    [expandBtn addTarget:self action:@selector(showOrHideDetail:) forControlEvents:UIControlEventTouchUpInside];
+    [footer addSubview:expandBtn];
+    
+    
+    UIButton *addBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
+    addBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, 54, 300, 44);
+    [addBtn setTitle:@"添加" forState:UIControlStateNormal];
+    [addBtn setBackgroundImage:[UIImage imageNamed:@"reg_btn"] forState:UIControlStateNormal];
+    [addBtn addTarget:self action:@selector(addGateway:) forControlEvents:UIControlEventTouchUpInside];
+    [footer addSubview:addBtn];
+    
+    
+    return footer;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 100;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
@@ -229,40 +272,6 @@
     return cell;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.frame), 100)];
-    
-    NSString *title = expand ? @"隐藏" : @"更多";
-    NSString *imageName = expand ? @"BlueUpBtn" : @"BlueDownBtn";
-    
-    UIButton *expandBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
-    expandBtn.frame = CGRectMake(CGRectGetWidth(tableView.frame)-74, 8, 64, 40);
-    [expandBtn setTitle:title forState:UIControlStateNormal];
-    [expandBtn setTitleColor:[UIColor colorWithRed:76/255. green:186/255. blue:255/255. alpha:1] forState:UIControlStateNormal];
-    [expandBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -24, 0, 0)];
-    [expandBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    [expandBtn setImageEdgeInsets:UIEdgeInsetsMake(0,44,0,0)];
-    [expandBtn addTarget:self action:@selector(showOrHideDetail:) forControlEvents:UIControlEventTouchUpInside];
-    [footer addSubview:expandBtn];
-    
-    
-    UIButton *addBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
-    addBtn.frame = CGRectMake((CGRectGetWidth(tableView.frame)-300)/2, 54, 300, 44);
-    [addBtn setTitle:@"添加" forState:UIControlStateNormal];
-    [addBtn setBackgroundImage:[UIImage imageNamed:@"reg_btn"] forState:UIControlStateNormal];
-    [addBtn addTarget:self action:@selector(addGateway:) forControlEvents:UIControlEventTouchUpInside];
-    [footer addSubview:addBtn];
-    
-    
-    return footer;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 100;
-}
 
 
 #pragma mark UITextFiledDelegate

@@ -44,9 +44,9 @@
     UIButton *rightBtn;
     
     NSMutableArray *_downloadFiles;//选中下载的文件路径
-    NSMutableArray *_downloadPaths;//选中的tablviewcell indexpath
+    NSMutableArray *_downloadIndexPaths;//选中的tablviewcell indexpath
     
-    
+    NSInteger downloadNum;//已下载的数量
     
 }
 
@@ -63,7 +63,7 @@
         _entries = [NSMutableArray arrayWithCapacity:1];
         
         _downloadFiles = [NSMutableArray arrayWithCapacity:1];
-        _downloadPaths = [NSMutableArray arrayWithCapacity:1];
+        _downloadIndexPaths = [NSMutableArray arrayWithCapacity:1];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDownloadFileNtf:) name:FileDownloadNotification object:nil];
     }
@@ -177,14 +177,14 @@
         
         [self showWaitingStatus];
         
-        [_downloadPaths removeAllObjects];
+        [_downloadIndexPaths removeAllObjects];
         [_tblView reloadData];
+        
+        downloadNum = 0;
         
         NSMutableArray *zipPaths = [NSMutableArray arrayWithCapacity:1];
         
-        
 
-        
         for (NSString *entry in _downloadFiles) {
             
             
@@ -266,13 +266,23 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reqTimeout) object:nil];
     
-	hud.mode = MBProgressHUDModeCustomView;
-    
-    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
     
 	hud.labelText = [NSString stringWithFormat:@"%@下载完成",fileName];
     
-    [hud hide:YES afterDelay:1.0];
+    if (downloadNum == [_downloadFiles count]) {
+        
+        [_downloadFiles removeAllObjects];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        
+        hud.labelText = @"全部面板下载完成";
+    
+        [hud hide:YES afterDelay:1.0];
+    }
+    
+
 }
 
 - (void)showDownLoadPanelNumHint
@@ -290,6 +300,8 @@
 #pragma mark Download
 - (void)handleDownloadFileNtf:(NSNotification *)ntf
 {
+    downloadNum++;
+    
     NSDictionary *dataDic = [ntf userInfo] ;
     NSString *destinationPath = [dataDic objectForKey:@"LocalPath"];
     
@@ -484,7 +496,7 @@
         
         
         BOOL checked = NO;
-        for (NSIndexPath *tempIndexPath in _downloadPaths) {
+        for (NSIndexPath *tempIndexPath in _downloadIndexPaths) {
             if (NSOrderedSame == [tempIndexPath  compare:indexPath]) {
                 checked = YES;
                 break;
@@ -516,39 +528,39 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row != 0 && indexPath.section == 0) {
-        BOOL checked;
-        NSIndexPath *aIndexPath = nil;
-        for (NSIndexPath *tempIndexPath in _downloadPaths) {
-            if (NSOrderedSame == [tempIndexPath  compare:indexPath]) {
-                checked = YES;
-                aIndexPath = tempIndexPath;
-                break;
-            }
+    
+    BOOL checked;
+    NSIndexPath *aIndexPath = nil;
+    for (NSIndexPath *tempIndexPath in _downloadIndexPaths) {
+        if (NSOrderedSame == [tempIndexPath  compare:indexPath]) {
+            checked = YES;
+            aIndexPath = tempIndexPath;
+            break;
         }
-        
-        
-        NSString *entry = [_entries objectAtIndex:indexPath.row - 1];
-        
-        if (nil != aIndexPath) {//已经选中,取消
-            [_downloadPaths removeObject:aIndexPath];
-            
-            [_downloadFiles removeObject:entry];
-            
-            [tableView reloadData];
-        }
-        else {//添加
-            
-            [_downloadPaths addObject:indexPath];
-            
-            [_downloadFiles addObject:entry];
-            
-            [tableView reloadData];
-        }
-        
-        
     }
-
+    
+    
+    NSString *entry = [_entries objectAtIndex:indexPath.row];
+    
+    if (nil != aIndexPath) {//已经选中,取消
+        [_downloadIndexPaths removeObject:aIndexPath];
+        
+        [_downloadFiles removeObject:entry];
+        
+        [tableView reloadData];
+    }
+    else {//添加
+        
+        [_downloadIndexPaths addObject:indexPath];
+        
+        [_downloadFiles addObject:entry];
+        
+        [tableView reloadData];
+    }
+    
+    
 }
+
+
 
 @end

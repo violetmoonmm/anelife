@@ -79,6 +79,11 @@
                     <rect key="frame" x="0.0" y="0.0" width="768" height="729"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <subviews>
+                        <view contentMode="scaleToFill" id="vH8-jK-MXI" customClass="VideoChannelView">
+                            <rect key="frame" x="0.0" y="625" width="768" height="84"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <view contentMode="scaleToFill" id="TZw-Fd-UeU" customClass="VideoWnd">
                             <rect key="frame" x="0.0" y="0.0" width="768" height="576"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -95,11 +100,6 @@
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
-                        <view contentMode="scaleToFill" id="vH8-jK-MXI" customClass="VideoChannelView">
-                            <rect key="frame" x="0.0" y="625" width="768" height="84"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

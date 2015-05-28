@@ -131,6 +131,7 @@ typedef enum EMDevType
     emBlanketSocket = 9,
     emEnvironmentMonitor = 10,
     emBackgroundMusic = 11,
+    emInfraredRemoteControl = 12,
     
 };
 

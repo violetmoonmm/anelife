@@ -22,7 +22,7 @@
 #define SH_DEVICE_HUMITURE          @"Humiture"
 #define SH_DEVICE_SOCKET            @"BlanketSocket"
 #define SH_DEVICE_ENVMONITOR        @"EnvironmentMonitor"
-
+#define SH_DEVICE_IRC               @"InfraredRemoteControl"
 
 
 typedef enum _GetConfigStep
@@ -144,6 +144,13 @@ typedef struct _SHRange
 
 @end
 
+
+@interface SHInfraredRemoteControlState : SHStateBase
+
+@property (nonatomic,assign) BOOL STUOn;//机顶盒
+@property (nonatomic,assign) BOOL TVOn;//电视
+
+@end
 
 @interface SHGatewayStatus : NSObject
 
@@ -296,7 +303,13 @@ typedef struct _SHRange
 
 @end
 
+/*红外遥控器*/
+@interface SHInfraredRemoteControl : SHDevice
 
+@property (nonatomic,strong) NSString *moduleName;//模块
+
+
+@end
 
 
 @interface SHLayout : NSObject

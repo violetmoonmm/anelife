@@ -33,10 +33,10 @@
     if (self) {
         // Initialization code
         
-        UIImageView *bgdView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame))];
-        bgdView.image = [UIImage imageNamed:@"PageFlipOrange"];
-        [self addSubview:bgdView];
-        
+//        UIImageView *bgdView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame))];
+//        bgdView.image = [UIImage imageNamed:@"PageFlipOrange"];
+//        [self addSubview:bgdView];
+//        
         self.backgroundColor = [UIColor clearColor];
         
     
@@ -48,15 +48,19 @@
         tblView.dataSource = self;
         tblView.allowsSelection = NO;
         tblView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [bgdView addSubview:tblView];
+//        [bgdView addSubview:tblView];
         
-//        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tblView.frame), CGRectGetHeight(tblView.frame))];
-//        imgView.image = [UIImage imageNamed:@"PageFlipOrange"];
-//        tblView.backgroundView = imgView;
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tblView.frame), CGRectGetHeight(tblView.frame))];
+        imgView.image = [UIImage imageNamed:@"PageFlipOrange"];
+        tblView.backgroundView = imgView;
         
-//        [self addSubview:tblView];
+       [self addSubview:tblView];
         
 
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDeviceStatusChangeNtf:) name:DeviceStatusChangeNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQueryStatusNtf:) name:QueryDeviceStatusNotification object:nil];
         
     }
     return self;
@@ -81,17 +85,61 @@
 
 - (void)setDisplayDevices:(NSArray *)devices
 {
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDeviceStatusChangeNtf:) name:DeviceStatusChangeNotification object:nil];
+    
+    [dataSource removeAllObjects];
+    
+    [dataSource addObjectsFromArray:devices];
     
     [tblView reloadData];
 }
 
-- (void)handleDeviceStatusChangeNtf:(NSNotification *)ntf
+
+- (void)handleQueryStatusNtf:(NSNotification *)ntf
 {
-    [tblView reloadData];
+     SHGateway *gateway = [ntf object];
+    
+    if ([gateway.serialNumber isEqualToString:self.gatewayId]) {
+        [tblView reloadData];
+    }
 }
 
+
+- (void)handleDeviceStatusChangeNtf:(NSNotification *)ntf
+{
+    
+    id object = [ntf object];
+    
+    
+    SHDevice *device = (SHDevice *)object;
+    
+    NSIndexPath *indexPath =  [self indexPathOfDevice:device];
+    
+    if (indexPath) {
+        
+        
+        [tblView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+    
+}
+
+- (NSIndexPath *)indexPathOfDevice:(SHDevice *)device
+{
+    
+    if (NSOrderedSame == [device.gatewaySN compare:self.gatewayId options:NSCaseInsensitiveSearch]) {//是当前显示的网关的设备
+        
+        
+        NSInteger row = [dataSource indexOfObject:device];
+        if (row != NSNotFound) {
+            NSIndexPath *path = [NSIndexPath indexPathForItem:row inSection:0];
+            
+            return path;
+        }
+    }
+    
+    
+    return nil;
+}
 
 
 #pragma mark UITableViewDataSource && UITableViewDelegate
@@ -136,10 +184,10 @@
     NSString *name = device.name;
     NSString *status = nil;
     if (!device.state.online) {
-        status = @"不在线";
+        status = @"?";
     }
     else {
-        status = device.state.powerOn ? @"已开" : @"已关";
+        status = device.state.powerOn ? @"开" : @"关";
     }
 
     
@@ -164,9 +212,10 @@
     statusLbl.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:statusLbl];
     
-    //cell.contentView.backgroundColor = [UIColor clearColor];
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor clearColor];
     
-    cell.contentView.backgroundColor = [UIColor colorWithRed:220/255. green:86/255. blue:45/255. alpha:1];
+//    cell.contentView.backgroundColor = [UIColor colorWithRed:220/255. green:86/255. blue:45/255. alpha:1];
     
     return cell;
 }

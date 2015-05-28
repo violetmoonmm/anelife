@@ -61,5 +61,6 @@ typedef enum _AlarmVideoSetting
 @property (nonatomic,strong) NSString *deviceModel;//设备型号
 @property (nonatomic,assign) BOOL enable;//是否启用
 @property (nonatomic,assign) BOOL online;//是否在线
+@property (nonatomic,assign) NSInteger loginTime;
 
 @end

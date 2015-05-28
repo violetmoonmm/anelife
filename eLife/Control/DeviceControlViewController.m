@@ -37,6 +37,7 @@
 #import "AirConditionView.h"
 #import "GroundHeatView.h"
 #import "BgdMusicView.h"
+#import "RemoteControlView.h"
 
 #import "HHFullScreenViewController.h"
 #import "MultiSelectionView.h"
@@ -1828,6 +1829,11 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
                 [ctrller setDevice:device];
 
               
+//                NSString *nibName = [Util nibNameWithClass:[RemoteControlView class]];
+//                RemoteControlView *ctrller = [[RemoteControlView alloc] initWithNibName:nibName bundle:nil];
+//                
+//                deviceController = ctrller;
+//                [self showDeviceControlView:ctrller.view];
                 
             }
             else if ([displayType isEqualToString:SH_DEVICE_AIRCONDITION])

@@ -23,16 +23,16 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="o6x-mE-Nau">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="964.00000685246482"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="964.00001543139433"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" id="89t-fE-7rp" customClass="VideoWnd">
-                                    <rect key="frame" x="0.0" y="194" width="768" height="576.00000512599956"/>
+                                    <rect key="frame" x="0.0" y="194" width="768" height="576.00001154348456"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="有访客在门口呼叫" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T4H-Na-MFN">
-                                    <rect key="frame" x="224" y="860.00000685246482" width="320" height="28"/>
+                                    <rect key="frame" x="224" y="860.00001543139433" width="320" height="28"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>

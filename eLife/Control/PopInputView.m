@@ -98,10 +98,65 @@
          okBtn.adjustsImageWhenHighlighted = YES;
         [okBtn addTarget:self action:@selector(clickOK:) forControlEvents:UIControlEventTouchUpInside];
         [contentView addSubview:okBtn];
+        
+        
+        [self registerNotification];
     }
     
     
     return self;
+}
+
+
+- (void)registerNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)handleKeyboardWillShow:(NSNotification *)ntf
+{
+
+    
+    NSDictionary *userInfo = [ntf userInfo];
+    NSValue *rectValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [rectValue CGRectValue];
+    NSInteger keyboardHeight = keyboardRect.size.height;
+    
+    NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    
+    NSInteger spacing = CGRectGetHeight(bgdView.frame) - CGRectGetMaxY(contentView.frame);
+    
+    NSInteger offY = keyboardHeight - spacing;
+    
+    
+    
+    if (offY > 0) {
+
+        CGRect frame = contentView.frame;
+        frame.origin.y -= offY;
+        
+        [UIView animateWithDuration:[duration floatValue] animations:^{
+            contentView.frame = frame;
+
+        }completion:NULL];
+    }
+    
+}
+
+- (void)handleKeyboardWillHide:(NSNotification *)ntf
+{
+    NSDictionary *userInfo = [ntf userInfo];
+    NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+
+    
+    [UIView animateWithDuration:[duration floatValue] animations:^{
+       contentView.frame =  CGRectMake((CGRectGetWidth(bgdView.bounds)-WIDTH)/2, (CGRectGetHeight(bgdView.bounds)-HEIGHT)/2, WIDTH, HEIGHT);
+        
+    }completion:NULL];
+    
+
 }
 
 - (void)show
@@ -118,6 +173,11 @@
     
 }
 
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)dismiss
 {

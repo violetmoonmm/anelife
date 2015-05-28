@@ -43,8 +43,8 @@
 #define BUFFER_SIZE 102400 //buffer
 
 //#define SERVER_DOMAIN @"www.dahuayun.com"
-#define SERVER_DOMAIN @"www.dahuaweb.com"
-//#define SERVER_DOMAIN @"www.aesyun.com"
+//#define SERVER_DOMAIN @"www.dahuaweb.com"
+#define SERVER_DOMAIN @"www.aesyun.com"
 
 #define MQ_TOPIC_PUBLIC @"zw.public.all.receive.info" //MQ主题 公共消息
 #define MQ_TOPIC_ALARM @"zw.public.single.receive" //MQ主题 报警消息
@@ -216,6 +216,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     //开启后台获取智能家居设备线程
     [self getSHConfig];
 
+    
 }
 
 - (void)beginTask
@@ -236,8 +237,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 
 - (void)redirect
 {
-    NSLog(@"redirect");
-    
+  
     //先检查keychain里面plugin程序是否有储存ip和port，有的话用，没有则利用服务重定向获取业务服务器ip和port
     NSMutableDictionary *kVPairs = (NSMutableDictionary *)[CHKeychain load:KEY_IP_PORT];
     NSString *ip = [kVPairs objectForKey:KEY_IP];
@@ -247,13 +247,12 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
         _serverAddr = ip;
         _serverPort = [port intValue];
 
+        NSLog(@"重定向从keychain");
     }
     else {
         ICRC_REDIRECT_INFO info;
         
-//        char buf[] = "www.dahuayun.com";
-        
-        NSLog(@"服务器重定向开始");
+        NSLog(@"重定向从服务器");
         
         if (0 == ICRC_Http_Redirect([SERVER_DOMAIN UTF8String],5000,&info)) {
             _serverAddr = [NSString stringWithUTF8String:info.sIp];
@@ -262,6 +261,15 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
         }
         
     }
+    
+    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSString *msg = [NSString stringWithFormat:@"%@:%d",_serverAddr,_serverPort];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"服务器地址" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//          [alert show];
+//    });
+
+  
     
     NSLog(@"重定向 ip :%@ port :%d",_serverAddr,_serverPort);
 }
@@ -889,7 +897,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 
 - (void)connectMQ
 {
-    
+//    closesocket(0);
     NSLog(@"MQ 连接中...");
     
 
@@ -1282,6 +1290,8 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
             NSString *remotePath = [remotePaths objectAtIndex:i];
             NSString *localPath = [localPaths objectAtIndex:i];
             
+            NSLog(@"downloadShareFiles remote:%@ local:%@",remotePath,localPath);
+            
             SH_DownloadShareFile(gateway.loginId, (char *)[remotePath UTF8String], (char *)[localPath UTF8String]);
         }
         
@@ -1352,10 +1362,15 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     //查询设备列表
     NSArray *deviceList = [[DBManager defaultManager] queryDevicesByGatewaySN:gateway.serialNumber];
     [gateway.deviceArray addObjectsFromArray: deviceList];
-    for (SHDevice *device in deviceList) {
+
+    
+    //查询红外遥控列表
+    NSArray *IRCList = [[DBManager defaultManager] queryRemoteControlsByGatewaySN:gateway.serialNumber];
+    [gateway.deviceArray addObjectsFromArray: IRCList];
+    
+    for (SHDevice *device in gateway.deviceArray) {
         [self generateDeviceState:device];
     }
-    
     
     //查询情景模式列表
     NSArray *sceneList = [[DBManager defaultManager] querySceneModesByGatewaySN:gateway.serialNumber];
@@ -2702,6 +2717,62 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 }
 
 
+- (NSArray *)getInfraredRemoteControlOfGateway:(SHGateway *)gateway
+{
+    //
+    NSMutableArray *authUsers = [NSMutableArray arrayWithCapacity:1];
+    NSDictionary *dataDic = [self getConfigByName:@"InfraredRemoteControl" loginId:gateway.loginId];
+    if (dataDic) {
+//        id ipcs = [ipcDic objectForKey:@"table"];
+//        if ([ipcs isKindOfClass:[NSArray class]]) {
+//            
+//            [gateway.ipcArray removeAllObjects];
+//            
+//            for (NSDictionary *tempIpc in ipcs) {
+//                
+//                SHVideoDevice *device = [[SHVideoDevice alloc] init];
+//                SHStateBase *state = [[SHStateBase alloc] init];
+//                device.state = state;
+//                
+//                id serialNumber = [tempIpc objectForKey:@"DeviceID"];
+//                if ([serialNumber isKindOfClass:[NSNumber class]]) {
+//                    device.serialNumber = [(NSNumber *)serialNumber stringValue];
+//                }
+//                else if ([serialNumber isKindOfClass:[NSString class]]) {
+//                    device.serialNumber = (NSString *)serialNumber;
+//                }
+//                
+//                device.name = [tempIpc objectForKey:@"Name"];
+//                device.type = SH_DEVICE_IPC;
+//                device.ip = [tempIpc objectForKey:@"Ip"];
+//                device.port = [[tempIpc objectForKey:@"Port"] intValue];
+//                device.user = [tempIpc objectForKey:@"Username"];
+//                device.pswd = [tempIpc objectForKey:@"Password"];
+//                device.gatewaySN = gateway.serialNumber;
+//                
+//
+//                
+//                id posId = [tempIpc objectForKey:@"AreaID"];
+//                if ([posId isKindOfClass:[NSNumber class]]) {
+//                    device.roomId = [(NSNumber *)posId stringValue];
+//                }
+//                else if ([posId isKindOfClass:[NSString class]]) {
+//                    device.roomId = (NSString *)posId;
+//                }
+//                
+//                [gateway.ipcArray addObject:device];
+//                
+//                
+//                
+//            }
+//        }
+        
+    }
+    
+    return nil;
+
+}
+
 
 - (void)getConfigOfGateway:(SHGateway *)gateway
 {
@@ -2732,6 +2803,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     [self getAllDeviceOfGateway:gateway];
     [self getAlarmLinkage:gateway];
 
+
     
     [[DBManager defaultManager] insertSceneMode:gateway.sceneModeArray gatewaySN:gateway.serialNumber];
     
@@ -2760,6 +2832,10 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     
     [[DBManager defaultManager] insertEnvMonitors:gateway.envMonitorArray gatewaySN:gateway.serialNumber];
     
+    NSArray *remoteControls = [self getInfraredRemoteControlOfGateway:gateway];
+    [[DBManager defaultManager] insertRemoteControl:remoteControls gatewaySN:gateway.serialNumber];
+    
+    [gateway.deviceArray addObjectsFromArray:remoteControls];
     
 }
 
@@ -4674,6 +4750,49 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
     });
 }
 
+- (void)remoteControl:(SHInfraredRemoteControl *)device key:(NSString *)key successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback
+{
+    if (nil == device.serialNumber) {
+        failureCallback();
+        return;
+    }
+    
+    if (![self checkOperationTime:device.serialNumber operation:@"remoteControl"]) {
+        NSLog(@"in time");
+        return;
+    }
+    
+    dispatch_async(_serialQueue, ^{
+        
+        SHGateway *gateway = [self lookupGatewayById:device.gatewaySN];
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"control",@"action", device.moduleName,@"ModuleName",key,@"KeyName",nil];
+        NSError *error;
+        NSString *strParams  = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
+        if (jsonData) {
+            strParams = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        }
+        
+        bool bRet = SH_Control(gateway.loginId, (char *)[SH_DEVICE_BACKGROUNDMUSIC UTF8String], (char *)[device.serialNumber UTF8String], (char *)[strParams UTF8String], [strParams length]);
+        
+        dispatch_async(dispatch_get_main_queue(),^{
+            if (bRet) {//控制成功
+                
+                
+                
+                if (successCallback) {
+                    successCallback();
+                }
+            }
+            else {//控制失败
+                if (failureCallback) {
+                    failureCallback();
+                }
+            }
+        });
+    });
+
+}
 
 #pragma mark 视频遮盖
 
@@ -4809,7 +4928,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 //    BOOL result = [[dataDic objectForKey:@"Result"] boolValue];
     
 
+    NSLog(@"postNotificationName start %@",[params description]);
     [[NSNotificationCenter defaultCenter] postNotificationName:FileDownloadNotification object:nil userInfo:dataDic];
+    NSLog(@"postNotificationName end");
 }
 
 
@@ -5063,6 +5184,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
         if ([ipc.serialNumber isEqualToString:alarmZone.ipcID]) {
             alarm.videoAddr = ipc.videoUrl;
             alarm.pubVideoAddr = ipc.pubVideoUrl;
+            
+            NSLog(@"报警联动 防区:%@ videoAddr:%@ pubVideoAddr:%@",alarmZone.name,alarm.videoAddr,alarm.pubVideoAddr);
+            
             break;
         }
     }

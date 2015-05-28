@@ -37,7 +37,7 @@
 
 @end
 
-@interface VideoMonitorViewController () <VideoChannelViewDelegate,PopInputViewDelegate>
+@interface VideoMonitorViewController () <VideoChannelViewDelegate,PopInputViewDelegate,BitrateViewDelegate>
 {
     IBOutlet VideoWnd *videoWnd;
     
@@ -197,6 +197,18 @@
     bitrateBtn.layer.cornerRadius = 5;
     bitrateBtn.layer.borderWidth = 1;
     bitrateBtn.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+    
+    
+    bitrateView = [[BitrateView alloc] initWithText:@[@"清晰",@"流畅"]];
+    CGRect tempFrame = bitrateView.frame;
+    tempFrame.origin.x = CGRectGetMinX(bitrateBtn.frame) - (CGRectGetWidth(bitrateView.frame)- CGRectGetWidth(bitrateBtn.frame))/2;
+    tempFrame.origin.y = CGRectGetMaxY(bitrateBtn.frame)+10;
+    bitrateView.frame = tempFrame;
+    bitrateView.delegate = self;
+    [videoWnd addSubview:bitrateView];
+    bitrateView.hidden = YES;
+    bitrateView.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin  | UIViewAutoresizingFlexibleBottomMargin;
+    bitrateView.selectedIndex = 0;
 
     //关闭视频按钮
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -381,6 +393,8 @@
 #ifndef INVALID_VIDEO  
     playBtn.hidden = YES;
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+    
     float fplayScale = 1.0;
     if ([UIScreen instancesRespondToSelector:@selector(scale)])
     {
@@ -486,7 +500,7 @@
     
     [self showVideoContrl];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:PlayVideoNotification object:self];
+   
 #endif
 }
 

@@ -102,6 +102,8 @@
 
 - (void)insertAuthUsers:(NSArray *)authUsers gatewaySN:(NSString *)gatewaySN;//插入授权用户表
 
+- (void)insertRemoteControl:(NSArray *)remoteControls gatewaySN:(NSString *)gatewaySN;//插入红外遥控器列表
+
 /*
  *查询的时候，gatewaySN都填网关的序列号
  */
@@ -121,6 +123,7 @@
 
 - (NSArray *)queryEnvMonitorsByGatewaySN:(NSString *)gatewaySN;//查询电表
 
+- (NSArray *)queryRemoteControlsByGatewaySN:(NSString *)gatewaySN;//查询红外遥控表
 
 - (void)updateGateway:(SHGateway *)gateway;
 

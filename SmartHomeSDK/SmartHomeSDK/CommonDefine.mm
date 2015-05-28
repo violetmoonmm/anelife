@@ -2184,7 +2184,7 @@ devicetype_list g_devicetype_list[] =
     { "BlanketSocket",	emBlanketSocket },
     { "EnvironmentMonitor",	emEnvironmentMonitor },
     { "BackgroundMusic",	emBackgroundMusic },
-    
+    { "InfraredRemoteControl",	emInfraredRemoteControl },
 };
 
 int LookupDeviceType(const char *szDeviceType)

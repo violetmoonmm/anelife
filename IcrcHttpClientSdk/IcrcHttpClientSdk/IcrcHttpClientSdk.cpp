@@ -445,6 +445,8 @@ static int _http_login(void *icrc_handle)
             return ICRC_ERROR_HTTP_PARAM_NOT_FOUND;
         pHandle->m_seed1 = sSeed.substr(0, pos);
         pHandle->m_seed2 = sSeed.substr(pos+1);
+        
+
     }
     // 第二步: md5加密
     std::string strMD5Password;

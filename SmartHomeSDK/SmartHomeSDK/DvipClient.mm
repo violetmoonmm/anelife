@@ -899,6 +899,7 @@ int CDvipClient::Subscrible()
     jsonInParams["codes"][1] = "AlarmLocal";
     jsonInParams["codes"][2] = "AlarmExtended";
     jsonInParams["codes"][3] = "RequestOpenDoor";
+    jsonInParams["codes"][4] = "InfraredStudy";
     
     //jsonInParams["codes"][2] = "ArmModeChange";
     //jsonInParams["codes"][0] = "*";

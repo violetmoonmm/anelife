@@ -292,18 +292,23 @@ typedef NS_ENUM(NSInteger, RAScrollDirction) {
 
 - (void)handleFtpDownloadNtf:(NSNotification *)nft
 {
+    
+    
     NSString *panelName = [[nft userInfo] objectForKey:FtpDownloadFileNameKey];
     NSString *filePath = [[nft userInfo] objectForKey:FtpDownloadFilePathKey];
     
+    NSArray *names = [config allKeys];
+    
+    NSLog(@"handleFtpDownloadNtf panelName %@ , preCount %d",panelName,[names count]);
+    
     BOOL overwritten = NO;
     
-    
-    NSArray *names = [config allKeys];
+   
     for (NSString *panel in names) {
         if ([panel isEqualToString:panelName]) {
             overwritten = YES;
             
-            NSLog(@"panelName: %@overwritten yes",panelName);
+            NSLog(@"面板覆盖 yes");
             break;
         }
     }
@@ -311,9 +316,11 @@ typedef NS_ENUM(NSInteger, RAScrollDirction) {
    
     
     if (!overwritten) {
+        
+         NSLog(@"面板覆盖 no");
+        
         NSInteger index = [names count];
         
-         NSLog(@"handleFtpDownloadNtf %@ panel count %d",panelName,index);
         
         [panelArray addObject:panelName];
         
@@ -379,6 +386,8 @@ typedef NS_ENUM(NSInteger, RAScrollDirction) {
 
 - (void)addItemAtIndex:(NSInteger)index name:(NSString *)name
 {
+    NSLog(@"%s index:%d name:%@",__func__,index,name);
+    
     int width = (CGRectGetWidth(self.view.frame)-SPACING*(ITEMS_PERROW+1))/ITEMS_PERROW;
     int height = (CGRectGetHeight(self.view.frame)-SPACING*(ITEMS_PERCOL+1))/ITEMS_PERCOL;
     

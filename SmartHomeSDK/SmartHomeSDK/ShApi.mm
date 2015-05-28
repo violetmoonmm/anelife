@@ -617,6 +617,34 @@ SH_API bool CALL_METHOD SH_GetExtraBitrate(unsigned int hLoginID,char *pszDevice
     return bRet;
 }
 
+
+// ÔÆÌ¨¿ØÖÆ
+SH_API bool CALL_METHOD SH_PTZControl(unsigned int hLoginID,char *pszDeviceId,char* pszMethod,char * pszCode,int arg1,int arg2,int arg3)
+{
+    int iRet = 0;
+    bool bRet = false;
+    CBaseClient *pInst;
+    
+    std::string strGwVCode;
+    pInst = CDvrGeneral::Instance()->FindInstance(hLoginID,strGwVCode);
+    if ( !pInst )
+    {
+        ERROR_TRACE("SH_SetExtraBitrate not find instance.id="<<hLoginID);
+        return false;
+    }
+    
+    iRet = pInst->PTZControl(pszDeviceId,pszMethod,pszCode,arg1,arg2,arg3,strGwVCode);
+    if ( 0 == iRet )
+    {
+        bRet = true;
+    }
+    else
+    {
+        bRet = false;
+    }
+    return bRet;
+}
+
 SH_API bool CALL_METHOD SH_RemoteOpenDoor(unsigned int hLoginID,char *pszShortNumber)
 {
     int iRet = 0;

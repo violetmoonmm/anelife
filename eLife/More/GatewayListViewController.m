@@ -396,9 +396,11 @@
     NSInteger smallFontSize = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 14: 16);
     UIFont *smallTxtFont = [UIFont systemFontOfSize:smallFontSize];
     
+    
+    NSInteger maxWidth = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? 200 : 400);
     //网关序列号
     NSString *snTxt = [NSString stringWithFormat:@"序列号: %@", gateway.serialNumber];
-    size = [snTxt sizeWithFont:smallTxtFont constrainedToSize:CGSizeMake(200, 24)];
+    size = [snTxt sizeWithFont:smallTxtFont constrainedToSize:CGSizeMake(maxWidth, 24)];
     UILabel *snLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLabel.frame), CGRectGetMaxY(titleLabel.frame)+spacingY, size.width, lblHeight)];
     snLabel.text = snTxt;
     snLabel.textColor = [UIColor darkGrayColor];

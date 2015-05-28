@@ -32,6 +32,7 @@
 }
 
 
+- (void)setDevNum:(NSInteger)num;
 
 @end
 
@@ -107,6 +108,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 
 
 - (void)handleSHTerminationNtf:(NSNotification *)ntf
@@ -186,10 +188,11 @@
     
     [[NetAPIClient sharedClient] readAmmeterMeter:_device successCallback:^(NSDictionary *dataDic){
         
-        NSDictionary *currentEnergys = [dataDic objectForKey:@"InstantPower"];
-        
-        NSString *actviePower = [currentEnergys objectForKey:@"ActivePower"];
-        NSString *ap = [NSString stringWithFormat:@"%.2f",[actviePower floatValue]/10];
+   
+        NSDictionary *currentEnergys = [dataDic objectForKey:@"CurrentPeriodKey"];
+        NSDictionary *instantPower = [currentEnergys objectForKey:@"InstantPower"];
+        NSString *activePower = [instantPower objectForKey:@"ActivePower"];
+        NSString *ap = [NSString stringWithFormat:@"%.2f",[activePower floatValue]/10];
         
         valueLbl.text = [ap stringByAppendingString:@"瓦"];//当前能耗值（/10 瓦）
         
@@ -348,20 +351,29 @@
     selIndx = page;
 }
 
+- (void)setElements:(NSArray *)elements
+{
 
+    [super setElements:elements];
+    
+    energyView.deviceId = self.deviceId;
+    energyView.gatewayId = self.gatewayId;
+    
+    stateView.gatewayId = self.gatewayId;
+}
 
 - (void)associateWithDevices:(NSArray *)ammeters
 {
-    
-    [energyView associateWithDevices:ammeters];
-    
 
+    [energyView associateWithDevices:ammeters];
     
 }
 
 - (void)setDisplayDevices:(NSArray *)devices
 {
     [stateView setDisplayDevices:devices];
+    
+    [energyView setDevNum:[devices count]];
 }
 
 

@@ -28,9 +28,9 @@ public:
         m_strServIp = pServIp; //服务端ip
         m_iServPort = (int)usServPort;		 //服务端端口
         
-        INFO_TRACE("ip="<<m_strServIp<<" port="<<m_iServPort
-                   <<" user="<<m_strUsername<<" pwd="<<m_strPassword
-                   <<" sn="<<pSn);
+        //INFO_TRACE("ip="<<m_strServIp<<" port="<<m_iServPort
+        //	<<" user="<<m_strUsername<<" pwd="<<m_strPassword
+        //	<<" sn="<<pSn);
     }
     
     int Login(int waittime);

@@ -148,7 +148,12 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
     [self displayConnectStatusForCurrentPanel];
     
     for (SHGateway *gateway in _gateways) {
-        [self associateCellWithGateway:gateway];
+        
+        if (gateway.getConfigStep == GetConfigStepFinished)
+        {
+            [self associateCellWithGateway:gateway];
+        }
+        
     }
     
     [self registerNotification];
@@ -584,8 +589,18 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
                 
                 NSArray *commLight = [gateway devicesForType:SH_DEVICE_COMMLIGHT];
                 NSArray *levelLight = [gateway devicesForType:SH_DEVICE_LEVELLIGHT];
+                NSArray *curtain = [gateway devicesForType:SH_DEVICE_CURTAIN];
+                NSArray *ac = [gateway devicesForType:SH_DEVICE_AIRCONDITION];
+                NSArray *sokect = [gateway devicesForType:SH_DEVICE_SOCKET];
+                NSArray *groundHeat = [gateway devicesForType:SH_DEVICE_GROUNDHEAT];
+                
                 NSMutableArray *arr = [NSMutableArray arrayWithArray:commLight];
                 [arr addObjectsFromArray:levelLight];
+                [arr addObjectsFromArray:curtain];
+                [arr addObjectsFromArray:ac];
+                [arr addObjectsFromArray:sokect];
+                [arr addObjectsFromArray:groundHeat];
+ 
                 [(BasicEnergyCell *)cell setDisplayDevices:arr];
                 
             }
