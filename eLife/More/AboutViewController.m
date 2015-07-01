@@ -112,7 +112,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  4;
+    return  3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,22 +146,22 @@
     else if (2 == indexPath.row) {
         cell.textLabel.text = @"服务使用协议";
     }
-    else {
-        cell.textLabel.text = @"版本更新";
-        
-        
-        if (![Util clientIsLastVersion]) {//提示更新
-            UIFont *font = [UIFont systemFontOfSize:14];
-            NSString *text = @"有新版本可用";
-            CGSize size = [text sizeWithFont:font constrainedToSize:CGSizeMake(120, 44)];
-            UILabel *info = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(rightArrow.frame)-size.width-8, (44-size.height)/2, size.width, size.height)];
-            info.font = font;
-            info.text = text;
-            info.textColor = [UIColor grayColor];
-            info.backgroundColor = [UIColor clearColor];
-            [cell.contentView addSubview:info];
-        }
-    }
+//    else {
+//        cell.textLabel.text = @"版本更新";
+//        
+//        
+//        if (![Util clientIsLastVersion]) {//提示更新
+//            UIFont *font = [UIFont systemFontOfSize:14];
+//            NSString *text = @"有新版本可用";
+//            CGSize size = [text sizeWithFont:font constrainedToSize:CGSizeMake(120, 44)];
+//            UILabel *info = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(rightArrow.frame)-size.width-8, (44-size.height)/2, size.width, size.height)];
+//            info.font = font;
+//            info.text = text;
+//            info.textColor = [UIColor grayColor];
+//            info.backgroundColor = [UIColor clearColor];
+//            [cell.contentView addSubview:info];
+//        }
+//    }
     
 
     
@@ -178,24 +178,24 @@
         vc.registering = NO;
         [self.navigationController pushViewController:vc animated:YES];
     }
-    else if (3 == indexPath.row) {
-        if ([Util clientIsLastVersion]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"当前版本已经是最新！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alert show];
-        }
-        else {
-            VersionInfo *versionInfo = [NetAPIClient sharedClient].versionInfo;
-            NSString *title = [NSString stringWithFormat:@"新版本%@",versionInfo.versionName];
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"YYYY年MM月dd日"];
-            NSString *strDate = [formatter stringFromDate:versionInfo.publishDate];
-            
-            NSString *msg = [NSString stringWithFormat:@"发布日期:%@",strDate];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"前往下载", nil];
-            [alert show];
-        }
-    }
+//    else if (3 == indexPath.row) {
+//        if ([Util clientIsLastVersion]) {
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"当前版本已经是最新！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//            [alert show];
+//        }
+//        else {
+//            VersionInfo *versionInfo = [NetAPIClient sharedClient].versionInfo;
+//            NSString *title = [NSString stringWithFormat:@"新版本%@",versionInfo.versionName];
+//            
+//            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//            [formatter setDateFormat:@"YYYY年MM月dd日"];
+//            NSString *strDate = [formatter stringFromDate:versionInfo.publishDate];
+//            
+//            NSString *msg = [NSString stringWithFormat:@"发布日期:%@",strDate];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"前往下载", nil];
+//            [alert show];
+//        }
+//    }
 
 }
 
@@ -207,7 +207,7 @@
     if ([title isEqualToString:@"前往下载"]) {
         
   
-        BOOL result = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_URL]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:APP_URL]];
         
     }
     else {

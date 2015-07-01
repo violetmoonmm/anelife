@@ -492,7 +492,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                     
                     free(conn);
                     
-                     [self checkVersion];
+                    [self checkVersion];
                     
                     [self sendToken:_meid];
                     
@@ -1060,6 +1060,10 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 //查询ipc码流
 - (void)getIpcBitrate:(SHDevice *)device successCallback:(void (^)(VideoQuality grade))successCallback failureCallback:(void (^)(void))failureCallback
 {
+    if (nil == device.serialNumber) {
+        failureCallback();
+        return;
+    }
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -1096,6 +1100,11 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 //设置码流
 - (void)setIpcBitrate:(SHDevice *)device quality:(VideoQuality)quality successCallback:(void (^)(void))successCallback failureCallback:(void (^)(void))failureCallback
 {
+    if (nil == device.serialNumber) {
+        failureCallback();
+        return;
+    }
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         SHGateway *gateway = [self lookupGatewayById:device.gatewaySN];
@@ -1128,6 +1137,11 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
 
 - (void)queryIpcVideoCount:(SHDevice *)device successCallback:(void (^)(BOOL max))successCallback failureCallback:(void (^)(void))failureCallback
 {
+    if (nil == device.serialNumber) {
+        failureCallback();
+        return;
+    }
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         char buf[1024] = {0};
@@ -1627,10 +1641,9 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
    
         
         
-        //发送获取到设备列表通知
-        
-        NSNotification *ntf = [NSNotification notificationWithName:DeviceListGetReadyNotifacation object:nil];
-        [[NSNotificationCenter defaultCenter] performSelector:@selector(postNotification:) onThread:[NSThread mainThread] withObject:ntf waitUntilDone:YES];
+//        //发送获取到设备列表通知
+//        NSNotification *ntf = [NSNotification notificationWithName:DeviceListGetReadyNotifacation object:nil];
+//        [[NSNotificationCenter defaultCenter] performSelector:@selector(postNotification:) onThread:[NSThread mainThread] withObject:ntf waitUntilDone:YES];
         
         //查询状态
         NSArray *tempArray = [NSArray arrayWithArray:self.gatewayList];
@@ -2672,6 +2685,7 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
                         user.deviceModel = [tempUserDic objectForKey:@"Model"];
                         user.enable = [[tempUserDic objectForKey:@"Enable"] boolValue];
                         user.online = [[tempUserDic objectForKey:@"Online"] boolValue];
+                        user.loginTime = [[tempUserDic objectForKey:@"Time"] integerValue];
                         
                         [authUsers addObject:user];
                         
@@ -4779,6 +4793,127 @@ static void OnIPSearch(char *pDeviceInfo,void *pUser);
             if (bRet) {//控制成功
                 
                 
+                
+                if (successCallback) {
+                    successCallback();
+                }
+            }
+            else {//控制失败
+                if (failureCallback) {
+                    failureCallback();
+                }
+            }
+        });
+    });
+
+}
+
+
+- (void)PTZControlMove:(SHDevice *)device direction:(int)direction successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback
+{
+    if (nil == device.serialNumber) {
+        failureCallback();
+        return;
+    }
+    
+    dispatch_async(_serialQueue, ^{
+        
+        SHGateway *gateway = [self lookupGatewayById:device.gatewaySN];
+        NSString *code = nil;
+
+        switch (direction) {
+            case SwipeDirectionUp:
+                code = @"Up";
+                break;
+            case SwipeDirectionDown:
+                code = @"Down";
+                break;
+            case SwipeDirectionLeft:
+                code = @"Left";
+                break;
+            case SwipeDirectionRight:
+                code = @"Right";
+                break;
+            case SwipeDirectionLeftUp:
+                code = @"LeftUp";
+                break;
+            case SwipeDirectionRightUp:
+                code = @"RightUp";
+                break;
+            case SwipeDirectionLeftDown:
+                code = @"LeftDown";
+                break;
+            case SwipeDirectionRightDown:
+                code = @"RightDown";
+                break;
+                
+            default:
+                break;
+        }
+        
+        bool bRet = SH_PTZControl(gateway.loginId, (char *)[device.serialNumber UTF8String], "start", (char *)[code UTF8String], 1, 0, 0);
+        
+        if (bRet) {
+            sleep(1);
+            
+            bRet = SH_PTZControl(gateway.loginId, (char *)[device.serialNumber UTF8String], "stop", (char *)[code UTF8String], 1, 0, 0);
+
+        }
+        
+        dispatch_async(dispatch_get_main_queue(),^{
+            if (bRet) {//控制成功
+
+                if (successCallback) {
+                    successCallback();
+                }
+            }
+            else {//控制失败
+                if (failureCallback) {
+                    failureCallback();
+                }
+            }
+        });
+    });
+    
+
+}
+
+
+- (void)PTZControlScale:(SHDevice *)device factor:(CGFloat)factor successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback
+{
+    if (nil == device.serialNumber) {
+        failureCallback();
+        return;
+    }
+    
+
+    
+    dispatch_async(_serialQueue, ^{
+        
+        SHGateway *gateway = [self lookupGatewayById:device.gatewaySN];
+        NSString *code = nil;
+        NSInteger step = 2;
+        
+        if (factor < 1.0) {
+            code = @"ZoomWide";
+           
+        }
+        else {
+            code = @"ZoomTele";
+        }
+        
+       bool bRet = SH_PTZControl(gateway.loginId, (char *)[device.serialNumber UTF8String], "start", (char *)[code UTF8String], step, 0, 0);
+        
+        if (bRet) {
+            sleep(1);
+            
+            bRet = SH_PTZControl(gateway.loginId, (char *)[device.serialNumber UTF8String], "stop", (char *)[code UTF8String], step, 0, 0);
+            
+        }
+        
+        dispatch_async(dispatch_get_main_queue(),^{
+            if (bRet) {//控制成功
+
                 
                 if (successCallback) {
                     successCallback();

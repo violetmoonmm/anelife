@@ -7,27 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef enum _SwipeDirection
-{
-    SwipeDirectionNone      = 0,
-    SwipeDirectionUp        = 1,
-    SwipeDirectionDown      = 2,
-    SwipeDirectionLeft      = 3,
-    SwipeDirectionRight     = 4,
-    SwipeDirectionLeftUp    = 5,
-    SwipeDirectionRightUp   = 6,
-    SwipeDirectionLeftDown  = 7,
-    SwipeDirectionRightDown = 8
-    
-} SwipeDirection;
+#import "Util.h"
 
 
 @class VideoWnd;
 
 @protocol VideoWndDelegate <NSObject>
 
+- (void)videoWndBeginTouch;
 - (void)videoWnd:(VideoWnd *)videoWnd swipeToDirection:(SwipeDirection)direction;
+- (void)videoWnd:(VideoWnd *)videoWnd scale:(CGFloat)scaleFactor;
 
 @end
 

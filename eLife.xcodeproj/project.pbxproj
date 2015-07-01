@@ -835,6 +835,8 @@
 		F5F380871A6E4CE300000838 /* SetGesturePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F380851A6E4CE300000838 /* SetGesturePasswordController.m */; };
 		F5F380881A6E4CE300000838 /* SetGesturePasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5F380861A6E4CE300000838 /* SetGesturePasswordController.xib */; };
 		F5F3808A1A6E4D0F00000838 /* SetGesturePasswordController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5F380891A6E4D0F00000838 /* SetGesturePasswordController_iPad.xib */; };
+		F5F8BB9D1B17035900F8CE13 /* Arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5F8BB9B1B17035900F8CE13 /* Arrow@2x.png */; };
+		F5F8BB9E1B17035900F8CE13 /* 云控制箭头45度.png in Resources */ = {isa = PBXBuildFile; fileRef = F5F8BB9C1B17035900F8CE13 /* 云控制箭头45度.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1892,6 +1894,8 @@
 		F5F380851A6E4CE300000838 /* SetGesturePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetGesturePasswordController.m; sourceTree = "<group>"; };
 		F5F380861A6E4CE300000838 /* SetGesturePasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetGesturePasswordController.xib; sourceTree = "<group>"; };
 		F5F380891A6E4D0F00000838 /* SetGesturePasswordController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetGesturePasswordController_iPad.xib; sourceTree = "<group>"; };
+		F5F8BB9B1B17035900F8CE13 /* Arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow@2x.png"; sourceTree = "<group>"; };
+		F5F8BB9C1B17035900F8CE13 /* 云控制箭头45度.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "云控制箭头45度.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2623,6 +2627,8 @@
 		F5375E3E19EF97FB008EF3C2 /* newVersion */ = {
 			isa = PBXGroup;
 			children = (
+				F5F8BB9B1B17035900F8CE13 /* Arrow@2x.png */,
+				F5F8BB9C1B17035900F8CE13 /* 云控制箭头45度.png */,
 				F5D1D3141B15BE5F00F5282F /* GUserOffline@2x.png */,
 				F5D1D3151B15BE5F00F5282F /* GUserOnline@2x.png */,
 				F5D1D3161B15BE5F00F5282F /* VideoMoveGray@2x.png */,
@@ -3395,7 +3401,7 @@
 								enabled = 0;
 							};
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Keychain = {
 								enabled = 1;
@@ -3573,6 +3579,7 @@
 				9A7B28BC1A15E86B00AF1BB7 /* CtrlOffBtnHl@2x.png in Resources */,
 				9A5F4E7F1A133AB000FB0F64 /* CurtainIcon@2x.png in Resources */,
 				F537600D19EF97FD008EF3C2 /* OtherBtnNormal@2x.png in Resources */,
+				F5F8BB9E1B17035900F8CE13 /* 云控制箭头45度.png in Resources */,
 				F51B7C6D1A4AA11400BAD955 /* BigLight.png in Resources */,
 				F56D83F61A71D94F009E7501 /* LoginBtn@2x.png in Resources */,
 				F55010C81B101CF600FBFA31 /* RCBackspace@2x.png in Resources */,
@@ -3974,6 +3981,7 @@
 				F59D5EAE1A26F0FC000C13D6 /* PlayBlack@2x.png in Resources */,
 				9A5C58CD19FBA306007DB920 /* scene_visit@2x.png in Resources */,
 				F5375FEE19EF97FD008EF3C2 /* LightTurnOnGif.gif in Resources */,
+				F5F8BB9D1B17035900F8CE13 /* Arrow@2x.png in Resources */,
 				F5963B7E1A53B423006DAD6D /* small_scene_sleep_gray@2x.png in Resources */,
 				F53760AF19EF97FD008EF3C2 /* ToolViewInputVoiceHL@2x.png in Resources */,
 				F5375F8619EF97FD008EF3C2 /* blackArrow@2x.png in Resources */,
@@ -4421,7 +4429,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_ENTITLEMENTS = eLife/anelife.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "eLife/eLife-Prefix.pch";
@@ -4443,11 +4451,12 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = anelife;
-				PROVISIONING_PROFILE = "1aabe333-b7b3-4994-a92b-091de2b218e8";
+				PROVISIONING_PROFILE = "280fe235-42e1-462e-a2b1-9e495fa110da";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4462,8 +4471,8 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_ENTITLEMENTS = eLife/anelife.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "eLife/eLife-Prefix.pch";
@@ -4484,11 +4493,12 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = anelife;
-				PROVISIONING_PROFILE = "1aabe333-b7b3-4994-a92b-091de2b218e8";
+				PROVISIONING_PROFILE = "280fe235-42e1-462e-a2b1-9e495fa110da";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

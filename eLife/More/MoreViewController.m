@@ -103,9 +103,9 @@
     [super viewWillAppear:animated];
 
     
-    if ([Util clientIsLastVersion] || _haveViewAbout) {
-        [_dotView removeFromSuperview];
-    }
+//    if ([Util clientIsLastVersion] || _haveViewAbout) {
+//        [_dotView removeFromSuperview];
+//    }
     
     UINavigationController *navController = ((AppDelegate*)[UIApplication sharedApplication].delegate).mainNavController;
     [navController setNavigationBarHidden:YES];
@@ -327,12 +327,12 @@
         rightArrow.backgroundColor = [UIColor clearColor];
         cell.accessoryView = rightArrow;
         
-        //红点
-        if (![Util clientIsLastVersion] && !_haveViewAbout) {
-            _dotView = [[DotView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lbl.frame)+10, (DEFAULT_CELL_HEIGHT-10)/2, 10, 10)];
-            _dotView.backgroundColor = [UIColor clearColor];
-            [cell.contentView addSubview:_dotView];
-        }
+//        //红点
+//        if (![Util clientIsLastVersion] && !_haveViewAbout) {
+//            _dotView = [[DotView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lbl.frame)+10, (DEFAULT_CELL_HEIGHT-10)/2, 10, 10)];
+//            _dotView.backgroundColor = [UIColor clearColor];
+//            [cell.contentView addSubview:_dotView];
+//        }
         
 
     }

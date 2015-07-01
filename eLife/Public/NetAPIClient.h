@@ -283,6 +283,14 @@ enum DisConnectReason
  */
 - (void)remoteControl:(SHInfraredRemoteControl *)device key:(NSString *)key successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback;
 
+/*
+ *云台控制
+ */
+- (void)PTZControlMove:(SHDevice *)device direction:(int)direction successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback;
+
+- (void)PTZControlScale:(SHDevice *)device factor:(CGFloat)factor successCallback:(void(^)(void))successCallback failureCallback:(void(^)(void))failureCallback;
+
+
 #pragma mark 抄表 & 环境监测
 
 - (void)readEnvironmentMonitor:(SHDevice *)device successCallback:(void(^)(NSDictionary *))successCallback failureCallback:(void(^)(void))failureCallback;

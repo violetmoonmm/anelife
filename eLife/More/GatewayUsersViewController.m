@@ -217,9 +217,10 @@
     NSInteger profileSize = 60;
     
     //头像
+    NSString *userImage = user.online ? @"GUserOnline" : @"GUserOffline";
     NSInteger imgMargin = (CELL_H-profileSize)/2;
     UIImageView *profileView = [[UIImageView alloc] initWithFrame:CGRectMake(imgMargin, imgMargin, profileSize, profileSize)];
-    profileView.image = [UIImage imageNamed:@"LoginProfile"];
+    profileView.image = [UIImage imageNamed:userImage];
     [cell.contentView addSubview:profileView];
     
     
@@ -254,7 +255,11 @@
     [cell.contentView addSubview:deviceLbl];
     
     //登录时间
-    NSString *strDate = @"登录时间: --";
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:user.loginTime];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd HH:mm"];
+    NSString *strDate = [formatter stringFromDate:date];
+    strDate = [NSString stringWithFormat:@"上次登录: %@",strDate];
     size = [strDate sizeWithFont:detailFont constrainedToSize:CGSizeMake(300, dateHeight)];
     UILabel *dateLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(userLbl.frame), CGRectGetMaxY(deviceLbl.frame)+spacingY, size.width, phoneModelHeight)];
     dateLbl.text = strDate;

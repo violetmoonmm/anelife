@@ -312,6 +312,17 @@
     //登录成功向服务器注册推送服务
     [[NetAPIClient sharedClient] sendToken:[User currentUser].devToken];
     
+    //检查版本
+    [[NetAPIClient sharedClient] checkVersion:^(VersionInfo *version){
+        
+        if (![Util clientIsLastVersion]) {
+            [self showVersionUpdateInfo:version];
+        }
+
+    }failureCallback:^{
+        NSLog(@"检查版本失败");
+    }];
+    
     
     [[NetAPIClient sharedClient] beginTask];
 
@@ -325,6 +336,35 @@
     
     
 }
+
+- (void)showVersionForceUpdate:(VersionInfo *)versionInfo
+{
+    NSString *title = @"版本过低，请先升级再使用";
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY年MM月dd日"];
+    NSString *strDate = [formatter stringFromDate:versionInfo.publishDate];
+    
+    NSString *msg = [NSString stringWithFormat:@"新版本:%@\n发布日期:%@",versionInfo.versionName,strDate];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"前往下载", nil];
+    [alert show];
+    
+}
+
+- (void)showVersionUpdateInfo:(VersionInfo *)versionInfo
+{
+    NSString *title = [NSString stringWithFormat:@"新版本%@",versionInfo.versionName];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY年MM月dd日"];
+    NSString *strDate = [formatter stringFromDate:versionInfo.publishDate];
+    
+    NSString *msg = [NSString stringWithFormat:@"发布日期:%@",strDate];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"前往下载", nil];
+    [alert show];
+    
+}
+
 
 - (void)loginFailed:(int)error
 {

@@ -82,7 +82,47 @@
     return [[NetAPIClient sharedClient].versionInfo.versionName isEqualToString:CLIENT_VERSION];
 }
 
-
+//- (NSComparisonResult)versionCompare:(NSString *)version anotherVersion:(NSString *)version1
+//{
+//    NSArray *components = [version componentsSeparatedByString:@"."];
+//    NSArray *components1 = [version1 componentsSeparatedByString:@"."];
+//    
+//    if ([components count] == 3 && [components1 count] == 3) {
+//        NSInteger header = [[components objectAtIndex:0] integerValue];
+//        NSInteger header1 = [[components1 objectAtIndex:0] integerValue];
+//        
+//        if (header > header1) {
+//            return NSOrderedDescending;
+//        }
+//        else if (header < header1) {
+//            return NSOrderedAscending;
+//        }
+//        else {
+//            NSInteger mid = [[components objectAtIndex:1] integerValue];
+//            NSInteger mid1 = [[components1 objectAtIndex:1] integerValue];
+//            
+//            if (mid > mid1) {
+//                return NSOrderedDescending;
+//            }
+//            else if (mid < mid1) {
+//                return NSOrderedAscending;
+//            }
+//            else {
+//                NSInteger tail = [[components objectAtIndex:2] integerValue];
+//                NSInteger tail1 = [[components1 objectAtIndex:2] integerValue];
+//                
+//                if (tail > tail1) {
+//                    return NSOrderedDescending;
+//                }
+//                else if (tail < tail1) {
+//                    return NSOrderedAscending;
+//                }
+//            }
+//        }
+//    }
+//    
+//    return NSOrderedSame;
+//}
 
 /*
  * 将字符串str进行md5编码后返回

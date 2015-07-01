@@ -161,10 +161,7 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
     return self;
 }
 
-//- (void)test
-//{
-//    NSLog(@"通知 test");
-//}
+
 
 
 - (void)viewDidLoad {
@@ -1305,7 +1302,7 @@ static NSString *const FooterIdentifier = @"FooterIdentifier";
     
     NSLog(@"handleGetDevicesReadyNtf");
     
-    [self hideWaitingStatus];
+    //[self hideWaitingStatus];
     
     
     //[self refreshTable];

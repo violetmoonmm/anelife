@@ -120,9 +120,9 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
 
     
 
-    if (![Util clientIsLastVersion]) {
-        [(CustomTabBarController *)((AppDelegate *)[UIApplication sharedApplication].delegate).tabBarController displayTrackPoint:YES atIndex:3];
-    }
+//    if (![Util clientIsLastVersion]) {
+//        [(CustomTabBarController *)((AppDelegate *)[UIApplication sharedApplication].delegate).tabBarController displayTrackPoint:YES atIndex:3];
+//    }
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -917,6 +917,7 @@ CGRect FrameFromLayout(int column, int columnSpan, int row , int rowSpan, int co
         scrlView.showsHorizontalScrollIndicator = NO;
         scrlView.showsVerticalScrollIndicator = NO;
         scrlView.pagingEnabled = YES;
+        scrlView.delaysContentTouches = NO;
         scrlView.delegate = self;
         scrlView.bounces = NO;
         scrlView.autoresizesSubviews = YES;

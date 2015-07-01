@@ -25,7 +25,15 @@
 
 #define SIDE_BAR_WIDTH 50
 
-@interface BasicVideoCell () <BitrateViewDelegate>
+#define ARROW_MARGIN 4//箭头离视频边缘距离
+#define ARROW_SIZE 37//箭头尺寸
+
+#define PTZBtnW 32
+#define PTZBtnH 32
+
+#define ARROW_DISPLAY_TIME 1.0
+
+@interface BasicVideoCell () <BitrateViewDelegate,VideoWndDelegate>
 {
     UIImageView *bgdView;
     
@@ -44,7 +52,11 @@
     
     BitrateView *bitrateView;
     
+    UIButton *ptzBtn;//云台控制按钮
+    
     UIImageView *videoMaxView;//视频转发达到最大数
+    
+    UIImageView *arrowView;
 }
 
 @end
@@ -66,7 +78,7 @@
    
         videoWnd = [[VideoWnd alloc] initWithFrame:CGRectMake(VideoWndMargin, VideoWndMargin, CGRectGetWidth(bgdView.frame)-2*VideoWndMargin, CGRectGetHeight(bgdView.frame)-2*VideoWndMargin)];
         videoWnd.backgroundColor = [UIColor blackColor];
-  
+        videoWnd.delegate = self;
         [bgdView addSubview:videoWnd];
         videoWnd.autoresizesSubviews = YES;
         
@@ -133,6 +145,15 @@
         bitrateView.autoresizingMask =  UIViewAutoresizingFlexibleLeftMargin  | UIViewAutoresizingFlexibleBottomMargin;
         bitrateView.selectedIndex = 0;
         
+        //云台控制按钮
+        ptzBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        ptzBtn.frame = CGRectMake(CGRectGetMaxX(bitrateBtn.frame)-PTZBtnW, CGRectGetHeight(videoWnd.frame) - btnMargin - PTZBtnH, PTZBtnW, PTZBtnH);
+        [ptzBtn setImage:[UIImage imageNamed:@"VideoMoveGray"] forState:UIControlStateNormal];
+        [ptzBtn setImage:[UIImage imageNamed:@"VideoMoveGreen"] forState:UIControlStateSelected];
+        [ptzBtn addTarget:self action:@selector(setPTZCtrlEnable:) forControlEvents:UIControlEventTouchUpInside];
+        [videoWnd addSubview:ptzBtn];
+        ptzBtn.hidden = YES;
+        
         //关闭视频按钮
         closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         closeBtn.frame = CGRectMake(0, btnMargin, SIDE_BAR_WIDTH, SIDE_BAR_WIDTH);
@@ -157,7 +178,10 @@
         landscapeBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         //landscapeBtn.backgroundColor = [UIColor redColor];
         
-        
+        arrowView = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(videoWnd.bounds)-ARROW_SIZE)/2, 0, ARROW_SIZE, ARROW_SIZE)];
+        arrowView.image = [UIImage imageNamed:@"Arrow"];
+        [videoWnd addSubview:arrowView];
+        arrowView.alpha = 0;
         
         [self registerNotification];
     }
@@ -216,6 +240,31 @@
 }
 
 
+- (void)setPTZCtrlEnable:(UIButton *)sender
+{
+    ptzBtn.selected = !ptzBtn.selected;
+    
+    videoWnd.enablePTZCtrl = ptzBtn.selected;
+    
+    if (ptzBtn.selected) {
+        [self hideVideoContrl];
+        
+        CGRect frame = ptzBtn.frame;
+        frame.origin.x = CGRectGetWidth(videoWnd.frame)-SIDE_BAR_WIDTH;
+        ptzBtn.frame = frame;
+        
+        
+    }
+    else {
+        [self showVideoContrl];
+        
+        CGRect frame = ptzBtn.frame;
+        frame.origin.x = CGRectGetMaxX(bitrateBtn.frame)-PTZBtnW;
+        ptzBtn.frame = frame;
+        
+    }
+}
+
 //显示视频控件
 - (void)showVideoContrl
 {
@@ -228,7 +277,7 @@
     
     sideBar.hidden = NO;
     bitrateBtn.hidden = NO;
-    
+    ptzBtn.hidden = NO;
 
 }
 
@@ -379,21 +428,24 @@
 
 - (void)tapBgdView
 {
-    if (self.isPlaying) {
-
-        if (sideBar.hidden)
-        {
-            [self showVideoContrl];
+    if (!ptzBtn.selected) {
+        if (self.isPlaying) {
+            
+            if (sideBar.hidden)
+            {
+                [self showVideoContrl];
+            }
+            else {
+                [self hideVideoContrl];
+            }
+            
         }
         else {
-            [self hideVideoContrl];
+            
+            [self playVideo];
         }
-        
     }
-    else {
-        
-        [self playVideo];
-    }
+
 }
 
 - (void) setAnchorPoint:(CGPoint)anchorpoint forView:(UIView *)view{
@@ -555,6 +607,135 @@
         [self showCtrlFailedHint];
         
         bitrateView.hidden = YES;
+    }];
+}
+
+
+#pragma mark VideoWndDelegate
+
+- (void)videoWndBeginTouch
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    
+    [self hideArrowAnimated:[NSNumber numberWithBool:NO]];
+}
+
+
+- (void)videoWnd:(VideoWnd *)videoWnd swipeToDirection:(SwipeDirection)direction
+{
+
+    [self rotateArrowTo:direction];
+    
+    [[NetAPIClient sharedClient] PTZControlMove:self.device direction:direction successCallback:^{
+        
+        NSLog(@"swipeToDirection %d success",direction);
+        
+    }failureCallback:^{
+        NSLog(@"swipeToDirection %d failed",direction);
+    }];
+}
+
+- (void)videoWnd:(VideoWnd *)videoWnd scale:(CGFloat)scaleFactor
+{
+  
+    [[NetAPIClient sharedClient] PTZControlScale:self.device factor:scaleFactor successCallback:^{
+        
+        NSLog(@"scale %f success",scaleFactor);
+        
+    }failureCallback:^{
+        NSLog(@"scale %f failed",scaleFactor);
+    }];
+}
+
+- (void)hideArrowAnimated:(NSNumber *)bNumber
+{
+    if ([bNumber boolValue]) {
+        [UIView animateWithDuration:0.2 animations:^{
+            arrowView.alpha = 0.0;
+        }completion:^(BOOL f){
+            
+            
+        }];
+    }
+    else {
+        arrowView.alpha = 0.0;
+    }
+    
+    
+}
+
+
+- (void)rotateArrowTo:(SwipeDirection)direction
+{
+    CGFloat angle = 0;
+    CGFloat x = 0;
+    CGFloat y = 0;
+    
+    switch (direction) {
+        case SwipeDirectionUp:
+            angle = 0;
+            x = (CGRectGetWidth(videoWnd.bounds) - ARROW_SIZE)/2;
+            y = 0;
+            break;
+        case SwipeDirectionLeft:
+            angle = -M_PI/2;
+            x = 0;
+            y = (CGRectGetHeight(videoWnd.bounds) - ARROW_SIZE)/2;
+            break;
+        case SwipeDirectionDown:
+            angle = M_PI;
+            x = (CGRectGetWidth(videoWnd.bounds) - ARROW_SIZE)/2;
+            y = CGRectGetHeight(videoWnd.bounds) - ARROW_SIZE;
+            break;
+        case SwipeDirectionRight:
+            angle = M_PI/2;
+            x = CGRectGetWidth(videoWnd.bounds) - ARROW_SIZE;
+            y = (CGRectGetHeight(videoWnd.bounds) - ARROW_SIZE)/2;
+            break;
+        case SwipeDirectionLeftUp:
+            angle = -M_PI/4;
+            x = 0;
+            y = 0;
+            break;
+        case SwipeDirectionRightUp:
+            angle = M_PI/4;
+            x = CGRectGetWidth(videoWnd.bounds) - ARROW_SIZE;
+            y = 0;
+            break;
+        case SwipeDirectionLeftDown:
+            angle = -M_PI*3/4;
+            x = 0;
+            y = CGRectGetHeight(videoWnd.bounds) - ARROW_SIZE;
+            break;
+        case SwipeDirectionRightDown:
+            angle = M_PI*3/4;
+            x = CGRectGetWidth(videoWnd.bounds) - ARROW_SIZE;
+            y = CGRectGetHeight(videoWnd.bounds) - ARROW_SIZE;
+            break;
+            
+        default:
+            break;
+    }
+    
+    arrowView.transform = CGAffineTransformIdentity;
+    
+    
+    CGRect frame = arrowView.frame;
+    frame.origin.x = x;
+    frame.origin.y = y;
+    arrowView.frame = frame;
+    
+    CGAffineTransform rotation = CGAffineTransformMakeRotation(angle);
+    arrowView.transform = rotation;
+    
+    arrowView.alpha = 0.0;
+    [UIView animateWithDuration:0.2 animations:^{
+        arrowView.alpha = 1.0;
+    }completion:^(BOOL f){
+        
+        if (f) {
+            [self performSelector:@selector(hideArrowAnimated:) withObject:[NSNumber numberWithBool:YES] afterDelay:ARROW_DISPLAY_TIME];
+        }
     }];
 }
 

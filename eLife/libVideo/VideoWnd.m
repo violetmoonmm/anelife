@@ -45,6 +45,23 @@
 	return self;
 }
 
+- (void)awakeFromNib
+{
+    UIPinchGestureRecognizer *pin = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinGesture:)];
+    [self addGestureRecognizer:pin];
+}
+
+- (void)handlePinGesture:(UIPinchGestureRecognizer *)gstr
+{
+    if (gstr.state == UIGestureRecognizerStateEnded) {
+        
+        if (self.enablePTZCtrl && [self.delegate respondsToSelector:@selector(videoWnd:scale:)]) {
+            [self.delegate videoWnd:self scale:gstr.scale];
+        }
+    }
+
+}
+
 //创建视频控件
 - (void)setupVideoControls
 {
@@ -136,6 +153,10 @@
         startPoint = [touch locationInView:self];
         
         swipeDirection = SwipeDirectionNone;
+        
+        if ([self.delegate respondsToSelector:@selector(videoWndBeginTouch)]) {
+            [self.delegate videoWndBeginTouch];
+        }
     }
 
 }

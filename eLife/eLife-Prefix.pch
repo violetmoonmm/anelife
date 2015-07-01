@@ -23,6 +23,6 @@
 
 
 //禁止视频
-#define INVALID_VIDEO
+//#define INVALID_VIDEO
 
 

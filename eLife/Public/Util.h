@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum _SwipeDirection
+{
+    SwipeDirectionNone      = 0,
+    SwipeDirectionUp        = 1,
+    SwipeDirectionDown      = 2,
+    SwipeDirectionLeft      = 3,
+    SwipeDirectionRight     = 4,
+    SwipeDirectionLeftUp    = 5,
+    SwipeDirectionRightUp   = 6,
+    SwipeDirectionLeftDown  = 7,
+    SwipeDirectionRightDown = 8
+    
+} SwipeDirection;
+
 @interface Util : NSObject
 
 
@@ -19,7 +33,6 @@
 + (void)unifyGoBackButtonWithTarget:(UIViewController *)target selector:(SEL)selector;
 
 + (BOOL)clientIsLastVersion;
-
 
 
 +(NSString *)md5:(NSString *)str;

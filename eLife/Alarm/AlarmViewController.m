@@ -26,7 +26,6 @@ static float cellHeight = 44;
     IBOutlet VideoWnd *videoWnd;
     IBOutlet UIButton *playBtn;//视频播放按钮
     
-  
     NSInteger selectedIndex;
 }
 
